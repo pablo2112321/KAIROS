@@ -19,7 +19,6 @@
   --text: #f3f4f6;
   --text-secondary: #9ca3af;
   --text-muted: #6b7280;
-  --accent: #e5e7eb;
   --mc-accent: #10b981;
   --mc-soft: rgba(16, 185, 129, 0.12);
   --dev-accent: #6366f1;
@@ -35,11 +34,7 @@
   --mono: 'JetBrains Mono', monospace;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   background-color: var(--bg);
@@ -58,7 +53,6 @@ body {
   padding: 40px 24px 64px;
 }
 
-/* Header */
 .header {
   display: flex;
   align-items: center;
@@ -70,11 +64,7 @@ body {
   flex-wrap: wrap;
 }
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
+.brand { display: flex; align-items: center; gap: 14px; }
 
 .brand-logo {
   width: 38px;
@@ -86,26 +76,12 @@ body {
   place-items: center;
   font-weight: 700;
   font-size: 16px;
-  letter-spacing: -0.03em;
 }
 
-.brand-text h1 {
-  font-size: 17px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-}
+.brand-text h1 { font-size: 17px; font-weight: 600; letter-spacing: 0.04em; }
+.brand-text p { font-size: 12px; color: var(--text-muted); }
 
-.brand-text p {
-  font-size: 12px;
-  color: var(--text-muted);
-}
-
-.header-controls {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
+.header-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 
 .pill {
   display: inline-flex;
@@ -120,39 +96,17 @@ body {
   color: var(--text-secondary);
 }
 
-.dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--text-muted);
-}
-
-.dot.online {
-  background: var(--mc-accent);
-  box-shadow: 0 0 8px var(--mc-accent);
-}
-
-.dot.busy {
-  background: var(--amber);
-  box-shadow: 0 0 8px var(--amber);
-  animation: pulse 1.5s infinite ease-in-out;
-}
-
-.dot.error {
-  background: var(--danger);
-}
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text-muted); }
+.dot.online { background: var(--mc-accent); box-shadow: 0 0 8px var(--mc-accent); }
+.dot.busy { background: var(--amber); box-shadow: 0 0 8px var(--amber); animation: pulse 1.5s infinite ease-in-out; }
+.dot.error { background: var(--danger); }
 
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.35; }
 }
 
-/* Navigation Tabs (Main vs Minecraft Hub) */
-.view-nav {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 28px;
-}
+.view-nav { display: flex; gap: 8px; margin-bottom: 28px; }
 
 .tab-btn {
   background: transparent;
@@ -165,24 +119,10 @@ body {
   cursor: pointer;
   transition: all 0.18s ease;
 }
+.tab-btn:hover { color: var(--text); background: var(--surface); }
+.tab-btn.active { background: var(--surface); border-color: var(--border-strong); color: var(--text); }
 
-.tab-btn:hover {
-  color: var(--text);
-  background: var(--surface);
-}
-
-.tab-btn.active {
-  background: var(--surface);
-  border-color: var(--border-strong);
-  color: var(--text);
-}
-
-/* Cards Grid */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
+.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
 
 .card {
   background: var(--surface);
@@ -192,20 +132,11 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition: border-color 0.2s ease;
 }
-
-.card:hover {
-  border-color: var(--border-strong);
-}
-
-.card.active-mc {
-  border-color: rgba(16, 185, 129, 0.4);
-}
-
-.card.active-dev {
-  border-color: rgba(99, 102, 241, 0.4);
-}
+.card:hover { border-color: var(--border-strong); }
+.card.active-mc { border-color: rgba(16, 185, 129, 0.4); }
+.card.active-dev { border-color: rgba(99, 102, 241, 0.4); }
 
 .card-top {
   display: flex;
@@ -225,11 +156,7 @@ body {
   margin-bottom: 4px;
 }
 
-.card-title {
-  font-size: 20px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
+.card-title { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
 
 .status-badge {
   display: inline-flex;
@@ -244,26 +171,10 @@ body {
   border: 1px solid var(--border);
   color: var(--text-secondary);
 }
+.status-badge.on { background: var(--mc-soft); color: #34d399; border-color: rgba(16, 185, 129, 0.25); }
+.status-badge.starting, .status-badge.stopping { background: var(--amber-soft); color: #fbbf24; border-color: rgba(245, 158, 11, 0.25); }
 
-.status-badge.on {
-  background: var(--mc-soft);
-  color: #34d399;
-  border-color: rgba(16, 185, 129, 0.25);
-}
-
-.status-badge.starting,
-.status-badge.stopping {
-  background: var(--amber-soft);
-  color: #fbbf24;
-  border-color: rgba(245, 158, 11, 0.25);
-}
-
-.card-desc {
-  color: var(--text-secondary);
-  font-size: 13.5px;
-  margin-bottom: 24px;
-  line-height: 1.6;
-}
+.card-desc { color: var(--text-secondary); font-size: 13.5px; margin-bottom: 24px; line-height: 1.6; }
 
 .specs {
   display: grid;
@@ -275,27 +186,10 @@ body {
   border-radius: var(--radius-md);
   margin-bottom: 24px;
 }
+.spec-item span { display: block; font-size: 11px; color: var(--text-muted); margin-bottom: 2px; }
+.spec-item strong { font-family: var(--mono); font-size: 11.5px; font-weight: 500; color: var(--text); word-break: break-all; }
 
-.spec-item span {
-  display: block;
-  font-size: 11px;
-  color: var(--text-muted);
-  margin-bottom: 2px;
-}
-
-.spec-item strong {
-  font-family: var(--mono);
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text);
-}
-
-/* Buttons */
-.actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
+.actions { display: flex; gap: 10px; flex-wrap: wrap; }
 
 .btn {
   appearance: none;
@@ -312,90 +206,22 @@ body {
   justify-content: center;
   gap: 8px;
   transition: all 0.16s ease;
-  text-decoration: none;
 }
+.btn:hover:not(:disabled) { background: #1f2330; border-color: rgba(255, 255, 255, 0.28); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-primary { background: var(--text); color: var(--bg); border-color: var(--text); font-weight: 600; flex: 1; }
+.btn-mc { background: var(--mc-accent); color: #04130e; border-color: var(--mc-accent); font-weight: 600; flex: 1; }
+.btn-mc:hover:not(:disabled) { background: #34d399; border-color: #34d399; }
+.btn-dev { background: var(--dev-accent); color: #ffffff; border-color: var(--dev-accent); font-weight: 600; flex: 1; }
+.btn-dev:hover:not(:disabled) { background: #818cf8; border-color: #818cf8; }
+.btn-danger { background: var(--danger-soft); color: #f87171; border-color: rgba(239, 68, 68, 0.25); }
+.btn-danger:hover:not(:disabled) { background: rgba(239, 68, 68, 0.22); }
+.btn-sm { padding: 7px 12px; font-size: 12px; border-radius: var(--radius-sm); }
 
-.btn:hover:not(:disabled) {
-  background: #1f2330;
-  border-color: rgba(255, 255, 255, 0.28);
-}
+.view-section { display: none; animation: fadeIn 0.22s ease; }
+.view-section.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
-.btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-.btn-primary {
-  background: var(--text);
-  color: var(--bg);
-  border-color: var(--text);
-  font-weight: 600;
-  flex: 1;
-}
-
-.btn-primary:hover:not(:disabled) {
-  background: #ffffff;
-  opacity: 0.92;
-}
-
-.btn-mc {
-  background: var(--mc-accent);
-  color: #04130e;
-  border-color: var(--mc-accent);
-  font-weight: 600;
-  flex: 1;
-}
-
-.btn-mc:hover:not(:disabled) {
-  background: #34d399;
-  border-color: #34d399;
-}
-
-.btn-dev {
-  background: var(--dev-accent);
-  color: #ffffff;
-  border-color: var(--dev-accent);
-  font-weight: 600;
-  flex: 1;
-}
-
-.btn-dev:hover:not(:disabled) {
-  background: #818cf8;
-  border-color: #818cf8;
-}
-
-.btn-danger {
-  background: var(--danger-soft);
-  color: #f87171;
-  border-color: rgba(239, 68, 68, 0.25);
-}
-
-.btn-danger:hover:not(:disabled) {
-  background: rgba(239, 68, 68, 0.22);
-}
-
-.btn-sm {
-  padding: 7px 12px;
-  font-size: 12px;
-  border-radius: var(--radius-sm);
-}
-
-/* Sections / Views */
-.view-section {
-  display: none;
-  animation: fadeIn 0.22s ease;
-}
-
-.view-section.active {
-  display: block;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Dedicated Minecraft Connection View */
 .mc-portal {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -405,7 +231,6 @@ body {
   max-width: 640px;
   margin: 0 auto;
 }
-
 .mc-portal-icon {
   width: 52px;
   height: 52px;
@@ -418,20 +243,8 @@ body {
   margin: 0 auto 16px;
   border: 1px solid rgba(16, 185, 129, 0.25);
 }
-
-.mc-portal h2 {
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  margin-bottom: 8px;
-}
-
-.mc-portal p {
-  color: var(--text-secondary);
-  font-size: 13.5px;
-  max-width: 460px;
-  margin: 0 auto 28px;
-}
+.mc-portal h2 { font-size: 22px; font-weight: 600; margin-bottom: 8px; }
+.mc-portal p { color: var(--text-secondary); font-size: 13.5px; max-width: 460px; margin: 0 auto 28px; }
 
 .ip-box {
   background: var(--surface-subtle);
@@ -445,29 +258,10 @@ body {
   margin-bottom: 24px;
   flex-wrap: wrap;
 }
+.ip-box-left { text-align: left; }
+.ip-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); display: block; margin-bottom: 4px; }
+.ip-address { font-family: var(--mono); font-size: 20px; font-weight: 600; color: var(--text); }
 
-.ip-box-left {
-  text-align: left;
-}
-
-.ip-label {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
-  display: block;
-  margin-bottom: 4px;
-}
-
-.ip-address {
-  font-family: var(--mono);
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--text);
-  letter-spacing: -0.02em;
-}
-
-/* Dev SSH Box inside Card */
 .dev-tunnel-box {
   margin-top: 18px;
   padding: 14px;
@@ -475,25 +269,9 @@ body {
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
 }
+.dev-tunnel-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; font-size: 11.5px; color: var(--text-secondary); }
+.dev-tunnel-code { font-family: var(--mono); font-size: 11.5px; color: #a5b4fc; word-break: break-all; line-height: 1.5; }
 
-.dev-tunnel-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 8px;
-  font-size: 11.5px;
-  color: var(--text-secondary);
-}
-
-.dev-tunnel-code {
-  font-family: var(--mono);
-  font-size: 11.5px;
-  color: #a5b4fc;
-  word-break: break-all;
-  line-height: 1.5;
-}
-
-/* Activity Log Bar */
 .log-panel {
   margin-top: 32px;
   padding: 18px 22px;
@@ -501,40 +279,11 @@ body {
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
 }
+.log-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 11.5px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.log-list { font-family: var(--mono); font-size: 12px; color: var(--text-secondary); max-height: 120px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
+.log-item { display: flex; gap: 10px; }
+.log-time { color: var(--text-muted); flex-shrink: 0; }
 
-.log-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-  font-size: 11.5px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.log-list {
-  font-family: var(--mono);
-  font-size: 12px;
-  color: var(--text-secondary);
-  max-height: 120px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.log-item {
-  display: flex;
-  gap: 10px;
-}
-
-.log-time {
-  color: var(--text-muted);
-  flex-shrink: 0;
-}
-
-/* Modal Pendrive Key */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -545,11 +294,7 @@ body {
   padding: 20px;
   z-index: 50;
 }
-
-.modal-backdrop.open {
-  display: grid;
-}
-
+.modal-backdrop.open { display: grid; }
 .modal {
   background: var(--surface);
   border: 1px solid var(--border-strong);
@@ -559,19 +304,8 @@ body {
   width: 100%;
   box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6);
 }
-
-.modal h3 {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-.modal p {
-  font-size: 13px;
-  color: var(--text-secondary);
-  margin-bottom: 20px;
-  line-height: 1.55;
-}
+.modal h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+.modal p { font-size: 13px; color: var(--text-secondary); margin-bottom: 20px; line-height: 1.55; }
 
 .file-drop {
   border: 1px dashed var(--border-strong);
@@ -583,40 +317,9 @@ body {
   transition: border-color 0.16s ease, background 0.16s ease;
   margin-bottom: 14px;
 }
-
-.file-drop:hover {
-  border-color: var(--dev-accent);
-  background: rgba(99, 102, 241, 0.05);
-}
-
-.file-drop strong {
-  display: block;
-  font-size: 13px;
-  margin-bottom: 4px;
-}
-
-.file-drop span {
-  font-size: 11.5px;
-  color: var(--text-muted);
-  font-family: var(--mono);
-}
-
-.input-field {
-  width: 100%;
-  background: var(--surface-subtle);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 10px 12px;
-  color: var(--text);
-  font-family: var(--mono);
-  font-size: 12.5px;
-  margin-bottom: 14px;
-  outline: none;
-}
-
-.input-field:focus {
-  border-color: var(--dev-accent);
-}
+.file-drop:hover { border-color: var(--dev-accent); background: rgba(99, 102, 241, 0.05); }
+.file-drop strong { display: block; font-size: 13px; margin-bottom: 4px; }
+.file-drop span { font-size: 11.5px; color: var(--text-muted); font-family: var(--mono); }
 
 .key-preview {
   font-family: var(--mono);
@@ -630,14 +333,8 @@ body {
   word-break: break-all;
   display: none;
 }
+.modal-actions { display: flex; justify-content: flex-end; gap: 10px; }
 
-.modal-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-}
-
-/* Toast */
 .toast {
   position: fixed;
   bottom: 24px;
@@ -656,27 +353,17 @@ body {
   transition: all 0.2s ease;
   z-index: 60;
 }
-
-.toast.show {
-  opacity: 1;
-  transform: translateY(0);
-}
+.toast.show { opacity: 1; transform: translateY(0); }
 
 @media (max-width: 720px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-  .ip-box {
-    flex-direction: column;
-    align-items: stretch;
-  }
+  .grid { grid-template-columns: 1fr; }
+  .ip-box { flex-direction: column; align-items: stretch; }
 }
 </style>
 </head>
 <body>
 
 <div class="container">
-  <!-- Header -->
   <header class="header">
     <div class="brand">
       <div class="brand-logo">K</div>
@@ -687,34 +374,31 @@ body {
     </div>
 
     <div class="header-controls">
-      <div class="pill" id="awsStatusPill">
+      <div class="pill">
         <span class="dot busy" id="awsDot"></span>
         <span id="awsStatusText">Sincronizando AWS…</span>
       </div>
-
-      <button class="btn btn-sm" id="usbStatusBtn" type="button" title="Cargar o cambiar llave del pendrive">
+      <button class="btn btn-sm" id="usbStatusBtn" type="button">
         <span id="usbStatusLabel">🔑 Llave USB: No cargada</span>
       </button>
-
       <button class="btn btn-sm" id="syncBtn" type="button">↻ Actualizar</button>
     </div>
   </header>
 
-  <!-- Navigation -->
   <div class="view-nav">
     <button class="tab-btn active" id="tabNodes" type="button">Panel de Nodos</button>
     <button class="tab-btn" id="tabMcPortal" type="button">Sala de Conexión Minecraft</button>
   </div>
 
-  <!-- VIEW 1: UNIFIED NODES -->
+  <!-- VISTA 1: PANEL UNIFICADO -->
   <section class="view-section active" id="sectionNodes">
     <div class="grid">
-      <!-- Card 1: Minecraft Server -->
+      <!-- Nodo Minecraft: spokcillo -->
       <article class="card" id="mcCard">
         <div>
           <div class="card-top">
             <div>
-              <span class="node-tag">Comunidad · Game Node</span>
+              <span class="node-tag">Minecraft · spokcillo</span>
               <h2 class="card-title">Minecraft Server</h2>
             </div>
             <span class="status-badge" id="mcBadge">
@@ -724,20 +408,20 @@ body {
           </div>
 
           <p class="card-desc">
-            Servidor comunitario en AWS. Al encenderlo se abrirá automáticamente el apartado para copiar la dirección IP pública. Se apaga solo tras 20 minutos sin jugadores.
+            Al iniciar el servidor se abrirá automáticamente el apartado para copiar la IP pública. Se apaga automáticamente tras 20 minutos sin jugadores.
           </p>
 
           <div class="specs">
             <div class="spec-item">
-              <span>Instancia</span>
-              <strong>t3.xlarge</strong>
+              <span>Nombre</span>
+              <strong>spokcillo</strong>
             </div>
             <div class="spec-item">
-              <span>Auto-Stop</span>
-              <strong>20 min</strong>
+              <span>Instance ID</span>
+              <strong>i-0830d7dc6ccd4a515</strong>
             </div>
             <div class="spec-item">
-              <span>IP Actual</span>
+              <span>IP Pública</span>
               <strong id="mcCardIp">—</strong>
             </div>
           </div>
@@ -746,17 +430,17 @@ body {
         <div class="actions">
           <button class="btn btn-mc" id="startMcBtn" type="button">Iniciar Servidor</button>
           <button class="btn" id="openMcPortalBtn" type="button">Ver IP</button>
-          <button class="btn btn-danger" id="stopMcBtn" type="button" title="Requiere llave USB">Apagar</button>
+          <button class="btn btn-danger" id="stopMcBtn" type="button" title="Requiere llave en pendrive">Apagar</button>
         </div>
       </article>
 
-      <!-- Card 2: Programming & AI Instance -->
+      <!-- Nodo Programación: SpawnDeck -->
       <article class="card" id="devCard">
         <div>
           <div class="card-top">
             <div>
-              <span class="node-tag">Privado · Workstation</span>
-              <h2 class="card-title">Studio &amp; AI Node</h2>
+              <span class="node-tag">Workstation · SpawnDeck</span>
+              <h2 class="card-title">SpawnDeck Studio</h2>
             </div>
             <span class="status-badge" id="devBadge">
               <span class="dot" id="devDot"></span>
@@ -765,17 +449,17 @@ body {
           </div>
 
           <p class="card-desc">
-            Instancia de desarrollo y modelos locales para VS Code. Protegida por la llave de seguridad en tu pendrive tanto para encender como para apagar.
+            Instancia dedicada para programar y ejecutar modelos en VS Code. Requiere seleccionar la llave de seguridad en tu pendrive para encender o apagar.
           </p>
 
           <div class="specs">
             <div class="spec-item">
-              <span>Instancia</span>
-              <strong>g6.xlarge</strong>
+              <span>Nombre</span>
+              <strong>SpawnDeck-Dev</strong>
             </div>
             <div class="spec-item">
-              <span>Acceso</span>
-              <strong>Llave USB</strong>
+              <span>Instance ID</span>
+              <strong>i-097a016bf5e55ec12</strong>
             </div>
             <div class="spec-item">
               <span>IP Pública</span>
@@ -785,7 +469,7 @@ body {
 
           <div class="dev-tunnel-box">
             <div class="dev-tunnel-head">
-              <span>Túnel SSH (VS Code / Ollama)</span>
+              <span>Túnel SSH (VS Code / Localhost)</span>
               <button class="btn btn-sm" id="copySshBtn" type="button">Copiar comando</button>
             </div>
             <div class="dev-tunnel-code" id="sshCmdBox">
@@ -802,13 +486,13 @@ body {
     </div>
   </section>
 
-  <!-- VIEW 2: MINECRAFT CONNECTION PORTAL -->
+  <!-- VISTA 2: SALA DE CONEXIÓN MINECRAFT -->
   <section class="view-section" id="sectionMcPortal">
     <div class="mc-portal">
       <div class="mc-portal-icon">⛏</div>
-      <h2 id="portalTitle">Conexión a Minecraft</h2>
-      <p id="portalSubtitle">
-        Copia la dirección IP pública para unirte desde el multijugador de Minecraft. La dirección cambia cada vez que se enciende la máquina.
+      <h2>Conexión a spokcillo</h2>
+      <p>
+        Copia la dirección IP pública para conectarte al servidor desde Minecraft. Recuerda que la IP cambia cada vez que se inicia la instancia.
       </p>
 
       <div class="ip-box">
@@ -829,7 +513,6 @@ body {
     </div>
   </section>
 
-  <!-- Minimalist Live Log -->
   <div class="log-panel">
     <div class="log-header">
       <span>Registro de Actividad AWS</span>
@@ -838,25 +521,25 @@ body {
     <div class="log-list" id="logList">
       <div class="log-item">
         <span class="log-time">[SISTEMA]</span>
-        <span>KAIROS inicializado. Conectando con endpoint AWS Lambda...</span>
+        <span>KAIROS listo. Sincronizando instancias i-0830d7dc6ccd4a515 y i-097a016bf5e55ec12...</span>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Modal: USB Pendrive Authentication -->
+<!-- Modal: Autenticación con Pendrive -->
 <div class="modal-backdrop" id="usbModal">
   <form class="modal" id="usbForm">
     <h3>Autenticación con Pendrive</h3>
     <p>
-      Esta acción está protegida. Selecciona el archivo de llave o contraseña almacenado en tu pendrive USB para autorizar la operación en AWS.
+      Selecciona el archivo de llave o contraseña almacenado en tu pendrive USB para autorizar esta acción en AWS.
     </p>
 
     <input type="file" id="usbFileInput" accept=".qkey,.key,.txt,.pem,*/*" style="display:none">
 
     <div class="file-drop" id="fileDropZone">
       <strong id="fileDropTitle">Seleccionar archivo desde tu Pendrive</strong>
-      <span id="fileDropSub">Formatos aceptados: .qkey, .key, .txt, .pem</span>
+      <span id="fileDropSub">Formatos soportados: .qkey, .key, .txt, .pem</span>
     </div>
 
     <div class="key-preview" id="keyPreviewBox"></div>
@@ -871,14 +554,13 @@ body {
 <div class="toast" id="toast"></div>
 
 <script>
-// === CONFIGURACIÓN AWS LAMBDA ===
 const LAMBDA_URL = "https://yakcmdk3nraxjqlgl77wh7gczm0hgove.lambda-url.us-east-2.on.aws/";
 const FRIEND_PIN = "spokcillo";
 
 const state = {
-  mc: 'off',       // 'off' | 'starting' | 'on' | 'stopping'
+  mc: 'off',
   mcIp: null,
-  dev: 'off',      // 'off' | 'starting' | 'on' | 'stopping'
+  dev: 'off',
   devIp: null,
   usbHash: null,
   usbSecret: null,
@@ -915,20 +597,12 @@ function switchTab(tabName) {
   document.getElementById('sectionMcPortal').classList.toggle('active', isPortal);
 }
 
-// === RENDERIZADO DE INTERFAZ ===
 function renderUI() {
-  const labels = {
-    off: 'Detenido',
-    starting: 'Iniciando…',
-    stopping: 'Apagando…',
-    on: 'Activo'
-  };
+  const labels = { off: 'Detenido', starting: 'Iniciando…', stopping: 'Apagando…', on: 'En ejecución' };
 
-  // Estado Minecraft
-  const mcBadge = document.getElementById('mcBadge');
-  const mcDot = document.getElementById('mcDot');
-  mcBadge.className = `status-badge ${state.mc}`;
-  mcDot.className = `dot ${state.mc === 'on' ? 'online' : (state.mc === 'starting' || state.mc === 'stopping' ? 'busy' : '')}`;
+  // Nodo spokcillo (Minecraft)
+  document.getElementById('mcBadge').className = `status-badge ${state.mc}`;
+  document.getElementById('mcDot').className = `dot ${state.mc === 'on' ? 'online' : (state.mc === 'starting' || state.mc === 'stopping' ? 'busy' : '')}`;
   document.getElementById('mcStatusLabel').textContent = labels[state.mc] || 'Detenido';
   document.getElementById('mcCard').classList.toggle('active-mc', state.mc === 'on');
   document.getElementById('mcCardIp').textContent = (state.mc === 'on' && state.mcIp) ? state.mcIp : (state.mc === 'starting' ? 'Asignando…' : '—');
@@ -939,17 +613,17 @@ function renderUI() {
   startMcBtn.textContent = state.mc === 'on' ? 'Servidor en línea' : (state.mc === 'starting' ? 'Iniciando en AWS…' : 'Iniciar Servidor');
   document.getElementById('stopMcBtn').disabled = mcBusy || state.mc !== 'on';
 
-  // Portal de Conexión Minecraft
+  // Portal Minecraft
   const portalStateLabel = document.getElementById('portalStateLabel');
   const portalIpText = document.getElementById('portalIpText');
   const portalStartBtn = document.getElementById('portalStartMcBtn');
 
   if (state.mc === 'on' && state.mcIp) {
-    portalStateLabel.textContent = 'Servidor Online · Listo para entrar';
+    portalStateLabel.textContent = 'spokcillo Online · Listo para entrar';
     portalIpText.textContent = state.mcIp;
     portalStartBtn.style.display = 'none';
   } else if (state.mc === 'starting') {
-    portalStateLabel.textContent = 'Encendiendo máquina EC2 en AWS (30-45s)…';
+    portalStateLabel.textContent = 'Encendiendo i-0830d7dc6ccd4a515 en AWS…';
     portalIpText.textContent = 'Asignando IP pública…';
     portalStartBtn.style.display = 'none';
   } else if (state.mc === 'stopping') {
@@ -957,16 +631,14 @@ function renderUI() {
     portalIpText.textContent = 'Cerrando sesión…';
     portalStartBtn.style.display = 'none';
   } else {
-    portalStateLabel.textContent = 'Servidor Apagado';
+    portalStateLabel.textContent = 'Servidor Detenido';
     portalIpText.textContent = 'Sin IP asignada';
     portalStartBtn.style.display = 'inline-flex';
   }
 
-  // Estado Studio / Programación
-  const devBadge = document.getElementById('devBadge');
-  const devDot = document.getElementById('devDot');
-  devBadge.className = `status-badge ${state.dev}`;
-  devDot.className = `dot ${state.dev === 'on' ? 'online' : (state.dev === 'starting' || state.dev === 'stopping' ? 'busy' : '')}`;
+  // Nodo SpawnDeck (Programación)
+  document.getElementById('devBadge').className = `status-badge ${state.dev}`;
+  document.getElementById('devDot').className = `dot ${state.dev === 'on' ? 'online' : (state.dev === 'starting' || state.dev === 'stopping' ? 'busy' : '')}`;
   document.getElementById('devStatusLabel').textContent = labels[state.dev] || 'Detenido';
   document.getElementById('devCard').classList.toggle('active-dev', state.dev === 'on');
   document.getElementById('devCardIp').textContent = (state.dev === 'on' && state.devIp) ? state.devIp : (state.dev === 'starting' ? 'Asignando…' : '—');
@@ -974,22 +646,17 @@ function renderUI() {
   const devBusy = state.dev === 'starting' || state.dev === 'stopping';
   const startDevBtn = document.getElementById('startDevBtn');
   startDevBtn.disabled = devBusy || state.dev === 'on';
-  startDevBtn.textContent = state.dev === 'on' ? 'Estudio Activo' : (state.dev === 'starting' ? 'Iniciando en AWS…' : '🔑 Iniciar con Pendrive');
+  startDevBtn.textContent = state.dev === 'on' ? 'SpawnDeck Activo' : (state.dev === 'starting' ? 'Iniciando en AWS…' : '🔑 Iniciar con Pendrive');
   document.getElementById('stopDevBtn').disabled = devBusy || state.dev !== 'on';
 
   const sshHost = (state.dev === 'on' && state.devIp) ? state.devIp : '<esperando-ip>';
   document.getElementById('sshCmdBox').textContent = `ssh -i ~/.ssh/qelvaryth-gpu.pem -N -L 11434:127.0.0.1:11434 ubuntu@${sshHost}`;
 
-  // Estado Llave USB en Header
-  const usbLabel = document.getElementById('usbStatusLabel');
-  if (state.usbHash) {
-    usbLabel.textContent = `🔑 USB: ${state.usbFileName} (${state.usbHash.slice(0, 6)}…)`;
-  } else {
-    usbLabel.textContent = '🔑 Llave USB: No cargada';
-  }
+  document.getElementById('usbStatusLabel').textContent = state.usbHash
+    ? `🔑 USB: ${state.usbFileName} (${state.usbHash.slice(0, 6)}…)`
+    : '🔑 Llave USB: No cargada';
 }
 
-// === AUTENTICACIÓN CON PENDRIVE USB (SHA-256) ===
 async function sha256Hex(buffer) {
   const digest = await crypto.subtle.digest('SHA-256', buffer);
   return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
@@ -1005,15 +672,9 @@ function requireUsbKey(callback) {
 }
 
 const usbFileInput = document.getElementById('usbFileInput');
-const fileDropZone = document.getElementById('fileDropZone');
-const keyPreviewBox = document.getElementById('keyPreviewBox');
-const confirmUsbBtn = document.getElementById('confirmUsbBtn');
+let tempHash = null, tempSecret = null, tempFileName = null;
 
-let tempHash = null;
-let tempSecret = null;
-let tempFileName = null;
-
-fileDropZone.addEventListener('click', () => usbFileInput.click());
+document.getElementById('fileDropZone').addEventListener('click', () => usbFileInput.click());
 
 usbFileInput.addEventListener('change', async () => {
   const file = usbFileInput.files && usbFileInput.files[0];
@@ -1025,9 +686,10 @@ usbFileInput.addEventListener('change', async () => {
 
   document.getElementById('fileDropTitle').textContent = `Archivo cargado: ${file.name}`;
   document.getElementById('fileDropSub').textContent = `${Math.max(1, Math.ceil(file.size / 1024))} KB · Listo para verificar`;
-  keyPreviewBox.style.display = 'block';
-  keyPreviewBox.textContent = `Firma SHA-256: ${tempHash}`;
-  confirmUsbBtn.disabled = false;
+  const preview = document.getElementById('keyPreviewBox');
+  preview.style.display = 'block';
+  preview.textContent = `Firma SHA-256: ${tempHash}`;
+  document.getElementById('confirmUsbBtn').disabled = false;
 });
 
 document.getElementById('cancelModalBtn').addEventListener('click', () => {
@@ -1043,8 +705,8 @@ document.getElementById('usbForm').addEventListener('submit', (e) => {
   state.usbFileName = tempFileName;
 
   document.getElementById('usbModal').classList.remove('open');
-  addLog(`Llave USB verificada desde pendrive (${tempFileName}).`);
-  showToast('Llave USB verificada correctamente.');
+  addLog(`Llave USB verificada (${tempFileName}).`);
+  showToast('Llave del pendrive verificada.');
   renderUI();
 
   if (state.pendingAction) {
@@ -1059,7 +721,6 @@ document.getElementById('usbStatusBtn').addEventListener('click', () => {
   document.getElementById('usbModal').classList.add('open');
 });
 
-// === SINCRONIZACIÓN Y CONTROL AWS LAMBDA ===
 async function syncAwsStatus(silent = false) {
   const dot = document.getElementById('awsDot');
   const txt = document.getElementById('awsStatusText');
@@ -1087,7 +748,7 @@ async function syncAwsStatus(silent = false) {
     }
 
     if (!silent) {
-      addLog(`Sincronizado — MC: ${state.mc.toUpperCase()} (${state.mcIp || 'sin IP'}) | Studio: ${state.dev.toUpperCase()} (${state.devIp || 'sin IP'})`);
+      addLog(`Estado — spokcillo: ${state.mc.toUpperCase()} (${state.mcIp || 'sin IP'}) | SpawnDeck: ${state.dev.toUpperCase()} (${state.devIp || 'sin IP'})`);
     }
     renderUI();
   } catch (err) {
@@ -1101,9 +762,6 @@ async function sendLambdaAction(service, targetState) {
   const isMc = service === 'mc';
   const isStart = targetState === 'on';
 
-  // Regla de seguridad:
-  // - Encender Minecraft es libre y redirige al apartado de copiar IP.
-  // - Apagar Minecraft y Encender/Apagar el servidor de programación requieren la llave del pendrive.
   const needsUsb = !isMc || !isStart;
   if (needsUsb && !state.usbHash) {
     requireUsbKey(() => sendLambdaAction(service, targetState));
@@ -1112,9 +770,7 @@ async function sendLambdaAction(service, targetState) {
 
   if (isMc) {
     state.mc = isStart ? 'starting' : 'stopping';
-    if (isStart) {
-      switchTab('portal');
-    }
+    if (isStart) switchTab('portal');
   } else {
     state.dev = isStart ? 'starting' : 'stopping';
   }
@@ -1137,46 +793,45 @@ async function sendLambdaAction(service, targetState) {
     const data = await res.json();
 
     if (!res.ok || data.error) {
-      showToast(`AWS rechazó la solicitud: ${data.error || 'Error'}`);
-      addLog(`Respuesta de error AWS: ${data.error || res.status}`);
+      showToast(`AWS rechazó la orden: ${data.error || 'Error'}`);
+      addLog(`Error AWS: ${data.error || res.status}`);
       await syncAwsStatus(true);
       return;
     }
 
-    showToast(isStart ? 'Orden enviada. Esperando IP pública de AWS…' : 'Deteniendo instancia en AWS…');
+    showToast(isStart ? 'Orden enviada. Esperando IP pública…' : 'Deteniendo instancia en AWS…');
 
     const poll = setInterval(async () => {
       await syncAwsStatus(true);
       if (isMc) {
         if (isStart && state.mc === 'on' && state.mcIp) {
           clearInterval(poll);
-          addLog(`Servidor de Minecraft listo en ${state.mcIp}`);
-          showToast(`¡Minecraft Online! IP: ${state.mcIp}`);
+          addLog(`spokcillo listo en ${state.mcIp}`);
+          showToast(`¡spokcillo Online! IP: ${state.mcIp}`);
         } else if (!isStart && state.mc === 'off') {
           clearInterval(poll);
-          addLog('Servidor de Minecraft detenido.');
-          showToast('Servidor de Minecraft apagado.');
+          addLog('spokcillo detenido.');
+          showToast('Servidor spokcillo apagado.');
         }
       } else {
         if (isStart && state.dev === 'on' && state.devIp) {
           clearInterval(poll);
-          addLog(`Nodo de programación listo en ${state.devIp}`);
-          showToast(`¡Studio Online! IP: ${state.devIp}`);
+          addLog(`SpawnDeck listo en ${state.devIp}`);
+          showToast(`¡SpawnDeck Online! IP: ${state.devIp}`);
         } else if (!isStart && state.dev === 'off') {
           clearInterval(poll);
-          addLog('Nodo de programación detenido.');
-          showToast('Studio apagado en AWS.');
+          addLog('SpawnDeck detenido.');
+          showToast('SpawnDeck apagado en AWS.');
         }
       }
     }, 4000);
   } catch (err) {
     showToast('No se pudo contactar con AWS Lambda.');
-    addLog(`Fallo en petición POST: ${err.message}`);
+    addLog(`Error POST: ${err.message}`);
     await syncAwsStatus(true);
   }
 }
 
-// === EVENTOS DE BOTONES ===
 document.getElementById('tabNodes').addEventListener('click', () => switchTab('nodes'));
 document.getElementById('tabMcPortal').addEventListener('click', () => switchTab('portal'));
 document.getElementById('openMcPortalBtn').addEventListener('click', () => switchTab('portal'));
@@ -1200,11 +855,11 @@ document.getElementById('refreshPortalBtn').addEventListener('click', () => {
 
 document.getElementById('copyMcIpBtn').addEventListener('click', () => {
   if (!state.mcIp) {
-    showToast('Aún no hay una IP pública disponible.');
+    showToast('Aún no hay una IP pública asignada.');
     return;
   }
   navigator.clipboard.writeText(state.mcIp);
-  showToast(`¡IP copiada al portapapeles!: ${state.mcIp}`);
+  showToast(`¡IP copiada!: ${state.mcIp}`);
 });
 
 document.getElementById('copySshBtn').addEventListener('click', () => {
@@ -1213,7 +868,6 @@ document.getElementById('copySshBtn').addEventListener('click', () => {
   showToast('Comando de túnel SSH copiado.');
 });
 
-// Inicializar
 renderUI();
 syncAwsStatus(false);
 setInterval(() => syncAwsStatus(true), 12000);
