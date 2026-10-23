@@ -1,4 +1,925 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090a0f">
+<title>KAIROS — Cloud Control</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #090a0f;
+  --surface: #11131a;
+  --surface-hover: #161922;
+  --surface-subtle: #0d0f14;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --text: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  --accent: #e5e7eb;
+  --mc-accent: #10b981;
+  --mc-soft: rgba(16, 185, 129, 0.12);
+  --dev-accent: #6366f1;
+  --dev-soft: rgba(99, 102, 241, 0.12);
+  --amber: #f59e0b;
+  --amber-soft: rgba(245, 158, 11, 0.12);
+  --danger: #ef4444;
+  --danger-soft: rgba(239, 68, 68, 0.12);
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg);
+  background-image: radial-gradient(circle at 50% -20%, rgba(99, 102, 241, 0.08), transparent 60%);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px 24px 64px;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--text);
+  color: var(--bg);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.03em;
+}
+
+.brand-text h1 {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.brand-text p {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--text-muted);
+}
+
+.dot.online {
+  background: var(--mc-accent);
+  box-shadow: 0 0 8px var(--mc-accent);
+}
+
+.dot.busy {
+  background: var(--amber);
+  box-shadow: 0 0 8px var(--amber);
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.dot.error {
+  background: var(--danger);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+/* Navigation Tabs (Main vs Minecraft Hub) */
+.view-nav {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.tab-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.tab-btn:hover {
+  color: var(--text);
+  background: var(--surface);
+}
+
+.tab-btn.active {
+  background: var(--surface);
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+
+/* Cards Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.card:hover {
+  border-color: var(--border-strong);
+}
+
+.card.active-mc {
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.card.active-dev {
+  border-color: rgba(99, 102, 241, 0.4);
+}
+
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.node-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.card-title {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 500;
+  font-family: var(--mono);
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.status-badge.on {
+  background: var(--mc-soft);
+  color: #34d399;
+  border-color: rgba(16, 185, 129, 0.25);
+}
+
+.status-badge.starting,
+.status-badge.stopping {
+  background: var(--amber-soft);
+  color: #fbbf24;
+  border-color: rgba(245, 158, 11, 0.25);
+}
+
+.card-desc {
+  color: var(--text-secondary);
+  font-size: 13.5px;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.specs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 14px;
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  margin-bottom: 24px;
+}
+
+.spec-item span {
+  display: block;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.spec-item strong {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+/* Buttons */
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  appearance: none;
+  border: 1px solid var(--border-strong);
+  background: var(--surface-hover);
+  color: var(--text);
+  padding: 11px 16px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.16s ease;
+  text-decoration: none;
+}
+
+.btn:hover:not(:disabled) {
+  background: #1f2330;
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+  font-weight: 600;
+  flex: 1;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #ffffff;
+  opacity: 0.92;
+}
+
+.btn-mc {
+  background: var(--mc-accent);
+  color: #04130e;
+  border-color: var(--mc-accent);
+  font-weight: 600;
+  flex: 1;
+}
+
+.btn-mc:hover:not(:disabled) {
+  background: #34d399;
+  border-color: #34d399;
+}
+
+.btn-dev {
+  background: var(--dev-accent);
+  color: #ffffff;
+  border-color: var(--dev-accent);
+  font-weight: 600;
+  flex: 1;
+}
+
+.btn-dev:hover:not(:disabled) {
+  background: #818cf8;
+  border-color: #818cf8;
+}
+
+.btn-danger {
+  background: var(--danger-soft);
+  color: #f87171;
+  border-color: rgba(239, 68, 68, 0.25);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 0.22);
+}
+
+.btn-sm {
+  padding: 7px 12px;
+  font-size: 12px;
+  border-radius: var(--radius-sm);
+}
+
+/* Sections / Views */
+.view-section {
+  display: none;
+  animation: fadeIn 0.22s ease;
+}
+
+.view-section.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Dedicated Minecraft Connection View */
+.mc-portal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 36px;
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.mc-portal-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--mc-soft);
+  color: #34d399;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  margin: 0 auto 16px;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.mc-portal h2 {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+
+.mc-portal p {
+  color: var(--text-secondary);
+  font-size: 13.5px;
+  max-width: 460px;
+  margin: 0 auto 28px;
+}
+
+.ip-box {
+  background: var(--surface-subtle);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.ip-box-left {
+  text-align: left;
+}
+
+.ip-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.ip-address {
+  font-family: var(--mono);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+/* Dev SSH Box inside Card */
+.dev-tunnel-box {
+  margin-top: 18px;
+  padding: 14px;
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.dev-tunnel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 11.5px;
+  color: var(--text-secondary);
+}
+
+.dev-tunnel-code {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: #a5b4fc;
+  word-break: break-all;
+  line-height: 1.5;
+}
+
+/* Activity Log Bar */
+.log-panel {
+  margin-top: 32px;
+  padding: 18px 22px;
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.log-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.log-list {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-secondary);
+  max-height: 120px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.log-item {
+  display: flex;
+  gap: 10px;
+}
+
+.log-time {
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+/* Modal Pendrive Key */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 6, 10, 0.8);
+  backdrop-filter: blur(6px);
+  display: none;
+  place-items: center;
+  padding: 20px;
+  z-index: 50;
+}
+
+.modal-backdrop.open {
+  display: grid;
+}
+
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  max-width: 440px;
+  width: 100%;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6);
+}
+
+.modal h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.modal p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  line-height: 1.55;
+}
+
+.file-drop {
+  border: 1px dashed var(--border-strong);
+  background: var(--surface-subtle);
+  border-radius: var(--radius-md);
+  padding: 22px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.16s ease, background 0.16s ease;
+  margin-bottom: 14px;
+}
+
+.file-drop:hover {
+  border-color: var(--dev-accent);
+  background: rgba(99, 102, 241, 0.05);
+}
+
+.file-drop strong {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.file-drop span {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  font-family: var(--mono);
+}
+
+.input-field {
+  width: 100%;
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 12.5px;
+  margin-bottom: 14px;
+  outline: none;
+}
+
+.input-field:focus {
+  border-color: var(--dev-accent);
+}
+
+.key-preview {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: #34d399;
+  background: var(--mc-soft);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 16px;
+  word-break: break-all;
+  display: none;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  padding: 12px 18px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: all 0.2s ease;
+  z-index: 60;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 720px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .ip-box {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Header -->
+  <header class="header">
+    <div class="brand">
+      <div class="brand-logo">K</div>
+      <div class="brand-text">
+        <h1>KAIROS</h1>
+        <p>Cloud Node Studio · us-east-2</p>
+      </div>
+    </div>
+
+    <div class="header-controls">
+      <div class="pill" id="awsStatusPill">
+        <span class="dot busy" id="awsDot"></span>
+        <span id="awsStatusText">Sincronizando AWS…</span>
+      </div>
+
+      <button class="btn btn-sm" id="usbStatusBtn" type="button" title="Cargar o cambiar llave del pendrive">
+        <span id="usbStatusLabel">🔑 Llave USB: No cargada</span>
+      </button>
+
+      <button class="btn btn-sm" id="syncBtn" type="button">↻ Actualizar</button>
+    </div>
+  </header>
+
+  <!-- Navigation -->
+  <div class="view-nav">
+    <button class="tab-btn active" id="tabNodes" type="button">Panel de Nodos</button>
+    <button class="tab-btn" id="tabMcPortal" type="button">Sala de Conexión Minecraft</button>
+  </div>
+
+  <!-- VIEW 1: UNIFIED NODES -->
+  <section class="view-section active" id="sectionNodes">
+    <div class="grid">
+      <!-- Card 1: Minecraft Server -->
+      <article class="card" id="mcCard">
+        <div>
+          <div class="card-top">
+            <div>
+              <span class="node-tag">Comunidad · Game Node</span>
+              <h2 class="card-title">Minecraft Server</h2>
+            </div>
+            <span class="status-badge" id="mcBadge">
+              <span class="dot" id="mcDot"></span>
+              <span id="mcStatusLabel">Detenido</span>
+            </span>
+          </div>
+
+          <p class="card-desc">
+            Servidor comunitario en AWS. Al encenderlo se abrirá automáticamente el apartado para copiar la dirección IP pública. Se apaga solo tras 20 minutos sin jugadores.
+          </p>
+
+          <div class="specs">
+            <div class="spec-item">
+              <span>Instancia</span>
+              <strong>t3.xlarge</strong>
+            </div>
+            <div class="spec-item">
+              <span>Auto-Stop</span>
+              <strong>20 min</strong>
+            </div>
+            <div class="spec-item">
+              <span>IP Actual</span>
+              <strong id="mcCardIp">—</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-mc" id="startMcBtn" type="button">Iniciar Servidor</button>
+          <button class="btn" id="openMcPortalBtn" type="button">Ver IP</button>
+          <button class="btn btn-danger" id="stopMcBtn" type="button" title="Requiere llave USB">Apagar</button>
+        </div>
+      </article>
+
+      <!-- Card 2: Programming & AI Instance -->
+      <article class="card" id="devCard">
+        <div>
+          <div class="card-top">
+            <div>
+              <span class="node-tag">Privado · Workstation</span>
+              <h2 class="card-title">Studio &amp; AI Node</h2>
+            </div>
+            <span class="status-badge" id="devBadge">
+              <span class="dot" id="devDot"></span>
+              <span id="devStatusLabel">Detenido</span>
+            </span>
+          </div>
+
+          <p class="card-desc">
+            Instancia de desarrollo y modelos locales para VS Code. Protegida por la llave de seguridad en tu pendrive tanto para encender como para apagar.
+          </p>
+
+          <div class="specs">
+            <div class="spec-item">
+              <span>Instancia</span>
+              <strong>g6.xlarge</strong>
+            </div>
+            <div class="spec-item">
+              <span>Acceso</span>
+              <strong>Llave USB</strong>
+            </div>
+            <div class="spec-item">
+              <span>IP Pública</span>
+              <strong id="devCardIp">—</strong>
+            </div>
+          </div>
+
+          <div class="dev-tunnel-box">
+            <div class="dev-tunnel-head">
+              <span>Túnel SSH (VS Code / Ollama)</span>
+              <button class="btn btn-sm" id="copySshBtn" type="button">Copiar comando</button>
+            </div>
+            <div class="dev-tunnel-code" id="sshCmdBox">
+              ssh -i ~/.ssh/qelvaryth-gpu.pem -N -L 11434:127.0.0.1:11434 ubuntu@&lt;esperando-ip&gt;
+            </div>
+          </div>
+        </div>
+
+        <div class="actions" style="margin-top: 20px;">
+          <button class="btn btn-dev" id="startDevBtn" type="button">🔑 Iniciar con Pendrive</button>
+          <button class="btn btn-danger" id="stopDevBtn" type="button">Apagar</button>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- VIEW 2: MINECRAFT CONNECTION PORTAL -->
+  <section class="view-section" id="sectionMcPortal">
+    <div class="mc-portal">
+      <div class="mc-portal-icon">⛏</div>
+      <h2 id="portalTitle">Conexión a Minecraft</h2>
+      <p id="portalSubtitle">
+        Copia la dirección IP pública para unirte desde el multijugador de Minecraft. La dirección cambia cada vez que se enciende la máquina.
+      </p>
+
+      <div class="ip-box">
+        <div class="ip-box-left">
+          <span class="ip-label" id="portalStateLabel">Estado del Servidor</span>
+          <div class="ip-address" id="portalIpText">Sincronizando…</div>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-mc" id="copyMcIpBtn" type="button">Copiar IP</button>
+          <button class="btn" id="refreshPortalBtn" type="button">↻</button>
+        </div>
+      </div>
+
+      <div class="actions" style="justify-content: center;">
+        <button class="btn btn-mc" id="portalStartMcBtn" type="button" style="max-width: 240px;">Iniciar Servidor</button>
+        <button class="btn" id="backToNodesBtn" type="button">← Volver al panel</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Minimalist Live Log -->
+  <div class="log-panel">
+    <div class="log-header">
+      <span>Registro de Actividad AWS</span>
+      <span id="lastSyncTime">--:--:--</span>
+    </div>
+    <div class="log-list" id="logList">
+      <div class="log-item">
+        <span class="log-time">[SISTEMA]</span>
+        <span>KAIROS inicializado. Conectando con endpoint AWS Lambda...</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: USB Pendrive Authentication -->
+<div class="modal-backdrop" id="usbModal">
+  <form class="modal" id="usbForm">
+    <h3>Autenticación con Pendrive</h3>
+    <p>
+      Esta acción está protegida. Selecciona el archivo de llave o contraseña almacenado en tu pendrive USB para autorizar la operación en AWS.
+    </p>
+
+    <input type="file" id="usbFileInput" accept=".qkey,.key,.txt,.pem,*/*" style="display:none">
+
+    <div class="file-drop" id="fileDropZone">
+      <strong id="fileDropTitle">Seleccionar archivo desde tu Pendrive</strong>
+      <span id="fileDropSub">Formatos aceptados: .qkey, .key, .txt, .pem</span>
+    </div>
+
+    <div class="key-preview" id="keyPreviewBox"></div>
+
+    <div class="modal-actions">
+      <button class="btn" type="button" id="cancelModalBtn">Cancelar</button>
+      <button class="btn btn-primary" type="submit" id="confirmUsbBtn" disabled>Verificar y Continuar</button>
+    </div>
+  </form>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// === CONFIGURACIÓN AWS LAMBDA ===
+const LAMBDA_URL = "https://yakcmdk3nraxjqlgl77wh7gczm0hgove.lambda-url.us-east-2.on.aws/";
+const FRIEND_PIN = "spokcillo";
+
+const state = {
+  mc: 'off',       // 'off' | 'starting' | 'on' | 'stopping'
+  mcIp: null,
+  dev: 'off',      // 'off' | 'starting' | 'on' | 'stopping'
+  devIp: null,
+  usbHash: null,
+  usbSecret: null,
+  usbFileName: null,
+  pendingAction: null
+};
+
+function nowStr() {
+  return new Date().toLocaleTimeString('es-CL', { hour12: false });
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window.toastTimeout);
+  window.toastTimeout = setTimeout(() => t.classList.remove('show'), 3800);
+}
+
+function addLog(text) {
+  const list = document.getElementById('logList');
+  const item = document.createElement('div');
+  item.className = 'log-item';
+  item.innerHTML = `<span class="log-time">[${nowStr()}]</span><span>${text}</span>`;
+  list.prepend(item);
+  while (list.children.length > 20) list.lastElementChild.remove();
+}
+
+function switchTab(tabName) {
+  const isPortal = tabName === 'portal';
+  document.getElementById('tabNodes').classList.toggle('active', !isPortal);
+  document.getElementById('tabMcPortal').classList.toggle('active', isPortal);
+  document.getElementById('sectionNodes').classList.toggle('active', !isPortal);
+  document.getElementById('sectionMcPortal').classList.toggle('active', isPortal);
+}
+
+// === RENDERIZADO DE INTERFAZ ===
+function renderUI() {
+  const labels = {
+    off: 'Detenido',
+    starting: 'Iniciando…',
     stopping: 'Apagando…',
     on: 'Activo'
   };
