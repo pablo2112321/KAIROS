@@ -1,1800 +1,301 @@
-<!doctype html>
-<html lang="es">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#06080f">
-<title>QELVARYTH // Command Nexus v2.0</title>
-<style>
-:root {
-  --bg: #06080f;
-  --panel: #0d121f;
-  --panel-2: #131a2c;
-  --panel-glass: rgba(16, 22, 36, 0.78);
-  --line: #222d44;
-  --line-bright: #344668;
-  --text: #f2f6ff;
-  --muted: #8b99b5;
-  --cyan: #00f5d4;
-  --green: #38f89c;
-  --purple: #b589ff;
-  --pink: #ff5ca8;
-  --yellow: #ffca58;
-  --red: #ff5470;
-  --mc: #48f5a7;
-  --mc-2: #12b875;
-  --ai: #b78aff;
-  --ai-2: #7b4dff;
-  --shadow: 0 24px 64px rgba(0, 0, 0, 0.65);
-  --mono: "JetBrains Mono", "Fira Code", Consolas, ui-monospace, monospace;
-  --sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-}
 
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  margin: 0;
-  background-color: var(--bg);
-  background-image: 
-    radial-gradient(ellipse at 10% -5%, rgba(0, 245, 212, 0.14), transparent 40%),
-    radial-gradient(ellipse at 90% 0%, rgba(183, 138, 255, 0.15), transparent 40%),
-    radial-gradient(ellipse at 50% 105%, rgba(56, 248, 156, 0.07), transparent 45%),
-    linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 100% 100%, 36px 36px, 36px 36px;
-  color: var(--text);
-  font: 14px/1.5 var(--sans);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-button, input, select { font: inherit; }
-button { cursor: pointer; }
-button:focus-visible, input:focus-visible, select:focus-visible {
-  outline: 2px solid var(--cyan);
-  outline-offset: 2px;
-}
-button:disabled { opacity: 0.38; cursor: not-allowed; transform: none !important; }
-a { color: inherit; }
-
-.app {
-  display: grid;
-  grid-template-columns: 268px minmax(0, 1fr);
-  min-height: 100vh;
-}
-
-.sidebar {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  padding: 20px 15px 16px;
-  background: rgba(8, 11, 20, 0.88);
-  border-right: 1px solid rgba(255, 255, 255, 0.07);
-  display: flex;
-  flex-direction: column;
-  z-index: 10;
-  backdrop-filter: blur(18px);
-}
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 4px 8px 20px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  margin-bottom: 14px;
-}
-.brandmark {
-  height: 44px;
-  width: 44px;
-  display: grid;
-  place-items: center;
-  border-radius: 12px;
-  color: #050811;
-  font-weight: 950;
-  font-size: 23px;
-  background: linear-gradient(135deg, var(--cyan), var(--purple));
-  box-shadow: 0 0 28px rgba(0, 245, 212, 0.25);
-  clip-path: polygon(0 0, 100% 0, 100% 74%, 74% 100%, 0 100%);
-}
-.brand strong { font-size: 13.5px; letter-spacing: 0.16em; display: block; color: #fff; }
-.brand small { color: var(--cyan); font-size: 9.5px; letter-spacing: 0.14em; font-family: var(--mono); }
-
-.sidelabel {
-  font-size: 9.5px;
-  color: #637392;
-  letter-spacing: 0.2em;
-  font-weight: 900;
-  padding: 8px 10px 6px;
-  text-transform: uppercase;
-}
-.nav { display: grid; gap: 5px; }
-.navbtn {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  width: 100%;
-  padding: 10px 12px;
-  text-align: left;
-  border: 1px solid transparent;
-  border-radius: 11px;
-  background: transparent;
-  color: #9ba8c3;
-  transition: all 0.16s ease;
-}
-.navbtn:hover { background: rgba(255, 255, 255, 0.05); color: #fff; transform: translateX(2px); }
-.navbtn.active {
-  background: linear-gradient(95deg, rgba(0, 245, 212, 0.12), rgba(181, 137, 255, 0.08));
-  border-color: rgba(0, 245, 212, 0.35);
-  color: #fff;
-  box-shadow: inset 3px 0 0 var(--cyan);
-}
-.navbtn[data-view="minecraft"].active {
-  background: linear-gradient(95deg, rgba(72, 245, 167, 0.15), rgba(17, 45, 41, 0.4));
-  border-color: rgba(72, 245, 167, 0.4);
-  box-shadow: inset 3px 0 0 var(--mc);
-}
-.navbtn[data-view="ai"].active {
-  background: linear-gradient(95deg, rgba(183, 138, 255, 0.16), rgba(33, 26, 57, 0.5));
-  border-color: rgba(183, 138, 255, 0.45);
-  box-shadow: inset 3px 0 0 var(--ai);
-}
-.navicon { width: 22px; display: inline-grid; place-items: center; font-size: 17px; }
-.navtxt { font-size: 12.5px; font-weight: 750; }
-.navhint {
-  margin-left: auto;
-  font-size: 9.5px;
-  font-family: var(--mono);
-  color: #6b7996;
-  background: rgba(255,255,255,0.04);
-  padding: 2px 6px;
-  border-radius: 5px;
-  border: 1px solid rgba(255,255,255,0.06);
-}
-
-.sidebar-spacer { flex: 1; }
-
-.finops-box {
-  padding: 13px;
-  border: 1px solid #26334d;
-  border-radius: 13px;
-  background: linear-gradient(160deg, #101729, #0b0f1b);
-  margin-bottom: 10px;
-}
-.finops-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 10px;
-  font-weight: 800;
-  color: #98a7c4;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-.finops-burn {
-  font-family: var(--mono);
-  font-size: 18px;
-  font-weight: 900;
-  color: var(--cyan);
-  margin: 4px 0 2px;
-}
-.finops-sub { font-size: 10px; color: #7584a1; margin-bottom: 8px; }
-.finops-bar {
-  height: 6px;
-  border-radius: 99px;
-  background: #1b2438;
-  overflow: hidden;
-  margin-bottom: 6px;
-}
-.finops-fill {
-  height: 100%;
-  width: 20%;
-  background: linear-gradient(90deg, var(--mc), var(--cyan));
-  transition: width 0.3s ease, background 0.3s ease;
-}
-
-.sidebar-footer {
-  padding: 12px 13px;
-  border: 1px solid #2b3348;
-  border-radius: 13px;
-  background: rgba(16, 20, 33, 0.8);
-  font-size: 11px;
-  color: var(--muted);
-}
-.mode-line {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  color: var(--green);
-  font-weight: 800;
-  font-size: 10.5px;
-  letter-spacing: 0.05em;
-  margin-bottom: 4px;
-}
-.pulse {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: currentColor;
-  box-shadow: 0 0 10px currentColor;
-  animation: pulseAnim 2s infinite ease-in-out;
-}
-@keyframes pulseAnim {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.45; transform: scale(0.85); }
-}
-.sidebar-footer p { margin: 0; line-height: 1.4; font-size: 10.5px; }
-
-.main {
-  width: 100%;
-  max-width: 1580px;
-  margin: 0 auto;
-  padding: 24px clamp(16px, 3vw, 40px) 48px;
-  min-width: 0;
-}
-
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 18px;
-  margin-bottom: 22px;
-}
-.crumb {
-  font-size: 10px;
-  font-family: var(--mono);
-  color: var(--cyan);
-  font-weight: 800;
-  letter-spacing: 0.18em;
-}
-.topbar h1 {
-  font-size: clamp(26px, 2.8vw, 36px);
-  line-height: 1.1;
-  letter-spacing: -0.04em;
-  margin: 5px 0;
-}
-.subtitle { color: #9ba8c1; max-width: 720px; font-size: 13px; }
-.top-actions {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 9px;
-  flex-wrap: wrap;
-}
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  border-radius: 99px;
-  border: 1px solid #323d56;
-  background: #111726;
-  padding: 7px 11px;
-  font-size: 10px;
-  font-family: var(--mono);
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-}
-.badge.demo { color: var(--yellow); border-color: rgba(255, 202, 88, 0.35); background: rgba(50, 41, 22, 0.55); }
-.badge.quota-ok { color: var(--green); border-color: rgba(56, 248, 156, 0.35); background: rgba(20, 50, 37, 0.55); }
-.badge.err { color: var(--red); border-color: rgba(255, 84, 112, 0.4); background: rgba(60, 20, 30, 0.6); }
-
-.role-switch {
-  display: flex;
-  gap: 3px;
-  padding: 4px;
-  border-radius: 11px;
-  background: #0d121f;
-  border: 1px solid #263147;
-}
-.role-switch button {
-  border: 0;
-  background: transparent;
-  color: #93a1bc;
-  border-radius: 8px;
-  padding: 7px 11px;
-  font-size: 11px;
-  font-weight: 800;
-  transition: 0.15s;
-}
-.role-switch button.selected {
-  background: linear-gradient(135deg, #23314a, #1b253a);
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-}
-
-.demo-notice {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  padding: 12px 16px;
-  border: 1px solid rgba(56, 248, 156, 0.32);
-  border-radius: 14px;
-  margin-bottom: 24px;
-  background: linear-gradient(95deg, rgba(16, 45, 35, 0.65), rgba(18, 23, 38, 0.85));
-  color: #d8ffec;
-}
-.demo-notice-left { display: flex; align-items: flex-start; gap: 11px; }
-.demo-notice .notice-icon { font-size: 18px; line-height: 1.2; }
-.demo-notice strong { font-size: 12px; display: block; margin-bottom: 2px; }
-.demo-notice p { font-size: 11px; color: #a7cbbd; margin: 0; }
-.sim-lab-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.chip-btn {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  color: #e4ecff;
-  padding: 6px 10px;
-  border-radius: 8px;
-  font-size: 10.5px;
-  font-weight: 700;
-  transition: 0.15s;
-}
-.chip-btn:hover { background: rgba(255, 255, 255, 0.12); border-color: var(--cyan); }
-.chip-btn.active-chip { background: rgba(56, 248, 156, 0.16); border-color: var(--green); color: var(--green); }
-
-.overview-stats {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-  margin-bottom: 26px;
-}
-.stat {
-  padding: 15px 16px;
-  background: var(--panel-glass);
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  position: relative;
-  overflow: hidden;
-  backdrop-filter: blur(10px);
-}
-.stat::after {
-  content: "";
-  position: absolute;
-  right: -20px;
-  top: -25px;
-  width: 82px;
-  height: 82px;
-  border-radius: 50%;
-  background: var(--glow, var(--cyan));
-  opacity: 0.1;
-  filter: blur(10px);
-}
-.stat-label {
-  color: #8f9db8;
-  font-size: 10px;
-  font-weight: 850;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-.stat-value {
-  font-size: 22px;
-  font-weight: 900;
-  font-family: var(--mono);
-  letter-spacing: -0.03em;
-  margin-top: 4px;
-}
-.stat-detail { font-size: 10.5px; color: #73829e; margin-top: 2px; }
-
-.sectionhead {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 14px;
-  margin: 28px 0 14px;
-}
-.section-title { display: flex; align-items: center; gap: 10px; }
-.section-title .dash {
-  height: 24px;
-  width: 4px;
-  border-radius: 4px;
-  background: var(--cyan);
-  box-shadow: 0 0 14px var(--cyan);
-}
-.sectionhead h2 { font-size: 17px; margin: 0; letter-spacing: -0.02em; }
-.sectionhead p { margin: 2px 0 0; color: var(--muted); font-size: 11.5px; }
-
-.service-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
-}
-.server-card {
-  border-radius: 18px;
-  overflow: hidden;
-  min-width: 0;
-  background: var(--panel);
-  border: 1px solid #28334c;
-  box-shadow: var(--shadow);
-  position: relative;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
-}
-.server-card.mc { --accent: var(--mc); --accent2: var(--mc-2); --card-tint: #0d2822; --card-line: #215946; }
-.server-card.ai { --accent: var(--ai); --accent2: var(--ai-2); --card-tint: #1f1637; --card-line: #523b78; }
-.server-card.running-glow {
-  border-color: color-mix(in srgb, var(--accent) 55%, #28334c);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.65), 0 0 28px color-mix(in srgb, var(--accent) 12%, transparent);
-}
-
-.card-art {
-  height: 142px;
-  position: relative;
-  overflow: hidden;
-  background:
-    radial-gradient(ellipse at 80% 30%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 45%),
-    linear-gradient(125deg, var(--card-tint), #0d121f 78%);
-  border-bottom: 1px solid color-mix(in srgb, var(--accent) 24%, #222c42);
-}
-.card-art::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: 24px 24px;
-  mask-image: linear-gradient(to bottom, black, transparent);
-}
-.art-content {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  padding: 18px 20px;
-  z-index: 1;
-}
-.art-label {
-  font-size: 9.5px;
-  font-family: var(--mono);
-  color: var(--accent);
-  font-weight: 900;
-  letter-spacing: 0.2em;
-}
-.art-title {
-  font-size: clamp(22px, 2.2vw, 30px);
-  font-weight: 950;
-  letter-spacing: -0.05em;
-  line-height: 1.05;
-  margin-top: 4px;
-}
-.art-sub { font-size: 11px; color: #c0cadb; margin-top: 5px; }
-.art-emblem {
-  width: 68px;
-  height: 68px;
-  display: grid;
-  place-items: center;
-  font-size: 31px;
-  color: var(--accent);
-  border-radius: 20px;
-  background: color-mix(in srgb, var(--accent) 10%, #090d16);
-  border: 1px solid color-mix(in srgb, var(--accent) 38%, #252b42);
-  box-shadow: 0 0 36px color-mix(in srgb, var(--accent) 16%, transparent);
-  transform: rotate(4deg);
-}
-
-.card-body { padding: 18px 20px 20px; }
-.card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
-.server-title { font-size: 16px; font-weight: 900; letter-spacing: -0.02em; }
-.server-subtitle { color: #8796b2; font-size: 10.5px; font-family: var(--mono); margin-top: 3px; }
-
-.status {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  border-radius: 99px;
-  padding: 5px 10px;
-  font-size: 10px;
-  font-family: var(--mono);
-  font-weight: 800;
-  white-space: nowrap;
-  background: #1e2536;
-  color: #a4b0c6;
-  border: 1px solid rgba(255,255,255,0.06);
-}
-.status.off { color: #9aa7bf; }
-.status.pending { color: var(--yellow); background: rgba(56, 45, 25, 0.8); border-color: rgba(255, 202, 88, 0.3); }
-.status.starting, .status.stopping { color: var(--cyan); background: rgba(0, 245, 212, 0.12); border-color: rgba(0, 245, 212, 0.35); }
-.status.on { color: var(--green); background: rgba(20, 50, 37, 0.85); border-color: rgba(56, 248, 156, 0.35); }
-
-.server-description {
-  font-size: 12px;
-  color: #a6b2c9;
-  margin: 12px 0 15px;
-  line-height: 1.5;
-}
-
-.telemetry-box {
-  background: #080c16;
-  border: 1px solid #1e283d;
-  border-radius: 12px;
-  padding: 11px 12px;
-  margin-bottom: 13px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-.tele-item span {
-  font-size: 9px;
-  color: #7d8ca8;
-  text-transform: uppercase;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  display: flex;
-  justify-content: space-between;
-}
-.tele-item b { font-family: var(--mono); color: #eef3ff; font-size: 11px; }
-.tele-bar {
-  height: 5px;
-  background: #171f30;
-  border-radius: 99px;
-  overflow: hidden;
-  margin-top: 5px;
-}
-.tele-fill {
-  height: 100%;
-  width: 0%;
-  background: var(--accent);
-  transition: width 0.45s ease;
-}
-
-.metric-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-.metric {
-  padding: 9px 11px;
-  background: #090d17;
-  border: 1px solid #20293d;
-  border-radius: 10px;
-  min-width: 0;
-}
-.metric span { font-size: 9px; display: block; color: #7c8aa5; text-transform: uppercase; letter-spacing: 0.06em; }
-.metric b { font-size: 11.5px; font-family: var(--mono); display: block; margin-top: 3px; color: #f1f5ff; overflow-wrap: anywhere; }
-
-.card-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 15px; }
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  border-radius: 10px;
-  padding: 10px 13px;
-  border: 1px solid #313d56;
-  background: #172032;
-  color: #ebf1fc;
-  font-weight: 800;
-  font-size: 11.5px;
-  transition: all 0.15s ease;
-}
-.btn:hover:not(:disabled) { transform: translateY(-1px); background: #212d45; border-color: #46577a; }
-.btn.primary {
-  background: var(--accent);
-  color: #060b10;
-  border-color: var(--accent);
-  box-shadow: 0 4px 20px color-mix(in srgb, var(--accent) 22%, transparent);
-}
-.btn.primary:hover:not(:disabled) {
-  background: color-mix(in srgb, var(--accent) 84%, white);
-}
-.btn.ghost { background: transparent; border-color: #2b364d; }
-.btn.danger { background: rgba(65, 24, 37, 0.75); border-color: #783349; color: #ffc0cb; }
-.btn.danger:hover:not(:disabled) { background: #542031; }
-
-.server-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 7px;
-  font-size: 10px;
-  color: #77849d;
-  margin-top: 13px;
-  padding-top: 11px;
-  border-top: 1px solid rgba(255,255,255,0.05);
-}
-
-.workspace { display: none; }
-.workspace.active { display: block; animation: fadeIn 0.2s ease-out; }
-@keyframes fadeIn { from { opacity: 0.5; transform: translateY(4px); } to { opacity: 1; transform: none; } }
-
-.detail-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 16px; margin-top: 16px; }
-.detail-panel {
-  padding: 19px;
-  background: var(--panel);
-  border: 1px solid #242f46;
-  border-radius: 15px;
-}
-.detail-panel h3 { font-size: 13.5px; margin: 0 0 12px; display: flex; align-items: center; justify-content: space-between; }
-.detail-panel p { font-size: 11.5px; color: #9aa8c0; }
-.detail-list { display: grid; gap: 8px; }
-.detail-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 14px;
-  padding: 8px 0;
-  border-bottom: 1px solid #1e273a;
-  font-size: 11.5px;
-}
-.detail-row:last-child { border-bottom: 0; }
-.detail-row span:first-child { color: #8795b0; }
-.detail-row span:last-child { font-weight: 700; font-family: var(--mono); text-align: right; color: #e4ecff; }
-
-.terminal-window {
-  background: #050811;
-  border: 1px solid #26324b;
-  border-radius: 12px;
-  overflow: hidden;
-  font-family: var(--mono);
-}
-.terminal-header {
-  background: #0e1424;
-  padding: 8px 12px;
-  border-bottom: 1px solid #1f293e;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 10px;
-  color: #8b9ab6;
-}
-.term-dots { display: flex; gap: 5px; }
-.term-dots i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
-.term-body {
-  padding: 12px;
-  height: 195px;
-  overflow-y: auto;
-  font-size: 11px;
-  line-height: 1.55;
-  color: #c7d4ec;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.term-line { word-break: break-word; }
-.term-line .ts { color: #586784; margin-right: 6px; }
-.term-line.cmd { color: var(--cyan); }
-.term-line.ok { color: var(--green); }
-.term-line.warn { color: var(--yellow); }
-.term-input-row {
-  display: flex;
-  border-top: 1px solid #1e273b;
-  background: #090d19;
-}
-.term-input-row span {
-  padding: 9px 10px;
-  color: var(--cyan);
-  font-weight: 800;
-  font-size: 11px;
-}
-.term-input {
-  flex: 1;
-  background: transparent;
-  border: 0;
-  color: #fff;
-  padding: 9px 6px;
-  font-family: var(--mono);
-  font-size: 11.5px;
-  outline: none;
-}
-.term-send {
-  background: #172238;
-  border: 0;
-  border-left: 1px solid #25324c;
-  color: var(--cyan);
-  padding: 0 14px;
-  font-size: 11px;
-  font-weight: 800;
-}
-
-.code-box {
-  background: #060913;
-  border: 1px solid #25314a;
-  border-radius: 10px;
-  padding: 10px 12px;
-  font-family: var(--mono);
-  font-size: 11px;
-  color: #b78aff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-top: 8px;
-  overflow-x: auto;
-}
-
-.select-input {
-  width: 100%;
-  background: #090e1a;
-  border: 1px solid #2c3954;
-  color: #fff;
-  padding: 9px 11px;
-  border-radius: 9px;
-  font-family: var(--mono);
-  font-size: 11.5px;
-  margin-bottom: 10px;
-}
-
-.activity-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 16px; }
-.panel { padding: 19px; border-radius: 15px; border: 1px solid #253047; background: var(--panel); }
-.panel h3 { margin: 0; font-size: 14px; }
-.panel-sub { font-size: 10.5px; color: #8190aa; margin: 4px 0 14px; }
-.event-list { display: grid; gap: 0; max-height: 360px; overflow-y: auto; }
-.event {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 11px 4px;
-  border-bottom: 1px solid #1d2638;
-}
-.event:last-child { border-bottom: 0; }
-.event-icon {
-  height: 28px;
-  width: 28px;
-  flex: none;
-  border-radius: 8px;
-  display: grid;
-  place-items: center;
-  background: #162234;
-  color: var(--cyan);
-  font-size: 13px;
-}
-.event strong { display: block; font-size: 11.5px; }
-.event small { color: #8291ab; font-size: 10px; font-family: var(--mono); }
-
-.security-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-.security-tile {
-  padding: 15px;
-  background: var(--panel);
-  border: 1px solid #242f46;
-  border-radius: 13px;
-}
-.security-tile .tileicon { font-size: 21px; }
-.security-tile b { display: block; font-size: 12px; margin: 8px 0 4px; }
-.security-tile p { margin: 0; color: #909eb9; font-size: 11px; }
-
-.bottomnote {
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
-  align-items: center;
-  border-top: 1px solid #1f293d;
-  margin-top: 32px;
-  padding-top: 16px;
-  color: #73819b;
-  font-size: 10.5px;
-}
-
-.hidden { display: none !important; }
-.toast {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-  z-index: 40;
-  max-width: min(430px, calc(100vw - 32px));
-  padding: 12px 15px;
-  background: #11192b;
-  color: #f0f5ff;
-  border: 1px solid var(--cyan);
-  font-size: 12px;
-  font-weight: 700;
-  border-radius: 12px;
-  box-shadow: 0 16px 40px rgba(0,0,0,0.75);
-}
-.overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 35;
-  background: rgba(3, 5, 11, 0.84);
-  display: grid;
-  place-items: center;
-  padding: 18px;
-  backdrop-filter: blur(6px);
-}
-.modal {
-  background: #101626;
-  border: 1px solid #354360;
-  border-radius: 16px;
-  padding: 22px;
-  max-width: 490px;
-  width: 100%;
-  box-shadow: var(--shadow);
-}
-.modal h2 { font-size: 18px; margin: 0 0 8px; }
-.modal p { color: #a5b2ca; font-size: 12px; margin: 0 0 12px; }
-.modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; }
-
-.usb-file-input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
-.usb-selected {
-  margin-top: 10px;
-  padding: 11px 12px;
-  border: 1px dashed #475878;
-  border-radius: 10px;
-  background: #090e1a;
-  color: #cad5e9;
-  font-size: 11.5px;
-  font-family: var(--mono);
-  overflow-wrap: anywhere;
-}
-.hash-box {
-  margin-top: 8px;
-  padding: 9px 11px;
-  border-radius: 8px;
-  background: rgba(56, 248, 156, 0.08);
-  border: 1px solid rgba(56, 248, 156, 0.3);
-  color: var(--green);
-  font-family: var(--mono);
-  font-size: 10px;
-  word-break: break-all;
-}
-
-#exitPlayerPreview { display: none; }
-.player-ip-banner {
-  display: flex;
-  margin-top: 14px;
-  padding: 14px 16px;
-  background: #081512;
-  border: 1px solid #235744;
-  border-radius: 12px;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-.player-ip-banner b { font-family: var(--mono); font-size: 15px; color: var(--mc); }
-
-body.player-mode .admin-only,
-body.player-mode .sidebar .sidelabel,
-body.player-mode .sidebar .nav,
-body.player-mode .sidebar-footer,
-body.player-mode .finops-box,
-body.player-mode .role-switch,
-body.player-mode .sim-lab-controls,
-body.player-mode .demo-notice { display: none !important; }
-
-body.player-mode #exitPlayerPreview { display: inline-flex; }
-body.player-mode .app { display: block; }
-body.player-mode .sidebar {
-  height: auto;
-  position: relative;
-  padding: 13px 18px;
-  border-right: 0;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-body.player-mode .brand { padding: 0; margin: 0; border: 0; }
-body.player-mode .main { max-width: 860px; padding-top: 20px; }
-body.player-mode #view-minecraft .card-actions .btn.primary {
-  width: 100%;
-  min-height: 54px;
-  font-size: 15px;
-}
-
-@media (max-width: 1060px) {
-  .app { grid-template-columns: 225px minmax(0, 1fr); }
-  .overview-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .service-grid, .detail-grid, .activity-grid { grid-template-columns: 1fr; }
-}
-@media (max-width: 760px) {
-  .app { display: block; }
-  .sidebar { height: auto; position: relative; border-right: 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
-  .sidebar .sidelabel, .sidebar-footer, .sidebar-spacer, .finops-box { display: none; }
-  .nav { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-  .navbtn { flex-direction: column; gap: 4px; padding: 8px 4px; text-align: center; }
-  .navtxt { font-size: 9.5px; }
-  .navhint { display: none; }
-  .security-grid { grid-template-columns: 1fr; }
-  .topbar { flex-direction: column; }
-}
-</style>
-</head>
-<body>
-<div class="app">
-  <aside class="sidebar">
-    <div class="brand">
-      <div class="brandmark">Q</div>
-      <div>
-        <strong>QELVARYTH</strong>
-        <small>NEXUS OS // LIVE AWS</small>
-      </div>
-    </div>
-
-    <div class="sidelabel">Centro de Mando</div>
-    <nav class="nav" aria-label="Navegación principal">
-      <button class="navbtn active" data-view="overview"><span class="navicon">◈</span><span class="navtxt">Resumen</span><span class="navhint">1</span></button>
-      <button class="navbtn" data-view="minecraft"><span class="navicon">⛏</span><span class="navtxt">Minecraft</span><span class="navhint">2</span></button>
-      <button class="navbtn" data-view="ai"><span class="navicon">⌘</span><span class="navtxt">AI Forge</span><span class="navhint">3</span></button>
-      <button class="navbtn" data-view="activity"><span class="navicon">≋</span><span class="navtxt">Actividad</span><span class="navhint">4</span></button>
-      <button class="navbtn" data-view="security"><span class="navicon">⬡</span><span class="navtxt">Seguridad</span><span class="navhint">5</span></button>
-    </nav>
-
-    <div class="sidebar-spacer"></div>
-
-    <div class="finops-box">
-      <div class="finops-head">
-        <span>Gasto EC2 Activo</span>
-        <span id="burnStatusTag">IDLE</span>
-      </div>
-      <div class="finops-burn" id="burnRateVal">$0.000 / h</div>
-      <div class="finops-sub" id="creditRunway">Créditos AWS: $70.29 USD disp.</div>
-      <div class="finops-bar"><div class="finops-fill" id="burnBarFill"></div></div>
-      <div style="display:flex;justify-content:space-between;font-size:9.5px;color:#7c8ba6;font-family:var(--mono)">
-        <span>EBS Fijo: ~$0.017/h</span>
-        <span id="runwayHours">∞ hrs</span>
-      </div>
-    </div>
-
-    <div class="sidebar-footer">
-      <div class="mode-line"><span class="pulse"></span> CONECTADO A AWS OHIO</div>
-      <p>Endpoint Lambda activo para Minecraft EC2. Auto-stop a los 20 min sin jugadores.</p>
-    </div>
-  </aside>
-
-  <main class="main">
-    <header class="topbar">
-      <div>
-        <div class="crumb" id="pageCrumb">QELVARYTH / COMMAND CENTER</div>
-        <h1 id="pageTitle">Command Nexus</h1>
-        <div class="subtitle" id="pageSubtitle">Orquestación dual en AWS us-east-2: servidor comunitario de Minecraft en vivo y estación GPU para IA.</div>
-      </div>
-      <div class="top-actions">
-        <span class="badge quota-ok" id="awsConnBadge"><span class="pulse"></span> LAMBDA CONECTADA</span>
-        <div class="role-switch" aria-label="Selector de rol">
-          <button id="adminTab" class="selected" type="button">Vista Admin</button>
-          <button id="playerTab" type="button">Vista Amigos</button>
-        </div>
-        <button class="btn ghost" id="exitPlayerPreview" type="button">↩ Vista Admin</button>
-      </div>
-    </header>
-
-    <div class="demo-notice">
-      <div class="demo-notice-left">
-        <div class="notice-icon">⚡</div>
-        <div>
-          <strong>Puente AWS Lambda Activo (us-east-2)</strong>
-          <p>Los botones de Minecraft ahora controlan tu instancia EC2 real. Comparte el enlace con <code>?modo=amigos</code> para que tus amigos entren directo al launcher.</p>
-        </div>
-      </div>
-      <div class="sim-lab-controls">
-        <button class="chip-btn" id="syncNowBtn" type="button">↻ Sincronizar estado AWS ahora</button>
-        <button class="chip-btn" id="toggleQuotaBtn" type="button">🔓 Simular cuota GPU</button>
-      </div>
-    </div>
-
-    <!-- VISTA 1: RESUMEN -->
-    <section class="workspace active" id="view-overview" data-workspace="overview">
-      <div class="overview-stats">
-        <div class="stat" style="--glow:var(--mc)">
-          <div class="stat-label">Minecraft Realm</div>
-          <div class="stat-value" id="mcStat">SYNC...</div>
-          <div class="stat-detail" id="mcStatSub">t3.xlarge · $0.1664/h</div>
-        </div>
-        <div class="stat stat-gpu" style="--glow:var(--ai)">
-          <div class="stat-label">Ollama AI Forge</div>
-          <div class="stat-value" id="gpuStat">PENDIENTE</div>
-          <div class="stat-detail" id="gpuStatSub">g6.xlarge · NVIDIA L4</div>
-        </div>
-        <div class="stat" style="--glow:var(--cyan)">
-          <div class="stat-label">Consumo por Hora</div>
-          <div class="stat-value" id="topBurnStat">$0.00/h</div>
-          <div class="stat-detail">Región us-east-2 (Ohio)</div>
-        </div>
-        <div class="stat" style="--glow:var(--yellow)">
-          <div class="stat-label">Llave USB Admin</div>
-          <div class="stat-value" id="usbAuthStat">NO VERIF.</div>
-          <div class="stat-detail" id="usbAuthSub">Requerida para apagar / GPU</div>
-        </div>
-      </div>
-
-      <div class="sectionhead">
-        <div class="section-title">
-          <span class="dash"></span>
-          <div>
-            <h2>Nodos de Infraestructura</h2>
-            <p>Control de encendido en tiempo real, dirección IP dinámica y aislamiento de recursos.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="service-grid">
-        <!-- Card Minecraft -->
-        <article class="server-card mc" id="mcCardOverview">
-          <div class="card-art">
-            <div class="art-content">
-              <div>
-                <div class="art-label">SURVIVAL // COMMUNITY NODE</div>
-                <div class="art-title">MINECRAFT<br>REALM</div>
-                <div class="art-sub">Server_Spokcillo_El_Pillo · En vivo con AWS</div>
-              </div>
-              <div class="art-emblem">⛏</div>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="card-head">
-              <div>
-                <div class="server-title">Servidor de Minecraft</div>
-                <div class="server-subtitle">EC2 us-east-2 · Controlado por Lambda</div>
-              </div>
-              <span class="status off" id="mcStatus"><span class="pulse"></span>Sincronizando…</span>
-            </div>
-            <p class="server-description">Instancia dedicada con auto-apagado tras 20 min sin jugadores conectados para proteger tus créditos de AWS.</p>
-            
-            <div class="telemetry-box">
-              <div class="tele-item">
-                <span>CPU <b id="mcCpuVal">0%</b></span>
-                <div class="tele-bar"><div class="tele-fill" id="mcCpuBar"></div></div>
-              </div>
-              <div class="tele-item">
-                <span>RAM (16GB) <b id="mcRamVal">0.0 GB</b></span>
-                <div class="tele-bar"><div class="tele-fill" id="mcRamBar"></div></div>
-              </div>
-              <div class="tele-item">
-                <span>Estado Red <b id="mcTpsVal">--</b></span>
-                <div class="tele-bar"><div class="tele-fill" id="mcTpsBar"></div></div>
-              </div>
-            </div>
-
-            <div class="metric-row">
-              <div class="metric"><span>Instancia</span><b>t3.xlarge</b></div>
-              <div class="metric"><span>Auto-Stop</span><b>20m vacío</b></div>
-              <div class="metric"><span>IP Pública</span><b id="mcIpMetric">Consultando…</b></div>
-            </div>
-
-            <div class="card-actions">
-              <button class="btn primary simulate" data-service="mc" data-action="encender" type="button">▶ Encender Minecraft</button>
-              <button class="btn danger simulate admin-only" data-service="mc" data-action="apagar" type="button">■ Apagar</button>
-              <button class="btn ghost" data-goto="minecraft" type="button">Portal Amigos / IP ↗</button>
-            </div>
-            <div class="server-foot">
-              <span>◆ Conectado a Lambda Function URL</span>
-              <span style="font-family:var(--mono)">Costo: $0.166/h</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- Card AI Forge -->
-        <article class="server-card ai" id="gpuCardOverview">
-          <div class="card-art">
-            <div class="art-content">
-              <div>
-                <div class="art-label">LOCAL INFERENCE // GPU LAB</div>
-                <div class="art-title">OLLAMA<br>AI FORGE</div>
-                <div class="art-sub">Claude Code + Modelos Locales en NVIDIA L4</div>
-              </div>
-              <div class="art-emblem">⌘</div>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="card-head">
-              <div>
-                <div class="server-title">QELVARYTH-Ollama-GPU</div>
-                <div class="server-subtitle">g6.xlarge · 24 GB VRAM GDDR6</div>
-              </div>
-              <span class="status pending" id="gpuStatus"><span class="pulse"></span>Pendiente de cuota</span>
-            </div>
-            <p class="server-description">Estación privada para programación asistida por IA. Protegida mediante llave criptográfica USB y túnel SSH local.</p>
-
-            <div class="telemetry-box">
-              <div class="tele-item">
-                <span>VRAM L4 <b id="gpuVramVal">0.0 GB</b></span>
-                <div class="tele-bar"><div class="tele-fill" id="gpuVramBar"></div></div>
-              </div>
-              <div class="tele-item">
-                <span>GPU Core <b id="gpuLoadVal">0%</b></span>
-                <div class="tele-bar"><div class="tele-fill" id="gpuLoadBar"></div></div>
-              </div>
-              <div class="tele-item">
-                <span>Temp / Speed <b id="gpuTempVal">--</b></span>
-                <div class="tele-bar"><div class="tele-fill" id="gpuTempBar"></div></div>
-              </div>
-            </div>
-
-            <div class="metric-row">
-              <div class="metric"><span>Instancia</span><b>g6.xlarge</b></div>
-              <div class="metric"><span>Acelerador</span><b>NVIDIA L4</b></div>
-              <div class="metric"><span>Puerto 11434</span><b>Loopback SSH</b></div>
-            </div>
-
-            <div class="card-actions">
-              <button class="btn primary simulate admin-only" data-service="gpu" data-action="encender" type="button">🔐 Autenticar USB y Encender</button>
-              <button class="btn danger simulate admin-only" data-service="gpu" data-action="apagar" type="button">■ Apagar GPU</button>
-              <button class="btn ghost" data-goto="ai" type="button">Túnel SSH y Modelos ↗</button>
-            </div>
-            <div class="server-foot">
-              <span>◆ API cerrada a internet público</span>
-              <span style="font-family:var(--mono)">Costo: $0.805/h</span>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- VISTA 2: MINECRAFT -->
-    <section class="workspace" id="view-minecraft" data-workspace="minecraft">
-      <div class="server-card mc" id="mcCardDetail">
-        <div class="card-art" style="height:165px">
-          <div class="art-content">
-            <div>
-              <div class="art-label">SURVIVAL // COMMUNITY PORTAL</div>
-              <div class="art-title" style="font-size:clamp(28px,4vw,44px)">MINECRAFT REALM</div>
-              <div class="art-sub">Pulsa encender, espera la IP pública y entra a jugar.</div>
-            </div>
-            <div class="art-emblem">⛏</div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="card-head">
-            <div>
-              <div class="server-title">Server_Spokcillo_El_Pillo</div>
-              <div class="server-subtitle">Instancia EC2 t3.xlarge · Auto-apagado 20 min</div>
-            </div>
-            <span class="status off" id="mcStatusDetail"><span class="pulse"></span>Sincronizando…</span>
-          </div>
-          <p class="server-description" id="mcPlayerDescription">Pulsa el botón verde para encender la máquina en AWS. En unos 30-45 segundos aparecerá aquí abajo la dirección IP pública para copiar y entrar desde tu Minecraft. Si no queda nadie jugando durante 20 minutos, el servidor avisará en el chat y se apagará solo.</p>
-
-          <div class="player-ip-banner">
-            <div>
-              <span style="font-size:10px;color:#8cb8a8;text-transform:uppercase;font-weight:800;display:block">Dirección IP del Servidor (Cambia en cada inicio)</span>
-              <b id="friendIpDisplay">Consultando estado en AWS...</b>
-            </div>
-            <div style="display:flex;gap:8px">
-              <button class="btn ghost" id="refreshMcBtn" type="button">↻ Actualizar IP</button>
-              <button class="btn ghost" id="copyMcIpBtn" type="button">📋 Copiar IP</button>
-            </div>
-          </div>
-
-          <div class="card-actions">
-            <button class="btn primary simulate" data-service="mc" data-action="encender" type="button">🎮 Encender Servidor de Minecraft</button>
-            <button class="btn danger simulate admin-only" data-service="mc" data-action="apagar" type="button">■ Apagar Servidor (Admin)</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="detail-grid admin-only">
-        <div class="detail-panel">
-          <h3>
-            <span>💻 Consola de Eventos AWS / RCON</span>
-            <span style="font-size:10px;font-family:var(--mono);color:var(--mc)">us-east-2 · live</span>
-          </h3>
-          <div class="terminal-window">
-            <div class="terminal-header">
-              <div class="term-dots"><i style="background:#ff5f56"></i><i style="background:#ffbd2e"></i><i style="background:#27c93f"></i></div>
-              <span>lambda@qelvaryth-mc:~</span>
-              <span>HTTPS</span>
-            </div>
-            <div class="term-body" id="mcConsoleLogs">
-              <div class="term-line"><span class="ts">[SYSTEM]</span>Conectando con Lambda Function URL en Ohio...</div>
-            </div>
-            <form class="term-input-row" id="mcConsoleForm">
-              <span>CMD&gt;</span>
-              <input class="term-input" id="mcConsoleInput" type="text" placeholder="Escribe /status o comandos de nota local..." autocomplete="off">
-              <button class="term-send" type="submit">Enviar</button>
-            </form>
-          </div>
-        </div>
-
-        <div class="detail-panel">
-          <h3>🛡️ Reglas de Automatización Activas</h3>
-          <div class="detail-list">
-            <div class="detail-row"><span>Permiso de Jugadores</span><span>Solo Encender (StartInstances)</span></div>
-            <div class="detail-row"><span>Auto-Stop Inactividad</span><span>20 min con 0 jugadores</span></div>
-            <div class="detail-row"><span>Aviso en el Chat</span><span>5 min y 1 min antes de apagar</span></div>
-            <div class="detail-row"><span>Guardado de Mundo</span><span>save-all antes de shutdown</span></div>
-            <div class="detail-row"><span>Enlace para Amigos</span><span>?modo=amigos</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- VISTA 3: AI FORGE -->
-    <section class="workspace" id="view-ai" data-workspace="ai">
-      <div class="server-card ai" id="gpuCardDetail">
-        <div class="card-art" style="height:165px">
-          <div class="art-content">
-            <div>
-              <div class="art-label">PRIVATE CODE ENGINE // NVIDIA L4</div>
-              <div class="art-title" style="font-size:clamp(28px,4vw,44px)">OLLAMA AI FORGE</div>
-              <div class="art-sub">Inferencia privada conectada a VS Code + Claude Code / Roo Code.</div>
-            </div>
-            <div class="art-emblem">⌘</div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="card-head">
-            <div>
-              <div class="server-title">QELVARYTH-Ollama-GPU</div>
-              <div class="server-subtitle">g6.xlarge · 4 vCPU · 16 GB RAM · 24 GB VRAM</div>
-            </div>
-            <span class="status pending" id="gpuStatusDetail"><span class="pulse"></span>Pendiente de cuota</span>
-          </div>
-          <p class="server-description">Requiere llave física `.qkey` validada mediante firma SHA-256 antes de autorizar el encendido en AWS o apagar instancias.</p>
-          <div class="card-actions">
-            <button class="btn primary simulate admin-only" data-service="gpu" data-action="encender" type="button">🔐 Autenticar Llave USB y Encender</button>
-            <button class="btn danger simulate admin-only" data-service="gpu" data-action="apagar" type="button">■ Apagar Nodo GPU</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="detail-grid">
-        <div class="detail-panel">
-          <h3>
-            <span>🧪 Playground de Inferencia Local (Ollama)</span>
-            <span style="font-size:10px;font-family:var(--mono);color:var(--ai)" id="activeModelBadge">qwen2.5-coder:32b</span>
-          </h3>
-          <label style="font-size:10.5px;color:#8e9cb8;display:block;margin-bottom:5px">Modelo cargado en VRAM (24 GB NVIDIA L4):</label>
-          <select class="select-input" id="ollamaModelSelect">
-            <option value="qwen2.5-coder:32b-q4_K_M">qwen2.5-coder:32b-instruct-q4_K_M (19.5 GB VRAM · ~34 tok/s)</option>
-            <option value="deepseek-coder-v2:16b">deepseek-coder-v2:16b-lite-instruct (10.2 GB VRAM · ~68 tok/s)</option>
-            <option value="llama3.1:8b-instruct-q8">llama3.1:8b-instruct-q8_0 (8.6 GB VRAM · ~92 tok/s)</option>
-          </select>
-
-          <div class="terminal-window">
-            <div class="terminal-header">
-              <div class="term-dots"><i style="background:#ff5f56"></i><i style="background:#ffbd2e"></i><i style="background:#27c93f"></i></div>
-              <span>POST http://127.0.0.1:11434/api/generate</span>
-              <span id="tokSpeedLabel">0 tok/s</span>
-            </div>
-            <div class="term-body" id="aiConsoleLogs">
-              <div class="term-line"><span class="ts">[OLLAMA]</span>Enciende el nodo GPU para habilitar pruebas de inferencia y el túnel SSH.</div>
-            </div>
-            <form class="term-input-row" id="aiConsoleForm">
-              <span>PROMPT&gt;</span>
-              <input class="term-input" id="aiConsoleInput" type="text" placeholder="Ej: Optimiza una consulta en Django ORM..." autocomplete="off">
-              <button class="term-send" type="submit">Generar</button>
-            </form>
-          </div>
-        </div>
-
-        <div class="detail-panel">
-          <h3>🔗 Generador de Túnel SSH</h3>
-          <p>Ollama escucha solo en `127.0.0.1:11434` dentro de EC2. Ejecuta este comando en tu terminal de Windows para mapearlo a tu VS Code local:</p>
-          <div class="code-box">
-            <code id="sshCommandText">ssh -i ~/.ssh/qelvaryth-gpu.pem -N -L 11434:127.0.0.1:11434 ubuntu@&lt;IP-PENDIENTE&gt;</code>
-            <button class="btn ghost" id="copySshBtn" type="button" style="padding:6px 10px;font-size:10px">Copiar</button>
-          </div>
-
-          <div class="detail-list" style="margin-top:14px">
-            <div class="detail-row"><span>Firma USB Verificada</span><span id="usbHashShort">Ninguna en sesión</span></div>
-            <div class="detail-row"><span>Auto-Shutdown GPU</span><span>30 min sin llamadas HTTP</span></div>
-            <div class="detail-row"><span>Volumen EBS</span><span>gp3 · 100 GiB cifrado KMS</span></div>
-            <div class="detail-row"><span>Endpoint VS Code</span><span>http://localhost:11434</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- VISTA 4: ACTIVIDAD -->
-    <section class="workspace" id="view-activity" data-workspace="activity">
-      <div class="sectionhead">
-        <div class="section-title">
-          <span class="dash"></span>
-          <div>
-            <h2>Registro de Auditoría y Eventos</h2>
-            <p>Trazabilidad de llamadas a AWS Lambda y cambios de estado en tiempo real.</p>
-          </div>
-        </div>
-        <button class="btn ghost" id="clearLogsBtn" type="button">🗑 Limpiar historial</button>
-      </div>
-      <div class="activity-grid">
-        <article class="panel">
-          <h3>Eventos en Tiempo Real</h3>
-          <div class="panel-sub">Sincronizado con tu endpoint Lambda en us-east-2.</div>
-          <div class="event-list" id="eventList"></div>
-        </article>
-        <article class="panel">
-          <h3>Atajos de Teclado del Operador</h3>
-          <div class="panel-sub">Controla el Command Nexus sin usar el mouse.</div>
-          <div class="detail-list">
-            <div class="detail-row"><span>Teclas 1 a 5</span><span>Cambiar entre pestañas</span></div>
-            <div class="detail-row"><span>Tecla R</span><span>Alternar Admin / Vista Amigos</span></div>
-            <div class="detail-row"><span>Tecla Q</span><span>Aprobar/Bloquear cuota GPU demo</span></div>
-            <div class="detail-row"><span>Tecla ESC</span><span>Cerrar ventana modal activa</span></div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- VISTA 5: SEGURIDAD -->
-    <section class="workspace" id="view-security" data-workspace="security">
-      <div class="sectionhead">
-        <div class="section-title">
-          <span class="dash"></span>
-          <div>
-            <h2>Arquitectura Zero-Trust en AWS</h2>
-            <p>Seguridad aplicada entre tu HTML, AWS Lambda y la instancia EC2.</p>
-          </div>
-        </div>
-      </div>
-      <div class="security-grid">
-        <div class="security-tile"><div class="tileicon">🔑</div><b>Firma Local SHA-256</b><p>El archivo `.qkey` nunca se sube por internet: se calcula su hash localmente con Web Crypto API.</p></div>
-        <div class="security-tile"><div class="tileicon">⛏</div><b>Aislamiento de Jugadores</b><p>Tus amigos pueden encender el servidor pero tienen bloqueado el apagado manual.</p></div>
-        <div class="security-tile"><div class="tileicon">🛡️</div><b>Ollama 100% Privado</b><p>Security Group de la GPU sin el puerto 11434 abierto. Acceso exclusivo mediante túnel SSH.</p></div>
-        <div class="security-tile"><div class="tileicon">💸</div><b>Auto-Stop 20 Minutos</b><p>El demonio `mc-autostop.service` en Linux apaga la instancia si no detecta jugadores en 20 min.</p></div>
-        <div class="security-tile"><div class="tileicon">🧾</div><b>Sin Credenciales en Web</b><p>El HTML no contiene claves IAM de AWS; toda la autoridad reside en el rol de ejecución de Lambda.</p></div>
-        <div class="security-tile"><div class="tileicon">⏱</div><b>Avisos en el Juego</b><p>Antes de apagarse por inactividad, el servidor envía alertas al chat a los 5 min y 1 min.</p></div>
-      </div>
-    </section>
-
-    <footer class="bottomnote">
-      <div><strong>QELVARYTH COMMAND NEXUS // v2.0 LIVE</strong><br>Conectado a AWS Lambda (`us-east-2`).</div>
-      <div style="font-family:var(--mono);color:var(--cyan)">ATAJOS: [1-5] VISTAS · [R] ROL · [Q] CUOTA GPU</div>
-    </footer>
-  </main>
-</div>
-
-<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
-<div id="modalRoot"></div>
-
-<script>
-// === CONFIGURACIÓN DE TU LAMBDA AWS ===
-const LAMBDA_URL = "https://yakcmdk3nraxjqlgl77wh7gczm0hgove.lambda-url.us-east-2.on.aws/";
-const FRIEND_PIN = "spokcillo";
-
-const state = {
-  role: new URLSearchParams(window.location.search).get("modo") === "amigos" ? 'player' : 'admin',
-  view: new URLSearchParams(window.location.search).get("modo") === "amigos" ? 'minecraft' : 'overview',
-  mc: 'off',
-  gpu: 'pending',
-  quotaApproved: false,
-  mcPlayers: 0,
-  mcIp: null,
-  gpuIp: '3.142.88.210',
-  usbVerifiedHash: null,
-  usbKeyName: null,
-  creditsUsd: 70.29
-};
-
-const COSTS = { mc: 0.1664, gpu: 0.8048, ebsBase: 0.017 };
-
-const viewMeta = {
-  overview: ['QELVARYTH / COMMAND CENTER', 'Command Nexus', 'Orquestación dual en AWS us-east-2: servidor comunitario de Minecraft en vivo y estación GPU para IA.'],
-  minecraft: ['QELVARYTH / MINECRAFT REALM', 'Minecraft Realm', 'Portal de encendido en vivo para amigos y monitoreo de IP pública de EC2.'],
-  ai: ['QELVARYTH / AI FORGE', 'Ollama AI Forge', 'Laboratorio de inferencia local en NVIDIA L4, túnel SSH seguro y pruebas de modelos de código.'],
-  activity: ['QELVARYTH / AUDIT LOG', 'Actividad del Sistema', 'Historial detallado de eventos, llamadas a Lambda y cambios de estado.'],
-  security: ['QELVARYTH / SECURITY PROTOCOL', 'Seguridad Zero-Trust', 'Políticas de acceso mínimo, validación en backend y protección de créditos en AWS.']
-};
-
-function nowTime() {
-  return new Date().toLocaleTimeString('es-CL', { hour12: false });
-}
-
-function toast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.remove('hidden');
-  clearTimeout(window.toastTimer);
-  window.toastTimer = setTimeout(() => el.classList.add('hidden'), 4500);
-}
-
-function logEvent(title, sub, iconChar = '◈') {
-  const list = document.getElementById('eventList');
-  if (!list) return;
-  const e = document.createElement('div');
-  e.className = 'event';
-  e.innerHTML = `<div class="event-icon">${iconChar}</div><div><strong>${title}</strong><small>${nowTime()} · ${sub}</small></div>`;
-  list.prepend(e);
-  while (list.children.length > 25) list.lastElementChild.remove();
-}
-
-function appendTerm(containerId, text, type = '') {
-  const box = document.getElementById(containerId);
-  if (!box) return;
-  const line = document.createElement('div');
-  line.className = 'term-line ' + type;
-  line.innerHTML = `<span class="ts">[${nowTime()}]</span>${text}`;
-  box.appendChild(line);
-  box.scrollTop = box.scrollHeight;
-}
-
-function setView(view) {
-  if (state.role === 'player') view = 'minecraft';
-  state.view = view;
-  document.querySelectorAll('[data-workspace]').forEach(s => s.classList.toggle('active', s.dataset.workspace === view));
-  document.querySelectorAll('.navbtn[data-view]').forEach(b => b.classList.toggle('active', b.dataset.view === view));
-  const meta = viewMeta[view];
-  document.getElementById('pageCrumb').textContent = meta[0];
-  document.getElementById('pageTitle').textContent = meta[1];
-  document.getElementById('pageSubtitle').textContent = meta[2];
-}
-
-function updateFinOps() {
-  let burn = COSTS.ebsBase;
-  if (state.mc === 'on' || state.mc === 'starting') burn += COSTS.mc;
-  if (state.gpu === 'on' || state.gpu === 'starting') burn += COSTS.gpu;
-
-  document.getElementById('burnRateVal').textContent = `$${burn.toFixed(3)} / h`;
-  document.getElementById('topBurnStat').textContent = `$${burn.toFixed(2)}/h`;
-
-  const hoursLeft = Math.floor(state.creditsUsd / burn);
-  document.getElementById('runwayHours').textContent = `~${hoursLeft}h restantes`;
-
-  const pct = Math.min(100, Math.round((burn / 1.0) * 100));
-  const fill = document.getElementById('burnBarFill');
-  fill.style.width = `${Math.max(12, pct)}%`;
-  fill.style.background = burn > 0.5 ? 'linear-gradient(90deg, var(--yellow), var(--red))' : 'linear-gradient(90deg, var(--mc), var(--cyan))';
-  document.getElementById('burnStatusTag').textContent = burn > 0.5 ? 'ALTO CONSUMO' : (burn > 0.05 ? 'ACTIVO' : 'IDLE');
-}
-
-function updateTelemetry() {
-  const mcOn = state.mc === 'on';
-  const mcStarting = state.mc === 'starting';
-  const mcCpu = mcOn ? (28 + Math.floor(Math.random() * 10)) : (mcStarting ? 75 : 0);
-  const mcRam = mcOn ? '6.8' : (mcStarting ? '3.4' : '0.0');
-
-  document.getElementById('mcCpuVal').textContent = `${mcCpu}%`;
-  document.getElementById('mcCpuBar').style.width = `${mcCpu}%`;
-  document.getElementById('mcRamVal').textContent = `${mcRam} GB`;
-  document.getElementById('mcRamBar').style.width = `${Math.min(100, (parseFloat(mcRam) / 16) * 100)}%`;
-  document.getElementById('mcTpsVal').textContent = mcOn ? 'ONLINE' : (mcStarting ? 'BOOTING' : 'OFFLINE');
-  document.getElementById('mcTpsBar').style.width = mcOn ? '100%' : (mcStarting ? '50%' : '0%');
-
-  const ipText = mcOn && state.mcIp ? state.mcIp : (mcStarting ? 'Asignando IP pública...' : 'Servidor apagado');
-  document.getElementById('mcIpMetric').textContent = ipText;
-  document.getElementById('friendIpDisplay').textContent = ipText;
-
-  const gpuOn = state.gpu === 'on';
-  const gpuStarting = state.gpu === 'starting';
-  const modelSel = document.getElementById('ollamaModelSelect').value;
-  const vramBase = modelSel.includes('32b') ? 19.5 : (modelSel.includes('16b') ? 10.2 : 8.6);
-  const gpuVram = gpuOn ? vramBase.toFixed(1) : (gpuStarting ? '4.0' : '0.0');
-  const gpuLoad = gpuOn ? (14 + Math.floor(Math.random() * 12)) : (gpuStarting ? 55 : 0);
-
-  document.getElementById('gpuVramVal').textContent = `${gpuVram} GB`;
-  document.getElementById('gpuVramBar').style.width = `${Math.min(100, (parseFloat(gpuVram) / 24) * 100)}%`;
-  document.getElementById('gpuLoadVal').textContent = `${gpuLoad}%`;
-  document.getElementById('gpuLoadBar').style.width = `${gpuLoad}%`;
-  document.getElementById('gpuTempVal').textContent = gpuOn ? '51°C' : '--';
-  document.getElementById('gpuTempBar').style.width = gpuOn ? '62%' : '0%';
-
-  const sshHost = gpuOn ? state.gpuIp : '<IP-PENDIENTE>';
-  document.getElementById('sshCommandText').textContent = `ssh -i ~/.ssh/qelvaryth-gpu.pem -N -L 11434:127.0.0.1:11434 ubuntu@${sshHost}`;
-}
-
-function render() {
-  const statusMap = {
-    off: { text: 'Detenida', cls: 'off', stat: 'OFFLINE' },
-    pending: { text: 'Pendiente de cuota', cls: 'pending', stat: 'PENDIENTE' },
-    starting: { text: 'Iniciando EC2…', cls: 'starting', stat: 'BOOTING' },
-    stopping: { text: 'Deteniendo…', cls: 'stopping', stat: 'STOPPING' },
-    on: { text: 'En ejecución', cls: 'on', stat: 'ONLINE' }
+    stopping: 'Apagando…',
+    on: 'Activo'
   };
 
-  ['mc', 'gpu'].forEach(k => {
-    const info = statusMap[state[k]] || statusMap.off;
-    document.querySelectorAll(`#${k}Status, #${k}StatusDetail`).forEach(el => {
-      el.className = `status ${info.cls}`;
-      el.innerHTML = `<span class="pulse"></span>${info.text}`;
-    });
-    const statEl = document.getElementById(`${k}Stat`);
-    if (statEl) statEl.textContent = info.stat;
-  });
+  // Estado Minecraft
+  const mcBadge = document.getElementById('mcBadge');
+  const mcDot = document.getElementById('mcDot');
+  mcBadge.className = `status-badge ${state.mc}`;
+  mcDot.className = `dot ${state.mc === 'on' ? 'online' : (state.mc === 'starting' || state.mc === 'stopping' ? 'busy' : '')}`;
+  document.getElementById('mcStatusLabel').textContent = labels[state.mc] || 'Detenido';
+  document.getElementById('mcCard').classList.toggle('active-mc', state.mc === 'on');
+  document.getElementById('mcCardIp').textContent = (state.mc === 'on' && state.mcIp) ? state.mcIp : (state.mc === 'starting' ? 'Asignando…' : '—');
 
-  document.getElementById('mcCardOverview').classList.toggle('running-glow', state.mc === 'on');
-  document.getElementById('gpuCardOverview').classList.toggle('running-glow', state.gpu === 'on');
+  const mcBusy = state.mc === 'starting' || state.mc === 'stopping';
+  const startMcBtn = document.getElementById('startMcBtn');
+  startMcBtn.disabled = mcBusy || state.mc === 'on';
+  startMcBtn.textContent = state.mc === 'on' ? 'Servidor en línea' : (state.mc === 'starting' ? 'Iniciando en AWS…' : 'Iniciar Servidor');
+  document.getElementById('stopMcBtn').disabled = mcBusy || state.mc !== 'on';
 
-  const usbStat = document.getElementById('usbAuthStat');
-  const usbSub = document.getElementById('usbAuthSub');
-  if (state.usbVerifiedHash) {
-    usbStat.textContent = 'VERIFICADA';
-    usbStat.style.color = 'var(--green)';
-    usbSub.textContent = `${state.usbKeyName} (${state.usbVerifiedHash.slice(0, 8)}…)`;
-    document.getElementById('usbHashShort').textContent = state.usbVerifiedHash.slice(0, 16) + '…';
+  // Portal de Conexión Minecraft
+  const portalStateLabel = document.getElementById('portalStateLabel');
+  const portalIpText = document.getElementById('portalIpText');
+  const portalStartBtn = document.getElementById('portalStartMcBtn');
+
+  if (state.mc === 'on' && state.mcIp) {
+    portalStateLabel.textContent = 'Servidor Online · Listo para entrar';
+    portalIpText.textContent = state.mcIp;
+    portalStartBtn.style.display = 'none';
+  } else if (state.mc === 'starting') {
+    portalStateLabel.textContent = 'Encendiendo máquina EC2 en AWS (30-45s)…';
+    portalIpText.textContent = 'Asignando IP pública…';
+    portalStartBtn.style.display = 'none';
+  } else if (state.mc === 'stopping') {
+    portalStateLabel.textContent = 'Deteniendo servidor…';
+    portalIpText.textContent = 'Cerrando sesión…';
+    portalStartBtn.style.display = 'none';
   } else {
-    usbStat.textContent = 'NO VERIF.';
-    usbStat.style.color = '';
-    usbSub.textContent = 'Requerida para apagar / GPU';
-    document.getElementById('usbHashShort').textContent = 'Ninguna en sesión';
+    portalStateLabel.textContent = 'Servidor Apagado';
+    portalIpText.textContent = 'Sin IP asignada';
+    portalStartBtn.style.display = 'inline-flex';
   }
 
-  document.body.classList.toggle('player-mode', state.role === 'player');
-  document.getElementById('adminTab').classList.toggle('selected', state.role === 'admin');
-  document.getElementById('playerTab').classList.toggle('selected', state.role === 'player');
+  // Estado Studio / Programación
+  const devBadge = document.getElementById('devBadge');
+  const devDot = document.getElementById('devDot');
+  devBadge.className = `status-badge ${state.dev}`;
+  devDot.className = `dot ${state.dev === 'on' ? 'online' : (state.dev === 'starting' || state.dev === 'stopping' ? 'busy' : '')}`;
+  document.getElementById('devStatusLabel').textContent = labels[state.dev] || 'Detenido';
+  document.getElementById('devCard').classList.toggle('active-dev', state.dev === 'on');
+  document.getElementById('devCardIp').textContent = (state.dev === 'on' && state.devIp) ? state.devIp : (state.dev === 'starting' ? 'Asignando…' : '—');
 
-  document.querySelectorAll('.simulate').forEach(b => {
-    const srv = b.dataset.service;
-    const act = b.dataset.action;
-    const st = state[srv];
-    const busy = st === 'starting' || st === 'stopping';
-    const playerBlocked = state.role === 'player' && (srv === 'gpu' || act === 'apagar');
+  const devBusy = state.dev === 'starting' || state.dev === 'stopping';
+  const startDevBtn = document.getElementById('startDevBtn');
+  startDevBtn.disabled = devBusy || state.dev === 'on';
+  startDevBtn.textContent = state.dev === 'on' ? 'Estudio Activo' : (state.dev === 'starting' ? 'Iniciando en AWS…' : '🔑 Iniciar con Pendrive');
+  document.getElementById('stopDevBtn').disabled = devBusy || state.dev !== 'on';
 
-    if (act === 'encender') {
-      b.disabled = busy || st === 'on' || playerBlocked;
-      if (srv === 'mc') {
-        b.textContent = st === 'on' ? '✓ Servidor en ejecución' : (st === 'starting' ? '⏳ Iniciando instancia EC2…' : '🎮 Encender Servidor de Minecraft');
-      } else {
-        b.textContent = st === 'on' ? '✓ Nodo GPU activo' : (st === 'starting' ? '⏳ Cargando NVIDIA L4…' : '🔐 Autenticar USB y Encender');
-      }
-    } else {
-      b.disabled = busy || st !== 'on' || playerBlocked;
-    }
-  });
+  const sshHost = (state.dev === 'on' && state.devIp) ? state.devIp : '<esperando-ip>';
+  document.getElementById('sshCmdBox').textContent = `ssh -i ~/.ssh/qelvaryth-gpu.pem -N -L 11434:127.0.0.1:11434 ubuntu@${sshHost}`;
 
-  if (state.role === 'player' && state.view !== 'minecraft') setView('minecraft');
-  updateFinOps();
-  updateTelemetry();
+  // Estado Llave USB en Header
+  const usbLabel = document.getElementById('usbStatusLabel');
+  if (state.usbHash) {
+    usbLabel.textContent = `🔑 USB: ${state.usbFileName} (${state.usbHash.slice(0, 6)}…)`;
+  } else {
+    usbLabel.textContent = '🔑 Llave USB: No cargada';
+  }
 }
 
-function closeModal() {
-  document.getElementById('modalRoot').replaceChildren();
+// === AUTENTICACIÓN CON PENDRIVE USB (SHA-256) ===
+async function sha256Hex(buffer) {
+  const digest = await crypto.subtle.digest('SHA-256', buffer);
+  return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
-async function computeSha256(buffer) {
-  const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+function requireUsbKey(callback) {
+  if (state.usbHash) {
+    callback();
+    return;
+  }
+  state.pendingAction = callback;
+  document.getElementById('usbModal').classList.add('open');
 }
 
-function openUsbAuthModal(onSuccessCallback) {
-  document.getElementById('modalRoot').innerHTML = `
-    <div class="overlay">
-      <form class="modal" id="gpuUsbKeyForm" role="dialog" aria-modal="true">
-        <h2>🔐 Autenticación Física de Administrador</h2>
-        <p>Selecciona tu archivo de llave desde tu USB (o genera una llave virtual de sesión) para firmar la operación de administrador con SHA-256.</p>
-        <input class="usb-file-input" id="gpuUsbFile" type="file" accept=".qkey,.key,.pem,.txt,application/octet-stream">
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="btn primary" type="button" id="selectGpuUsbFile" style="flex:1">▣ Seleccionar archivo .qkey</button>
-          <button class="btn ghost" type="button" id="genVirtualKeyBtn">⚡ Generar llave virtual</button>
-        </div>
-        <div class="usb-selected" id="gpuUsbSelected">Ninguna llave cargada</div>
-        <div class="hash-box hidden" id="gpuHashPreview"></div>
-        <div class="modal-actions">
-          <button class="btn ghost" type="button" id="cancelGpuUsbKey">Cancelar</button>
-          <button class="btn primary" type="submit" id="continueGpuUsbKey" disabled>Firmar y Continuar</button>
-        </div>
-      </form>
-    </div>`;
+const usbFileInput = document.getElementById('usbFileInput');
+const fileDropZone = document.getElementById('fileDropZone');
+const keyPreviewBox = document.getElementById('keyPreviewBox');
+const confirmUsbBtn = document.getElementById('confirmUsbBtn');
 
-  const fileInput = document.getElementById('gpuUsbFile');
-  const selectedBox = document.getElementById('gpuUsbSelected');
-  const hashBox = document.getElementById('gpuHashPreview');
-  const submitBtn = document.getElementById('continueGpuUsbKey');
-  let tempHash = null;
-  let tempName = null;
+let tempHash = null;
+let tempSecret = null;
+let tempFileName = null;
 
-  document.getElementById('selectGpuUsbFile').onclick = () => fileInput.click();
-  document.getElementById('cancelGpuUsbKey').onclick = closeModal;
+fileDropZone.addEventListener('click', () => usbFileInput.click());
 
-  fileInput.onchange = async () => {
-    const file = fileInput.files && fileInput.files[0];
-    if (!file) return;
-    const buf = await file.arrayBuffer();
-    tempHash = await computeSha256(buf);
-    tempName = file.name;
-    selectedBox.textContent = `Llave: ${file.name} (${Math.max(1, Math.ceil(file.size / 1024))} KB)`;
-    hashBox.textContent = `SHA-256: ${tempHash}`;
-    hashBox.classList.remove('hidden');
-    submitBtn.disabled = false;
-  };
+usbFileInput.addEventListener('change', async () => {
+  const file = usbFileInput.files && usbFileInput.files[0];
+  if (!file) return;
+  const arrayBuffer = await file.arrayBuffer();
+  tempHash = await sha256Hex(arrayBuffer);
+  tempSecret = (await file.text()).trim();
+  tempFileName = file.name;
 
-  document.getElementById('genVirtualKeyBtn').onclick = async () => {
-    const seed = `QELVARYTH-ADMIN-${Date.now()}`;
-    const buf = new TextEncoder().encode(seed);
-    tempHash = await computeSha256(buf);
-    tempName = 'qelvaryth-admin.qkey';
-    selectedBox.textContent = `Llave virtual: ${tempName}`;
-    hashBox.textContent = `SHA-256: ${tempHash}`;
-    hashBox.classList.remove('hidden');
-    submitBtn.disabled = false;
-  };
+  document.getElementById('fileDropTitle').textContent = `Archivo cargado: ${file.name}`;
+  document.getElementById('fileDropSub').textContent = `${Math.max(1, Math.ceil(file.size / 1024))} KB · Listo para verificar`;
+  keyPreviewBox.style.display = 'block';
+  keyPreviewBox.textContent = `Firma SHA-256: ${tempHash}`;
+  confirmUsbBtn.disabled = false;
+});
 
-  document.getElementById('gpuUsbKeyForm').onsubmit = (e) => {
-    e.preventDefault();
-    if (!tempHash) return;
-    state.usbVerifiedHash = tempHash;
-    state.usbKeyName = tempName;
-    closeModal();
-    logEvent('Llave USB Admin verificada', `SHA-256: ${tempHash.slice(0, 16)}…`, '🔑');
-    render();
-    if (onSuccessCallback) onSuccessCallback();
-  };
-}
+document.getElementById('cancelModalBtn').addEventListener('click', () => {
+  document.getElementById('usbModal').classList.remove('open');
+  state.pendingAction = null;
+});
 
-// === COMUNICACIÓN REAL CON TU AWS LAMBDA ===
-async function syncRealAwsStatus(silent = false) {
-  const badge = document.getElementById('awsConnBadge');
+document.getElementById('usbForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (!tempHash) return;
+  state.usbHash = tempHash;
+  state.usbSecret = tempSecret;
+  state.usbFileName = tempFileName;
+
+  document.getElementById('usbModal').classList.remove('open');
+  addLog(`Llave USB verificada desde pendrive (${tempFileName}).`);
+  showToast('Llave USB verificada correctamente.');
+  renderUI();
+
+  if (state.pendingAction) {
+    const fn = state.pendingAction;
+    state.pendingAction = null;
+    fn();
+  }
+});
+
+document.getElementById('usbStatusBtn').addEventListener('click', () => {
+  state.pendingAction = null;
+  document.getElementById('usbModal').classList.add('open');
+});
+
+// === SINCRONIZACIÓN Y CONTROL AWS LAMBDA ===
+async function syncAwsStatus(silent = false) {
+  const dot = document.getElementById('awsDot');
+  const txt = document.getElementById('awsStatusText');
   try {
     const res = await fetch(LAMBDA_URL, { method: 'GET' });
     const data = await res.json();
+
     if (!res.ok || data.error) {
-      badge.className = 'badge err';
-      badge.innerHTML = '<span class="pulse"></span> ERROR AWS: ' + (data.error || res.status);
-      if (!silent) appendTerm('mcConsoleLogs', `Respuesta de AWS con alerta: ${data.error || res.status}`, 'warn');
+      dot.className = 'dot error';
+      txt.textContent = 'Alerta AWS';
+      if (!silent) addLog(`Error AWS: ${data.error || res.status}`);
       return;
     }
-    badge.className = 'badge quota-ok';
-    badge.innerHTML = '<span class="pulse"></span> AWS EC2 SINCRONIZADO';
+
+    dot.className = 'dot online';
+    txt.textContent = 'AWS Conectado';
+    document.getElementById('lastSyncTime').textContent = nowStr();
+
     state.mc = data.uiState || 'off';
     state.mcIp = data.ip || null;
-    if (!silent) {
-      appendTerm('mcConsoleLogs', `Estado EC2: ${data.awsState.toUpperCase()} | IP: ${state.mcIp || 'Sin IP'}`, 'ok');
+
+    if (data.gpuUiState !== undefined) {
+      state.dev = data.gpuUiState || 'off';
+      state.devIp = data.gpuIp || null;
     }
-    render();
+
+    if (!silent) {
+      addLog(`Sincronizado — MC: ${state.mc.toUpperCase()} (${state.mcIp || 'sin IP'}) | Studio: ${state.dev.toUpperCase()} (${state.devIp || 'sin IP'})`);
+    }
+    renderUI();
   } catch (err) {
-    badge.className = 'badge err';
-    badge.innerHTML = '<span class="pulse"></span> REVISAR CORS EN LAMBDA';
-    if (!silent) appendTerm('mcConsoleLogs', `Error de conexión / CORS al consultar Lambda: ${err.message}`, 'warn');
+    dot.className = 'dot error';
+    txt.textContent = 'Sin conexión Lambda';
+    if (!silent) addLog(`Error de conexión con Lambda: ${err.message}`);
   }
 }
 
-async function controlMinecraftAws(targetState) {
+async function sendLambdaAction(service, targetState) {
+  const isMc = service === 'mc';
   const isStart = targetState === 'on';
 
-  // Si es apagar desde la web, requerimos que el Admin haya firmado con su llave USB
-  if (!isStart && !state.usbVerifiedHash) {
-    openUsbAuthModal(() => controlMinecraftAws('off'));
+  // Regla de seguridad:
+  // - Encender Minecraft es libre y redirige al apartado de copiar IP.
+  // - Apagar Minecraft y Encender/Apagar el servidor de programación requieren la llave del pendrive.
+  const needsUsb = !isMc || !isStart;
+  if (needsUsb && !state.usbHash) {
+    requireUsbKey(() => sendLambdaAction(service, targetState));
     return;
   }
 
-  state.mc = isStart ? 'starting' : 'stopping';
-  render();
-  appendTerm('mcConsoleLogs', `Enviando orden ${isStart ? 'start_mc' : 'stop_mc'} a AWS Lambda...`, 'cmd');
+  if (isMc) {
+    state.mc = isStart ? 'starting' : 'stopping';
+    if (isStart) {
+      switchTab('portal');
+    }
+  } else {
+    state.dev = isStart ? 'starting' : 'stopping';
+  }
+  renderUI();
+
+  const actionName = isMc ? (isStart ? 'start_mc' : 'stop_mc') : (isStart ? 'start_gpu' : 'stop_gpu');
+  addLog(`Enviando orden '${actionName}' a AWS Lambda...`);
 
   try {
     const res = await fetch(LAMBDA_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        action: isStart ? 'start_mc' : 'stop_mc',
+        action: actionName,
         pin: FRIEND_PIN,
-        adminHash: state.usbVerifiedHash
+        adminHash: state.usbHash,
+        usbPassword: state.usbSecret
       })
     });
     const data = await res.json();
+
     if (!res.ok || data.error) {
-      toast(`AWS rechazó la orden: ${data.error || 'Error'}`);
-      appendTerm('mcConsoleLogs', `Error AWS: ${data.error || 'Fallo en la petición'}`, 'warn');
-      await syncRealAwsStatus();
+      showToast(`AWS rechazó la solicitud: ${data.error || 'Error'}`);
+      addLog(`Respuesta de error AWS: ${data.error || res.status}`);
+      await syncAwsStatus(true);
       return;
     }
 
-    toast(isStart ? '¡Orden enviada a AWS! Esperando a que EC2 entregue la IP pública...' : 'Apagando instancia EC2 en AWS...');
-    logEvent(isStart ? 'Encendido EC2 solicitado' : 'Apagado EC2 solicitado', 'AWS Lambda us-east-2', '⛏');
+    showToast(isStart ? 'Orden enviada. Esperando IP pública de AWS…' : 'Deteniendo instancia en AWS…');
 
     const poll = setInterval(async () => {
-      await syncRealAwsStatus(true);
-      if (isStart && state.mc === 'on' && state.mcIp) {
-        clearInterval(poll);
-        appendTerm('mcConsoleLogs', `¡Instancia EC2 corriendo! Conéctate a: ${state.mcIp}`, 'ok');
-        toast(`¡Servidor listo! IP: ${state.mcIp}`);
-      } else if (!isStart && state.mc === 'off') {
-        clearInterval(poll);
-        appendTerm('mcConsoleLogs', 'Instancia EC2 completamente detenida.', 'ok');
-        toast('Servidor detenido en AWS.');
+      await syncAwsStatus(true);
+      if (isMc) {
+        if (isStart && state.mc === 'on' && state.mcIp) {
+          clearInterval(poll);
+          addLog(`Servidor de Minecraft listo en ${state.mcIp}`);
+          showToast(`¡Minecraft Online! IP: ${state.mcIp}`);
+        } else if (!isStart && state.mc === 'off') {
+          clearInterval(poll);
+          addLog('Servidor de Minecraft detenido.');
+          showToast('Servidor de Minecraft apagado.');
+        }
+      } else {
+        if (isStart && state.dev === 'on' && state.devIp) {
+          clearInterval(poll);
+          addLog(`Nodo de programación listo en ${state.devIp}`);
+          showToast(`¡Studio Online! IP: ${state.devIp}`);
+        } else if (!isStart && state.dev === 'off') {
+          clearInterval(poll);
+          addLog('Nodo de programación detenido.');
+          showToast('Studio apagado en AWS.');
+        }
       }
     }, 4000);
   } catch (err) {
-    toast('Error al conectar con la URL de Lambda. Verifica el CORS en AWS.');
-    appendTerm('mcConsoleLogs', `Fallo de red/CORS en POST: ${err.message}`, 'warn');
-    await syncRealAwsStatus();
+    showToast('No se pudo contactar con AWS Lambda.');
+    addLog(`Fallo en petición POST: ${err.message}`);
+    await syncAwsStatus(true);
   }
 }
 
-function controlGpuSimulation(targetState) {
-  const isStart = targetState === 'on';
-  if (isStart) {
-    openUsbAuthModal(() => {
-      state.quotaApproved = true;
-      state.gpu = 'starting';
-      render();
-      appendTerm('aiConsoleLogs', 'Iniciando nodo g6.xlarge (Simulación local)...', 'cmd');
-      setTimeout(() => {
-        state.gpu = 'on';
-        appendTerm('aiConsoleLogs', `Nodo GPU activo en ${state.gpuIp}. Túnel SSH listo.`, 'ok');
-        toast('Estación GPU iniciada (modo simulación).');
-        render();
-      }, 1400);
-    });
-  } else {
-    state.gpu = 'stopping';
-    render();
-    setTimeout(() => {
-      state.gpu = 'off';
-      appendTerm('aiConsoleLogs', 'Nodo GPU detenido.', 'ok');
-      render();
-    }, 900);
-  }
-}
+// === EVENTOS DE BOTONES ===
+document.getElementById('tabNodes').addEventListener('click', () => switchTab('nodes'));
+document.getElementById('tabMcPortal').addEventListener('click', () => switchTab('portal'));
+document.getElementById('openMcPortalBtn').addEventListener('click', () => switchTab('portal'));
+document.getElementById('backToNodesBtn').addEventListener('click', () => switchTab('nodes'));
 
-document.querySelectorAll('.simulate').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const service = btn.dataset.service;
-    const action = btn.dataset.action;
-    if (state.role === 'player' && (service === 'gpu' || action === 'apagar')) {
-      toast('Acción permitida solo para el administrador.');
-      return;
-    }
-    if (service === 'mc') {
-      controlMinecraftAws(action === 'encender' ? 'on' : 'off');
-    } else {
-      controlGpuSimulation(action === 'encender' ? 'on' : 'off');
-    }
-  });
-});
+document.getElementById('startMcBtn').addEventListener('click', () => sendLambdaAction('mc', 'on'));
+document.getElementById('portalStartMcBtn').addEventListener('click', () => sendLambdaAction('mc', 'on'));
+document.getElementById('stopMcBtn').addEventListener('click', () => sendLambdaAction('mc', 'off'));
 
-document.getElementById('syncNowBtn').addEventListener('click', () => {
-  toast('Consultando estado real en AWS...');
-  syncRealAwsStatus(false);
-});
-document.getElementById('refreshMcBtn').addEventListener('click', () => {
-  toast('Actualizando estado e IP desde AWS...');
-  syncRealAwsStatus(false);
-});
+document.getElementById('startDevBtn').addEventListener('click', () => sendLambdaAction('dev', 'on'));
+document.getElementById('stopDevBtn').addEventListener('click', () => sendLambdaAction('dev', 'off'));
 
-document.getElementById('toggleQuotaBtn').addEventListener('click', () => {
-  state.quotaApproved = !state.quotaApproved;
-  if (state.gpu !== 'on' && state.gpu !== 'starting') {
-    state.gpu = state.quotaApproved ? 'off' : 'pending';
-  }
-  render();
+document.getElementById('syncBtn').addEventListener('click', () => {
+  showToast('Sincronizando con AWS...');
+  syncAwsStatus(false);
 });
-
-document.getElementById('mcConsoleForm').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const input = document.getElementById('mcConsoleInput');
-  const cmd = input.value.trim();
-  if (!cmd) return;
-  input.value = '';
-  appendTerm('mcConsoleLogs', `> ${cmd}`, 'cmd');
-  if (cmd.toLowerCase() === '/status') {
-    syncRealAwsStatus(false);
-  } else {
-    appendTerm('mcConsoleLogs', `Nota registrada. Estado actual: ${state.mc.toUpperCase()} (${state.mcIp || 'Sin IP'})`, 'ok');
-  }
-});
-
-document.getElementById('aiConsoleForm').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const input = document.getElementById('aiConsoleInput');
-  const prompt = input.value.trim();
-  if (!prompt) return;
-  input.value = '';
-  appendTerm('aiConsoleLogs', `Prompt: "${prompt}"`, 'cmd');
-  if (state.gpu !== 'on') {
-    appendTerm('aiConsoleLogs', 'Enciende primero el nodo GPU.', 'warn');
-    return;
-  }
-  const mdl = document.getElementById('ollamaModelSelect').value;
-  setTimeout(() => {
-    appendTerm('aiConsoleLogs', `[${mdl}] Usa .select_related() y .prefetch_related() para optimizar tus queries en Django.`, 'ok');
-  }, 400);
+document.getElementById('refreshPortalBtn').addEventListener('click', () => {
+  showToast('Actualizando IP...');
+  syncAwsStatus(false);
 });
 
 document.getElementById('copyMcIpBtn').addEventListener('click', () => {
   if (!state.mcIp) {
-    toast('El servidor aún no tiene una IP pública asignada.');
+    showToast('Aún no hay una IP pública disponible.');
     return;
   }
-  navigator.clipboard?.writeText(state.mcIp);
-  toast(`¡IP copiada!: ${state.mcIp}`);
+  navigator.clipboard.writeText(state.mcIp);
+  showToast(`¡IP copiada al portapapeles!: ${state.mcIp}`);
 });
+
 document.getElementById('copySshBtn').addEventListener('click', () => {
-  const cmd = document.getElementById('sshCommandText').textContent;
-  navigator.clipboard?.writeText(cmd);
-  toast('Comando SSH copiado.');
+  const cmd = document.getElementById('sshCmdBox').textContent.trim();
+  navigator.clipboard.writeText(cmd);
+  showToast('Comando de túnel SSH copiado.');
 });
 
-document.querySelectorAll('.navbtn[data-view]').forEach(b => b.addEventListener('click', () => setView(b.dataset.view)));
-document.querySelectorAll('[data-goto]').forEach(b => b.addEventListener('click', () => setView(b.dataset.goto)));
-
-document.getElementById('adminTab').onclick = () => { state.role = 'admin'; render(); setView('overview'); };
-document.getElementById('playerTab').onclick = () => { state.role = 'player'; render(); setView('minecraft'); };
-document.getElementById('exitPlayerPreview').onclick = () => { state.role = 'admin'; render(); setView('overview'); };
-document.getElementById('clearLogsBtn').onclick = () => { document.getElementById('eventList').replaceChildren(); };
-
-window.addEventListener('keydown', (e) => {
-  if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName)) return;
-  if (e.key === 'Escape') closeModal();
-  if (e.key === '1') setView('overview');
-  if (e.key === '2') setView('minecraft');
-  if (e.key === '3') setView('ai');
-  if (e.key === '4') setView('activity');
-  if (e.key === '5') setView('security');
-  if (e.key.toLowerCase() === 'r') {
-    state.role = state.role === 'admin' ? 'player' : 'admin';
-    render();
-  }
-});
-
-// Arrancar sincronización real con tu Lambda
-setView(state.view);
-render();
-syncRealAwsStatus(false);
-setInterval(() => syncRealAwsStatus(true), 12000);
+// Inicializar
+renderUI();
+syncAwsStatus(false);
+setInterval(() => syncAwsStatus(true), 12000);
 </script>
 </body>
 </html>
