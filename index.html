@@ -682,14 +682,14 @@ async function sendLambdaAction(service, targetState) {
   const isMc = service === 'mc';
   const isStart = targetState === 'on';
 
-  // Solo pide llave al INICIAR el servidor de programación (Apagar es directo)
+  // SÓLO pedimos llave si estamos INICIANDO SpawnDeck. Apagar es 100% libre y directo.
   if (!isMc && isStart && !state.usbHash) {
     state.pendingAction = () => sendLambdaAction(service, targetState);
     document.getElementById('usbModal').classList.add('open');
     return;
   }
 
-  // Si estamos apagando SpawnDeck, cerramos el túnel local primero
+  // Si estamos apagando SpawnDeck, cerramos el túnel SSH local de inmediato
   if (!isMc && !isStart) {
     disconnectLocalTunnel();
   }
@@ -706,26 +706,32 @@ async function sendLambdaAction(service, targetState) {
   addLog(`Enviando '${actionName}' a AWS Lambda...`);
 
   try {
+    // Si estamos apagando, mandamos el payload sin exigir credenciales de USB
+    const bodyData = {
+      action: actionName,
+      pin: FRIEND_PIN
+    };
+    
+    if (isStart) {
+      bodyData.adminHash = state.usbHash;
+      bodyData.usbPassword = state.usbSecret;
+    }
+
     const res = await fetch(LAMBDA_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        action: actionName,
-        pin: FRIEND_PIN,
-        adminHash: state.usbHash,
-        usbPassword: state.usbSecret
-      })
+      body: JSON.stringify(bodyData)
     });
     const data = await res.json();
 
     if (!res.ok || data.error) {
-      showToast(`AWS respondió: ${data.error || 'Verifica tu llave .qkey'}`);
+      showToast(`AWS respondió: ${data.error || 'Error en la orden'}`);
       addLog(`Error AWS: ${data.error || res.status}`);
       await syncAwsStatus(true);
       return;
     }
 
-    showToast(isStart ? 'Iniciando en AWS…' : 'Apagando servidor…');
+    showToast(isStart ? 'Iniciando en AWS…' : 'Apagando servidor en AWS…');
 
     const poll = setInterval(async () => {
       await syncAwsStatus(true);
@@ -735,7 +741,8 @@ async function sendLambdaAction(service, targetState) {
         triggerLocalTunnel(state.devIp);
       } else if (!isMc && !isStart && state.dev === 'off') {
         clearInterval(poll);
-        addLog('SpawnDeck detenido.');
+        addLog('SpawnDeck detenido correctamente.');
+        showToast('SpawnDeck apagado.');
       } else if (isMc && ((isStart && state.mc === 'on' && state.mcIp) || (!isStart && state.mc === 'off'))) {
         clearInterval(poll);
       }
