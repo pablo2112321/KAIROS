@@ -47,11 +47,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.container {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 40px 24px 64px;
-}
+.container { max-width: 960px; margin: 0 auto; padding: 40px 24px 64px; }
 
 .header {
   display: flex;
@@ -65,35 +61,20 @@ body {
 }
 
 .brand { display: flex; align-items: center; gap: 14px; }
-
 .brand-logo {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  background: var(--text);
-  color: var(--bg);
-  display: grid;
-  place-items: center;
-  font-weight: 700;
-  font-size: 16px;
+  width: 38px; height: 38px; border-radius: 10px;
+  background: var(--text); color: var(--bg);
+  display: grid; place-items: center; font-weight: 700; font-size: 16px;
 }
-
 .brand-text h1 { font-size: 17px; font-weight: 600; letter-spacing: 0.04em; }
 .brand-text p { font-size: 12px; color: var(--text-muted); }
 
 .header-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 
 .pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 500;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 12px; border-radius: 999px; font-size: 12px; font-weight: 500;
+  background: var(--surface); border: 1px solid var(--border); color: var(--text-secondary);
 }
 
 .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text-muted); }
@@ -101,23 +82,13 @@ body {
 .dot.busy { background: var(--amber); box-shadow: 0 0 8px var(--amber); animation: pulse 1.5s infinite ease-in-out; }
 .dot.error { background: var(--danger); }
 
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.35; }
-}
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
 
 .view-nav { display: flex; gap: 8px; margin-bottom: 28px; }
-
 .tab-btn {
-  background: transparent;
-  border: 1px solid transparent;
-  color: var(--text-secondary);
-  padding: 8px 16px;
-  border-radius: var(--radius-sm);
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.18s ease;
+  background: transparent; border: 1px solid transparent; color: var(--text-secondary);
+  padding: 8px 16px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500;
+  cursor: pointer; transition: all 0.18s ease;
 }
 .tab-btn:hover { color: var(--text); background: var(--surface); }
 .tab-btn.active { background: var(--surface); border-color: var(--border-strong); color: var(--text); }
@@ -125,66 +96,33 @@ body {
 .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
 
 .card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 28px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 28px;
+  display: flex; flex-direction: column; justify-content: space-between;
   transition: border-color 0.2s ease;
 }
 .card:hover { border-color: var(--border-strong); }
 .card.active-mc { border-color: rgba(16, 185, 129, 0.4); }
 .card.active-dev { border-color: rgba(99, 102, 241, 0.4); }
 
-.card-top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 18px;
-}
-
-.node-tag {
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  display: block;
-  margin-bottom: 4px;
-}
-
+.card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+.node-tag { font-family: var(--mono); font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 4px; }
 .card-title { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
 
 .status-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 11.5px;
-  font-weight: 500;
-  font-family: var(--mono);
-  background: var(--surface-subtle);
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
+  display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px;
+  border-radius: 999px; font-size: 11.5px; font-weight: 500; font-family: var(--mono);
+  background: var(--surface-subtle); border: 1px solid var(--border); color: var(--text-secondary);
 }
 .status-badge.on { background: var(--mc-soft); color: #34d399; border-color: rgba(16, 185, 129, 0.25); }
 .status-badge.starting, .status-badge.stopping { background: var(--amber-soft); color: #fbbf24; border-color: rgba(245, 158, 11, 0.25); }
 
-.card-desc { color: var(--text-secondary); font-size: 13.5px; margin-bottom: 24px; line-height: 1.6; }
+.card-desc { color: var(--text-secondary); font-size: 13.5px; margin-bottom: 20px; line-height: 1.6; }
 
 .specs {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  padding: 14px;
-  background: var(--surface-subtle);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  margin-bottom: 24px;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 14px;
+  background: var(--surface-subtle); border: 1px solid var(--border);
+  border-radius: var(--radius-md); margin-bottom: 18px;
 }
 .spec-item span { display: block; font-size: 11px; color: var(--text-muted); margin-bottom: 2px; }
 .spec-item strong { font-family: var(--mono); font-size: 11.5px; font-weight: 500; color: var(--text); word-break: break-all; }
@@ -192,19 +130,10 @@ body {
 .actions { display: flex; gap: 10px; flex-wrap: wrap; }
 
 .btn {
-  appearance: none;
-  border: 1px solid var(--border-strong);
-  background: var(--surface-hover);
-  color: var(--text);
-  padding: 11px 16px;
-  border-radius: var(--radius-md);
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  appearance: none; border: 1px solid var(--border-strong); background: var(--surface-hover);
+  color: var(--text); padding: 11px 16px; border-radius: var(--radius-md);
+  font-size: 13px; font-weight: 500; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   transition: all 0.16s ease;
 }
 .btn:hover:not(:disabled) { background: #1f2330; border-color: rgba(255, 255, 255, 0.28); }
@@ -222,62 +151,41 @@ body {
 .view-section.active { display: block; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
-.mc-portal {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 36px;
-  text-align: center;
-  max-width: 640px;
-  margin: 0 auto;
-}
-.mc-portal-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
-  background: var(--mc-soft);
-  color: #34d399;
-  display: grid;
-  place-items: center;
-  font-size: 22px;
-  margin: 0 auto 16px;
-  border: 1px solid rgba(16, 185, 129, 0.25);
-}
-.mc-portal h2 { font-size: 22px; font-weight: 600; margin-bottom: 8px; }
-.mc-portal p { color: var(--text-secondary); font-size: 13.5px; max-width: 460px; margin: 0 auto 28px; }
-
-.ip-box {
-  background: var(--surface-subtle);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-md);
-  padding: 20px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
-}
-.ip-box-left { text-align: left; }
-.ip-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); display: block; margin-bottom: 4px; }
-.ip-address { font-family: var(--mono); font-size: 20px; font-weight: 600; color: var(--text); }
-
 .dev-tunnel-box {
-  margin-top: 18px;
-  padding: 14px;
-  background: var(--surface-subtle);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  padding: 14px; background: var(--surface-subtle);
+  border: 1px solid var(--border); border-radius: var(--radius-md);
 }
 .dev-tunnel-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; font-size: 11.5px; color: var(--text-secondary); }
 .dev-tunnel-code { font-family: var(--mono); font-size: 11.5px; color: #a5b4fc; word-break: break-all; line-height: 1.5; }
 
+.gpu-warmup-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 14px; border-radius: var(--radius-sm);
+  background: rgba(99, 102, 241, 0.08); border: 1px solid rgba(99, 102, 241, 0.25);
+  margin-bottom: 12px; font-family: var(--mono); font-size: 11.5px;
+}
+
+.mc-portal {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 36px; text-align: center;
+  max-width: 640px; margin: 0 auto;
+}
+.mc-portal-icon {
+  width: 52px; height: 52px; border-radius: 14px; background: var(--mc-soft); color: #34d399;
+  display: grid; place-items: center; font-size: 22px; margin: 0 auto 16px;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+.ip-box {
+  background: var(--surface-subtle); border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md); padding: 20px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; margin: 24px 0; flex-wrap: wrap;
+}
+.ip-address { font-family: var(--mono); font-size: 20px; font-weight: 600; color: var(--text); }
+
 .log-panel {
-  margin-top: 32px;
-  padding: 18px 22px;
-  background: var(--surface-subtle);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  margin-top: 32px; padding: 18px 22px; background: var(--surface-subtle);
+  border: 1px solid var(--border); border-radius: var(--radius-md);
 }
 .log-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 11.5px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
 .log-list { font-family: var(--mono); font-size: 12px; color: var(--text-secondary); max-height: 120px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
@@ -285,80 +193,47 @@ body {
 .log-time { color: var(--text-muted); flex-shrink: 0; }
 
 .modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(5, 6, 10, 0.8);
-  backdrop-filter: blur(6px);
-  display: none;
-  place-items: center;
-  padding: 20px;
-  z-index: 50;
+  position: fixed; inset: 0; background: rgba(5, 6, 10, 0.8);
+  backdrop-filter: blur(6px); display: none; place-items: center; padding: 20px; z-index: 50;
 }
 .modal-backdrop.open { display: grid; }
 .modal {
-  background: var(--surface);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-lg);
-  padding: 28px;
-  max-width: 440px;
-  width: 100%;
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6);
+  background: var(--surface); border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg); padding: 28px; max-width: 460px; width: 100%;
 }
 .modal h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
-.modal p { font-size: 13px; color: var(--text-secondary); margin-bottom: 20px; line-height: 1.55; }
+.modal p { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.55; }
 
 .file-drop {
-  border: 1px dashed var(--border-strong);
-  background: var(--surface-subtle);
-  border-radius: var(--radius-md);
-  padding: 22px 16px;
-  text-align: center;
-  cursor: pointer;
-  transition: border-color 0.16s ease, background 0.16s ease;
-  margin-bottom: 14px;
+  border: 1px dashed var(--border-strong); background: var(--surface-subtle);
+  border-radius: var(--radius-md); padding: 20px 16px; text-align: center;
+  cursor: pointer; margin-bottom: 14px;
 }
 .file-drop:hover { border-color: var(--dev-accent); background: rgba(99, 102, 241, 0.05); }
-.file-drop strong { display: block; font-size: 13px; margin-bottom: 4px; }
-.file-drop span { font-size: 11.5px; color: var(--text-muted); font-family: var(--mono); }
+
+.input-text {
+  width: 100%; padding: 10px 12px; border-radius: var(--radius-sm);
+  background: var(--surface-subtle); border: 1px solid var(--border-strong);
+  color: var(--text); font-family: var(--mono); font-size: 12px; margin-bottom: 14px;
+}
 
 .key-preview {
-  font-family: var(--mono);
-  font-size: 11px;
-  color: #34d399;
-  background: var(--mc-soft);
-  border: 1px solid rgba(16, 185, 129, 0.25);
-  padding: 9px 12px;
-  border-radius: var(--radius-sm);
-  margin-bottom: 16px;
-  word-break: break-all;
-  display: none;
+  font-family: var(--mono); font-size: 11px; color: #34d399;
+  background: var(--mc-soft); border: 1px solid rgba(16, 185, 129, 0.25);
+  padding: 9px 12px; border-radius: var(--radius-sm); margin-bottom: 16px;
+  word-break: break-all; display: none;
 }
 .modal-actions { display: flex; justify-content: flex-end; gap: 10px; }
 
 .toast {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  background: var(--surface);
-  border: 1px solid var(--border-strong);
-  color: var(--text);
-  padding: 12px 18px;
-  border-radius: var(--radius-md);
-  font-size: 13px;
-  font-weight: 500;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
-  opacity: 0;
-  transform: translateY(10px);
-  pointer-events: none;
-  transition: all 0.2s ease;
-  z-index: 60;
+  position: fixed; bottom: 24px; right: 24px; background: var(--surface);
+  border: 1px solid var(--border-strong); color: var(--text); padding: 12px 18px;
+  border-radius: var(--radius-md); font-size: 13px; font-weight: 500;
+  opacity: 0; transform: translateY(10px); pointer-events: none; transition: all 0.2s ease; z-index: 60;
 }
 .toast.show { opacity: 1; transform: translateY(0); }
 
-@media (max-width: 720px) {
-  .grid { grid-template-columns: 1fr; }
-  .ip-box { flex-direction: column; align-items: stretch; }
-}
+@media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -378,6 +253,10 @@ body {
         <span class="dot busy" id="awsDot"></span>
         <span id="awsStatusText">Sincronizando AWS…</span>
       </div>
+      <div class="pill">
+        <span class="dot" id="bridgeDot"></span>
+        <span id="bridgeStatusText">Puente PC: Buscando…</span>
+      </div>
       <button class="btn btn-sm" id="usbStatusBtn" type="button">
         <span id="usbStatusLabel">🔑 Llave USB: No cargada</span>
       </button>
@@ -390,7 +269,6 @@ body {
     <button class="tab-btn" id="tabMcPortal" type="button">Sala de Conexión Minecraft</button>
   </div>
 
-  <!-- VISTA 1: PANEL UNIFICADO -->
   <section class="view-section active" id="sectionNodes">
     <div class="grid">
       <!-- Nodo Minecraft: spokcillo -->
@@ -412,25 +290,16 @@ body {
           </p>
 
           <div class="specs">
-            <div class="spec-item">
-              <span>Nombre</span>
-              <strong>spokcillo</strong>
-            </div>
-            <div class="spec-item">
-              <span>Instance ID</span>
-              <strong>i-0830d7dc6ccd4a515</strong>
-            </div>
-            <div class="spec-item">
-              <span>IP Pública</span>
-              <strong id="mcCardIp">—</strong>
-            </div>
+            <div class="spec-item"><span>Nombre</span><strong>spokcillo</strong></div>
+            <div class="spec-item"><span>Instance ID</span><strong>i-0830d7dc6ccd4a515</strong></div>
+            <div class="spec-item"><span>IP Pública</span><strong id="mcCardIp">—</strong></div>
           </div>
         </div>
 
         <div class="actions">
           <button class="btn btn-mc" id="startMcBtn" type="button">Iniciar Servidor</button>
           <button class="btn" id="openMcPortalBtn" type="button">Ver IP</button>
-          <button class="btn btn-danger" id="stopMcBtn" type="button" title="Requiere llave en pendrive">Apagar</button>
+          <button class="btn btn-danger" id="stopMcBtn" type="button">Apagar</button>
         </div>
       </article>
 
@@ -449,37 +318,34 @@ body {
           </div>
 
           <p class="card-desc">
-            Instancia dedicada para programar y ejecutar modelos en VS Code. Requiere seleccionar la llave de seguridad en tu pendrive para encender o apagar.
+            Prende la instancia G6, abre el túnel SSH hacia tu PC automáticamente y precalienta <strong>qwen3-coder:30b-fast</strong> en la GPU NVIDIA L4.
           </p>
 
           <div class="specs">
-            <div class="spec-item">
-              <span>Nombre</span>
-              <strong>SpawnDeck-Dev</strong>
-            </div>
-            <div class="spec-item">
-              <span>Instance ID</span>
-              <strong>i-097a016bf5e55ec12</strong>
-            </div>
-            <div class="spec-item">
-              <span>IP Pública</span>
-              <strong id="devCardIp">—</strong>
-            </div>
+            <div class="spec-item"><span>Modelo IA</span><strong>qwen3:30b-fast</strong></div>
+            <div class="spec-item"><span>Instance ID</span><strong>i-097a016bf5e55ec12</strong></div>
+            <div class="spec-item"><span>IP Pública</span><strong id="devCardIp">—</strong></div>
+          </div>
+
+          <!-- Estado en vivo del Túnel + Calentamiento GPU -->
+          <div class="gpu-warmup-bar">
+            <span id="tunnelLiveStatus">🔴 Túnel Local: Desconectado</span>
+            <button class="btn btn-sm" id="manualTunnelBtn" type="button">Conectar y Calentar</button>
           </div>
 
           <div class="dev-tunnel-box">
             <div class="dev-tunnel-head">
-              <span>Túnel SSH (VS Code / Localhost)</span>
+              <span>Comando SSH Directo (Pendrive E:\)</span>
               <button class="btn btn-sm" id="copySshBtn" type="button">Copiar comando</button>
             </div>
             <div class="dev-tunnel-code" id="sshCmdBox">
-              ssh -i ~/.ssh/qelvaryth-gpu.pem -N -L 11434:127.0.0.1:11434 ubuntu@&lt;esperando-ip&gt;
+              ssh -i "E:\spawndeck.key" -N -L 11434:127.0.0.1:11434 -o Compression=no -o IPQoS=lowdelay ubuntu@&lt;esperando-ip&gt;
             </div>
           </div>
         </div>
 
         <div class="actions" style="margin-top: 20px;">
-          <button class="btn btn-dev" id="startDevBtn" type="button">🔑 Iniciar con Pendrive</button>
+          <button class="btn btn-dev" id="startDevBtn" type="button">⚡ Prender + Abrir Túnel</button>
           <button class="btn btn-danger" id="stopDevBtn" type="button">Apagar</button>
         </div>
       </article>
@@ -491,13 +357,9 @@ body {
     <div class="mc-portal">
       <div class="mc-portal-icon">⛏</div>
       <h2>Conexión a spokcillo</h2>
-      <p>
-        Copia la dirección IP pública para conectarte al servidor desde Minecraft. Recuerda que la IP cambia cada vez que se inicia la instancia.
-      </p>
-
       <div class="ip-box">
-        <div class="ip-box-left">
-          <span class="ip-label" id="portalStateLabel">Estado del Servidor</span>
+        <div style="text-align:left;">
+          <span class="node-tag" id="portalStateLabel">Estado del Servidor</span>
           <div class="ip-address" id="portalIpText">Sincronizando…</div>
         </div>
         <div style="display:flex; gap:8px;">
@@ -505,7 +367,6 @@ body {
           <button class="btn" id="refreshPortalBtn" type="button">↻</button>
         </div>
       </div>
-
       <div class="actions" style="justify-content: center;">
         <button class="btn btn-mc" id="portalStartMcBtn" type="button" style="max-width: 240px;">Iniciar Servidor</button>
         <button class="btn" id="backToNodesBtn" type="button">← Volver al panel</button>
@@ -515,38 +376,37 @@ body {
 
   <div class="log-panel">
     <div class="log-header">
-      <span>Registro de Actividad AWS</span>
+      <span>Registro de Actividad KAIROS</span>
       <span id="lastSyncTime">--:--:--</span>
     </div>
-    <div class="log-list" id="logList">
-      <div class="log-item">
-        <span class="log-time">[SISTEMA]</span>
-        <span>KAIROS listo. Sincronizando instancias i-0830d7dc6ccd4a515 y i-097a016bf5e55ec12...</span>
-      </div>
-    </div>
+    <div class="log-list" id="logList"></div>
   </div>
 </div>
 
-<!-- Modal: Autenticación con Pendrive -->
+<!-- Modal: Cargar o Crear Llave de Pendrive -->
 <div class="modal-backdrop" id="usbModal">
   <form class="modal" id="usbForm">
-    <h3>Autenticación con Pendrive</h3>
-    <p>
-      Selecciona el archivo de llave o contraseña almacenado en tu pendrive USB para autorizar esta acción en AWS.
-    </p>
+    <h3>Llave de Autorización (Pendrive)</h3>
+    <p>Selecciona tu archivo <strong>.qkey</strong> del pendrive o escribe tu clave secreta para generar un nuevo archivo <code>.qkey</code>.</p>
 
     <input type="file" id="usbFileInput" accept=".qkey,.key,.txt,.pem,*/*" style="display:none">
 
     <div class="file-drop" id="fileDropZone">
-      <strong id="fileDropTitle">Seleccionar archivo desde tu Pendrive</strong>
-      <span id="fileDropSub">Formatos soportados: .qkey, .key, .txt, .pem</span>
+      <strong id="fileDropTitle">📂 Cargar archivo desde E:\ (Spokcillo)</strong>
+      <span id="fileDropSub">Haz clic para buscar DEMO_SOLO_PARA_PROTOTIPO.qkey</span>
+    </div>
+
+    <p style="margin-bottom:6px; font-size:12px;">O escribe/crea tu clave directamente:</p>
+    <div style="display:flex; gap:8px; margin-bottom:14px;">
+      <input type="password" id="manualKeyInput" class="input-text" placeholder="Escribe la clave secreta de tu Lambda..." style="margin-bottom:0;">
+      <button class="btn btn-sm" type="button" id="downloadQkeyBtn" title="Guardar como nuevo archivo .qkey en tu Pendrive">💾 Crear .qkey</button>
     </div>
 
     <div class="key-preview" id="keyPreviewBox"></div>
 
     <div class="modal-actions">
       <button class="btn" type="button" id="cancelModalBtn">Cancelar</button>
-      <button class="btn btn-primary" type="submit" id="confirmUsbBtn" disabled>Verificar y Continuar</button>
+      <button class="btn btn-primary" type="submit" id="confirmUsbBtn" disabled>Guardar y Continuar</button>
     </div>
   </form>
 </div>
@@ -555,6 +415,7 @@ body {
 
 <script>
 const LAMBDA_URL = "https://yakcmdk3nraxjqlgl77wh7gczm0hgove.lambda-url.us-east-2.on.aws/";
+const LOCAL_BRIDGE_URL = "http://127.0.0.1:17500";
 const FRIEND_PIN = "spokcillo";
 
 const state = {
@@ -562,9 +423,11 @@ const state = {
   mcIp: null,
   dev: 'off',
   devIp: null,
-  usbHash: null,
-  usbSecret: null,
-  usbFileName: null,
+  bridgeOnline: false,
+  tunnelState: 'off',
+  usbHash: localStorage.getItem('kairos_usb_hash') || null,
+  usbSecret: localStorage.getItem('kairos_usb_secret') || null,
+  usbFileName: localStorage.getItem('kairos_usb_name') || null,
   pendingAction: null
 };
 
@@ -586,7 +449,7 @@ function addLog(text) {
   item.className = 'log-item';
   item.innerHTML = `<span class="log-time">[${nowStr()}]</span><span>${text}</span>`;
   list.prepend(item);
-  while (list.children.length > 20) list.lastElementChild.remove();
+  while (list.children.length > 25) list.lastElementChild.remove();
 }
 
 function switchTab(tabName) {
@@ -600,43 +463,19 @@ function switchTab(tabName) {
 function renderUI() {
   const labels = { off: 'Detenido', starting: 'Iniciando…', stopping: 'Apagando…', on: 'En ejecución' };
 
-  // Nodo spokcillo (Minecraft)
+  // Minecraft
   document.getElementById('mcBadge').className = `status-badge ${state.mc}`;
   document.getElementById('mcDot').className = `dot ${state.mc === 'on' ? 'online' : (state.mc === 'starting' || state.mc === 'stopping' ? 'busy' : '')}`;
   document.getElementById('mcStatusLabel').textContent = labels[state.mc] || 'Detenido';
   document.getElementById('mcCard').classList.toggle('active-mc', state.mc === 'on');
-  document.getElementById('mcCardIp').textContent = (state.mc === 'on' && state.mcIp) ? state.mcIp : (state.mc === 'starting' ? 'Asignando…' : '—');
+  document.getElementById('mcCardIp').textContent = (state.mc === 'on' && state.mcIp) ? state.mcIp : '—';
 
   const mcBusy = state.mc === 'starting' || state.mc === 'stopping';
-  const startMcBtn = document.getElementById('startMcBtn');
-  startMcBtn.disabled = mcBusy || state.mc === 'on';
-  startMcBtn.textContent = state.mc === 'on' ? 'Servidor en línea' : (state.mc === 'starting' ? 'Iniciando en AWS…' : 'Iniciar Servidor');
+  document.getElementById('startMcBtn').disabled = mcBusy || state.mc === 'on';
   document.getElementById('stopMcBtn').disabled = mcBusy || state.mc !== 'on';
+  document.getElementById('portalIpText').textContent = (state.mc === 'on' && state.mcIp) ? state.mcIp : 'Sin IP asignada';
 
-  // Portal Minecraft
-  const portalStateLabel = document.getElementById('portalStateLabel');
-  const portalIpText = document.getElementById('portalIpText');
-  const portalStartBtn = document.getElementById('portalStartMcBtn');
-
-  if (state.mc === 'on' && state.mcIp) {
-    portalStateLabel.textContent = 'spokcillo Online · Listo para entrar';
-    portalIpText.textContent = state.mcIp;
-    portalStartBtn.style.display = 'none';
-  } else if (state.mc === 'starting') {
-    portalStateLabel.textContent = 'Encendiendo i-0830d7dc6ccd4a515 en AWS…';
-    portalIpText.textContent = 'Asignando IP pública…';
-    portalStartBtn.style.display = 'none';
-  } else if (state.mc === 'stopping') {
-    portalStateLabel.textContent = 'Deteniendo servidor…';
-    portalIpText.textContent = 'Cerrando sesión…';
-    portalStartBtn.style.display = 'none';
-  } else {
-    portalStateLabel.textContent = 'Servidor Detenido';
-    portalIpText.textContent = 'Sin IP asignada';
-    portalStartBtn.style.display = 'inline-flex';
-  }
-
-  // Nodo SpawnDeck (Programación)
+  // SpawnDeck
   document.getElementById('devBadge').className = `status-badge ${state.dev}`;
   document.getElementById('devDot').className = `dot ${state.dev === 'on' ? 'online' : (state.dev === 'starting' || state.dev === 'stopping' ? 'busy' : '')}`;
   document.getElementById('devStatusLabel').textContent = labels[state.dev] || 'Detenido';
@@ -646,50 +485,137 @@ function renderUI() {
   const devBusy = state.dev === 'starting' || state.dev === 'stopping';
   const startDevBtn = document.getElementById('startDevBtn');
   startDevBtn.disabled = devBusy || state.dev === 'on';
-  startDevBtn.textContent = state.dev === 'on' ? 'SpawnDeck Activo' : (state.dev === 'starting' ? 'Iniciando en AWS…' : '🔑 Iniciar con Pendrive');
+  startDevBtn.textContent = state.dev === 'on' ? 'SpawnDeck Activo' : (state.dev === 'starting' ? 'Iniciando en AWS…' : '⚡ Prender + Abrir Túnel');
   document.getElementById('stopDevBtn').disabled = devBusy || state.dev !== 'on';
 
   const sshHost = (state.dev === 'on' && state.devIp) ? state.devIp : '<esperando-ip>';
-  document.getElementById('sshCmdBox').textContent = `ssh -i ~/.ssh/qelvaryth-gpu.pem -N -L 11434:127.0.0.1:11434 ubuntu@${sshHost}`;
+  document.getElementById('sshCmdBox').textContent = `ssh -i "E:\\spawndeck.key" -N -L 11434:127.0.0.1:11434 -o Compression=no -o IPQoS=lowdelay ubuntu@${sshHost}`;
 
   document.getElementById('usbStatusLabel').textContent = state.usbHash
-    ? `🔑 USB: ${state.usbFileName} (${state.usbHash.slice(0, 6)}…)`
+    ? `🔑 Llave: ${state.usbFileName} (${state.usbHash.slice(0, 6)}…)`
     : '🔑 Llave USB: No cargada';
 }
 
-async function sha256Hex(buffer) {
-  const digest = await crypto.subtle.digest('SHA-256', buffer);
+// Normaliza saltos de línea \r\n de Windows para que el hash SHA-256 nunca falle
+async function computeNormalizedHash(text) {
+  const clean = text.trim();
+  const encoder = new TextEncoder();
+  const digest = await crypto.subtle.digest('SHA-256', encoder.encode(clean));
   return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
-function requireUsbKey(callback) {
-  if (state.usbHash) {
-    callback();
-    return;
+// Sincronizar con el Puente Local de tu PC (kairos_bridge.pyw)
+async function pollLocalBridge() {
+  const bDot = document.getElementById('bridgeDot');
+  const bTxt = document.getElementById('bridgeStatusText');
+  const liveBar = document.getElementById('tunnelLiveStatus');
+
+  try {
+    const res = await fetch(LOCAL_BRIDGE_URL, { method: 'GET' });
+    const data = await res.json();
+    state.bridgeOnline = true;
+    state.tunnelState = data.tunnel;
+
+    bDot.className = 'dot online';
+    bTxt.textContent = 'Puente PC: Activo';
+
+    if (data.tunnel === 'ready') {
+      liveBar.textContent = `🟢 ${data.message}`;
+      liveBar.style.color = '#34d399';
+    } else if (data.tunnel === 'connecting' || data.tunnel === 'warming') {
+      liveBar.textContent = `🟡 ${data.message}`;
+      liveBar.style.color = '#fbbf24';
+    } else if (data.tunnel === 'error') {
+      liveBar.textContent = `🔴 ${data.message}`;
+      liveBar.style.color = '#f87171';
+    } else {
+      liveBar.textContent = '⚪ Túnel Local: En espera';
+      liveBar.style.color = '#9ca3af';
+    }
+
+    // AUTO-CONEXIÓN: Si SpawnDeck está ON con IP y el túnel está apagado, lo abre solo
+    if (state.dev === 'on' && state.devIp && data.tunnel === 'off') {
+      triggerLocalTunnel(state.devIp);
+    }
+  } catch (e) {
+    state.bridgeOnline = false;
+    bDot.className = 'dot';
+    bTxt.textContent = 'Puente PC: Apagado';
+    liveBar.textContent = '⚪ Ejecuta kairos_bridge.pyw en tu PC para auto-túnel';
+    liveBar.style.color = '#9ca3af';
   }
-  state.pendingAction = callback;
-  document.getElementById('usbModal').classList.add('open');
 }
 
-const usbFileInput = document.getElementById('usbFileInput');
+async function triggerLocalTunnel(ip) {
+  if (!ip) return;
+  try {
+    addLog(`Ordenando al Puente PC abrir túnel SSH hacia ${ip} y calentar GPU...`);
+    await fetch(LOCAL_BRIDGE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'connect', ip })
+    });
+    pollLocalBridge();
+  } catch (e) {
+    showToast('Abre kairos_bridge.pyw en tu PC para automatizar el túnel.');
+  }
+}
+
+async function disconnectLocalTunnel() {
+  try {
+    await fetch(LOCAL_BRIDGE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'disconnect' })
+    });
+  } catch (e) {}
+}
+
+// Manejo de Llave USB
 let tempHash = null, tempSecret = null, tempFileName = null;
+const usbFileInput = document.getElementById('usbFileInput');
+const manualKeyInput = document.getElementById('manualKeyInput');
 
 document.getElementById('fileDropZone').addEventListener('click', () => usbFileInput.click());
 
 usbFileInput.addEventListener('change', async () => {
   const file = usbFileInput.files && usbFileInput.files[0];
   if (!file) return;
-  const arrayBuffer = await file.arrayBuffer();
-  tempHash = await sha256Hex(arrayBuffer);
   tempSecret = (await file.text()).trim();
+  tempHash = await computeNormalizedHash(tempSecret);
   tempFileName = file.name;
 
   document.getElementById('fileDropTitle').textContent = `Archivo cargado: ${file.name}`;
-  document.getElementById('fileDropSub').textContent = `${Math.max(1, Math.ceil(file.size / 1024))} KB · Listo para verificar`;
   const preview = document.getElementById('keyPreviewBox');
   preview.style.display = 'block';
-  preview.textContent = `Firma SHA-256: ${tempHash}`;
+  preview.textContent = `SHA-256: ${tempHash}`;
   document.getElementById('confirmUsbBtn').disabled = false;
+});
+
+manualKeyInput.addEventListener('input', async () => {
+  const val = manualKeyInput.value.trim();
+  if (!val) return;
+  tempSecret = val;
+  tempHash = await computeNormalizedHash(val);
+  tempFileName = 'spawndeck.qkey';
+  const preview = document.getElementById('keyPreviewBox');
+  preview.style.display = 'block';
+  preview.textContent = `SHA-256: ${tempHash}`;
+  document.getElementById('confirmUsbBtn').disabled = false;
+});
+
+document.getElementById('downloadQkeyBtn').addEventListener('click', () => {
+  const val = manualKeyInput.value.trim();
+  if (!val) {
+    showToast('Escribe primero una clave en el campo de texto.');
+    return;
+  }
+  const blob = new Blob([val], { type: 'text/plain;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'spawndeck.qkey';
+  a.click();
+  showToast('Archivo spawndeck.qkey descargado. Guárdalo en tu pendrive E:\\');
 });
 
 document.getElementById('cancelModalBtn').addEventListener('click', () => {
@@ -704,9 +630,12 @@ document.getElementById('usbForm').addEventListener('submit', (e) => {
   state.usbSecret = tempSecret;
   state.usbFileName = tempFileName;
 
+  localStorage.setItem('kairos_usb_hash', tempHash);
+  localStorage.setItem('kairos_usb_secret', tempSecret);
+  localStorage.setItem('kairos_usb_name', tempFileName);
+
   document.getElementById('usbModal').classList.remove('open');
-  addLog(`Llave USB verificada (${tempFileName}).`);
-  showToast('Llave del pendrive verificada.');
+  addLog(`Llave configurada (${tempFileName}).`);
   renderUI();
 
   if (state.pendingAction) {
@@ -727,34 +656,25 @@ async function syncAwsStatus(silent = false) {
   try {
     const res = await fetch(LAMBDA_URL, { method: 'GET' });
     const data = await res.json();
-
     if (!res.ok || data.error) {
       dot.className = 'dot error';
       txt.textContent = 'Alerta AWS';
-      if (!silent) addLog(`Error AWS: ${data.error || res.status}`);
       return;
     }
-
     dot.className = 'dot online';
     txt.textContent = 'AWS Conectado';
     document.getElementById('lastSyncTime').textContent = nowStr();
 
     state.mc = data.uiState || 'off';
     state.mcIp = data.ip || null;
-
     if (data.gpuUiState !== undefined) {
       state.dev = data.gpuUiState || 'off';
       state.devIp = data.gpuIp || null;
-    }
-
-    if (!silent) {
-      addLog(`Estado — spokcillo: ${state.mc.toUpperCase()} (${state.mcIp || 'sin IP'}) | SpawnDeck: ${state.dev.toUpperCase()} (${state.devIp || 'sin IP'})`);
     }
     renderUI();
   } catch (err) {
     dot.className = 'dot error';
     txt.textContent = 'Sin conexión Lambda';
-    if (!silent) addLog(`Error de conexión con Lambda: ${err.message}`);
   }
 }
 
@@ -762,10 +682,16 @@ async function sendLambdaAction(service, targetState) {
   const isMc = service === 'mc';
   const isStart = targetState === 'on';
 
-  const needsUsb = !isMc || !isStart;
-  if (needsUsb && !state.usbHash) {
-    requireUsbKey(() => sendLambdaAction(service, targetState));
+  // Solo pide llave al INICIAR el servidor de programación (Apagar es directo)
+  if (!isMc && isStart && !state.usbHash) {
+    state.pendingAction = () => sendLambdaAction(service, targetState);
+    document.getElementById('usbModal').classList.add('open');
     return;
+  }
+
+  // Si estamos apagando SpawnDeck, cerramos el túnel local primero
+  if (!isMc && !isStart) {
+    disconnectLocalTunnel();
   }
 
   if (isMc) {
@@ -777,7 +703,7 @@ async function sendLambdaAction(service, targetState) {
   renderUI();
 
   const actionName = isMc ? (isStart ? 'start_mc' : 'stop_mc') : (isStart ? 'start_gpu' : 'stop_gpu');
-  addLog(`Enviando orden '${actionName}' a AWS Lambda...`);
+  addLog(`Enviando '${actionName}' a AWS Lambda...`);
 
   try {
     const res = await fetch(LAMBDA_URL, {
@@ -793,41 +719,29 @@ async function sendLambdaAction(service, targetState) {
     const data = await res.json();
 
     if (!res.ok || data.error) {
-      showToast(`AWS rechazó la orden: ${data.error || 'Error'}`);
+      showToast(`AWS respondió: ${data.error || 'Verifica tu llave .qkey'}`);
       addLog(`Error AWS: ${data.error || res.status}`);
       await syncAwsStatus(true);
       return;
     }
 
-    showToast(isStart ? 'Orden enviada. Esperando IP pública…' : 'Deteniendo instancia en AWS…');
+    showToast(isStart ? 'Iniciando en AWS…' : 'Apagando servidor…');
 
     const poll = setInterval(async () => {
       await syncAwsStatus(true);
-      if (isMc) {
-        if (isStart && state.mc === 'on' && state.mcIp) {
-          clearInterval(poll);
-          addLog(`spokcillo listo en ${state.mcIp}`);
-          showToast(`¡spokcillo Online! IP: ${state.mcIp}`);
-        } else if (!isStart && state.mc === 'off') {
-          clearInterval(poll);
-          addLog('spokcillo detenido.');
-          showToast('Servidor spokcillo apagado.');
-        }
-      } else {
-        if (isStart && state.dev === 'on' && state.devIp) {
-          clearInterval(poll);
-          addLog(`SpawnDeck listo en ${state.devIp}`);
-          showToast(`¡SpawnDeck Online! IP: ${state.devIp}`);
-        } else if (!isStart && state.dev === 'off') {
-          clearInterval(poll);
-          addLog('SpawnDeck detenido.');
-          showToast('SpawnDeck apagado en AWS.');
-        }
+      if (!isMc && isStart && state.dev === 'on' && state.devIp) {
+        clearInterval(poll);
+        addLog(`SpawnDeck Online en ${state.devIp}. Iniciando Auto-Túnel y Warmup...`);
+        triggerLocalTunnel(state.devIp);
+      } else if (!isMc && !isStart && state.dev === 'off') {
+        clearInterval(poll);
+        addLog('SpawnDeck detenido.');
+      } else if (isMc && ((isStart && state.mc === 'on' && state.mcIp) || (!isStart && state.mc === 'off'))) {
+        clearInterval(poll);
       }
     }, 4000);
   } catch (err) {
-    showToast('No se pudo contactar con AWS Lambda.');
-    addLog(`Error POST: ${err.message}`);
+    showToast('Error de red con Lambda.');
     await syncAwsStatus(true);
   }
 }
@@ -844,33 +758,27 @@ document.getElementById('stopMcBtn').addEventListener('click', () => sendLambdaA
 document.getElementById('startDevBtn').addEventListener('click', () => sendLambdaAction('dev', 'on'));
 document.getElementById('stopDevBtn').addEventListener('click', () => sendLambdaAction('dev', 'off'));
 
-document.getElementById('syncBtn').addEventListener('click', () => {
-  showToast('Sincronizando con AWS...');
-  syncAwsStatus(false);
+document.getElementById('manualTunnelBtn').addEventListener('click', () => {
+  if (state.devIp) triggerLocalTunnel(state.devIp);
+  else showToast('Primero enciende SpawnDeck para obtener IP.');
 });
-document.getElementById('refreshPortalBtn').addEventListener('click', () => {
-  showToast('Actualizando IP...');
-  syncAwsStatus(false);
-});
+
+document.getElementById('syncBtn').addEventListener('click', () => syncAwsStatus(false));
+document.getElementById('refreshPortalBtn').addEventListener('click', () => syncAwsStatus(false));
 
 document.getElementById('copyMcIpBtn').addEventListener('click', () => {
-  if (!state.mcIp) {
-    showToast('Aún no hay una IP pública asignada.');
-    return;
-  }
-  navigator.clipboard.writeText(state.mcIp);
-  showToast(`¡IP copiada!: ${state.mcIp}`);
+  if (state.mcIp) { navigator.clipboard.writeText(state.mcIp); showToast('IP copiada'); }
 });
-
 document.getElementById('copySshBtn').addEventListener('click', () => {
-  const cmd = document.getElementById('sshCmdBox').textContent.trim();
-  navigator.clipboard.writeText(cmd);
-  showToast('Comando de túnel SSH copiado.');
+  navigator.clipboard.writeText(document.getElementById('sshCmdBox').textContent.trim());
+  showToast('Comando SSH copiado');
 });
 
 renderUI();
 syncAwsStatus(false);
-setInterval(() => syncAwsStatus(true), 12000);
+pollLocalBridge();
+setInterval(() => syncAwsStatus(true), 10000);
+setInterval(pollLocalBridge, 3000);
 </script>
 </body>
 </html>
