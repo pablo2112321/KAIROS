@@ -682,7 +682,7 @@ async function sendLambdaAction(service, targetState) {
   const isMc = service === 'mc';
   const isStart = targetState === 'on';
 
-  // SÓLO pedimos llave si estamos INICIANDO SpawnDeck. Apagar es 100% libre y directo.
+  // Solo pedimos seleccionar el archivo si es la primera vez que prendes SpawnDeck y no hay llave guardada
   if (!isMc && isStart && !state.usbHash) {
     state.pendingAction = () => sendLambdaAction(service, targetState);
     document.getElementById('usbModal').classList.add('open');
@@ -706,26 +706,21 @@ async function sendLambdaAction(service, targetState) {
   addLog(`Enviando '${actionName}' a AWS Lambda...`);
 
   try {
-    // Si estamos apagando, mandamos el payload sin exigir credenciales de USB
-    const bodyData = {
-      action: actionName,
-      pin: FRIEND_PIN
-    };
-    
-    if (isStart) {
-      bodyData.adminHash = state.usbHash;
-      bodyData.usbPassword = state.usbSecret;
-    }
-
+    // ENVIAMOS AUTOMÁTICO LA LLAVE GUARDADA EN BACKGROUND PARA QUE LAMBDA NO LA RECHACE
     const res = await fetch(LAMBDA_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(bodyData)
+      body: JSON.stringify({
+        action: actionName,
+        pin: FRIEND_PIN,
+        adminHash: state.usbHash || "",
+        usbPassword: state.usbSecret || ""
+      })
     });
     const data = await res.json();
 
     if (!res.ok || data.error) {
-      showToast(`AWS respondió: ${data.error || 'Error en la orden'}`);
+      showToast(`AWS respondió: ${data.error || 'Error'}`);
       addLog(`Error AWS: ${data.error || res.status}`);
       await syncAwsStatus(true);
       return;
@@ -742,7 +737,7 @@ async function sendLambdaAction(service, targetState) {
       } else if (!isMc && !isStart && state.dev === 'off') {
         clearInterval(poll);
         addLog('SpawnDeck detenido correctamente.');
-        showToast('SpawnDeck apagado.');
+        showToast('SpawnDeck apagado en AWS.');
       } else if (isMc && ((isStart && state.mc === 'on' && state.mcIp) || (!isStart && state.mc === 'off'))) {
         clearInterval(poll);
       }
