@@ -496,7 +496,6 @@ function renderUI() {
     : '🔑 Llave USB: No cargada';
 }
 
-// Normaliza saltos de línea \r\n de Windows para que el hash SHA-256 nunca falle
 async function computeNormalizedHash(text) {
   const clean = text.trim();
   const encoder = new TextEncoder();
@@ -504,7 +503,6 @@ async function computeNormalizedHash(text) {
   return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
-// Sincronizar con el Puente Local de tu PC (kairos_bridge.pyw)
 async function pollLocalBridge() {
   const bDot = document.getElementById('bridgeDot');
   const bTxt = document.getElementById('bridgeStatusText');
@@ -533,7 +531,6 @@ async function pollLocalBridge() {
       liveBar.style.color = '#9ca3af';
     }
 
-    // AUTO-CONEXIÓN: Si SpawnDeck está ON con IP y el túnel está apagado, lo abre solo
     if (state.dev === 'on' && state.devIp && data.tunnel === 'off') {
       triggerLocalTunnel(state.devIp);
     }
@@ -571,7 +568,6 @@ async function disconnectLocalTunnel() {
   } catch (e) {}
 }
 
-// Manejo de Llave USB
 let tempHash = null, tempSecret = null, tempFileName = null;
 const usbFileInput = document.getElementById('usbFileInput');
 const manualKeyInput = document.getElementById('manualKeyInput');
@@ -682,14 +678,13 @@ async function sendLambdaAction(service, targetState) {
   const isMc = service === 'mc';
   const isStart = targetState === 'on';
 
-  // Solo pedimos seleccionar el archivo si es la primera vez que prendes SpawnDeck y no hay llave guardada
+  // Si no hay llave guardada al encender SpawnDeck, pedimos el modal
   if (!isMc && isStart && !state.usbHash) {
     state.pendingAction = () => sendLambdaAction(service, targetState);
     document.getElementById('usbModal').classList.add('open');
     return;
   }
 
-  // Si estamos apagando SpawnDeck, cerramos el túnel SSH local de inmediato
   if (!isMc && !isStart) {
     disconnectLocalTunnel();
   }
@@ -706,15 +701,15 @@ async function sendLambdaAction(service, targetState) {
   addLog(`Enviando '${actionName}' a AWS Lambda...`);
 
   try {
-    // ENVIAMOS AUTOMÁTICO LA LLAVE GUARDADA EN BACKGROUND PARA QUE LAMBDA NO LA RECHACE
+    // ENVIAMOS LAS CREDENCIALES TANTO AL PRENDER COMO AL APAGAR PARA EVITAR ACCESO DENEGADO
     const res = await fetch(LAMBDA_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         action: actionName,
         pin: FRIEND_PIN,
-        adminHash: state.usbHash || "",
-        usbPassword: state.usbSecret || ""
+        adminHash: state.usbHash || localStorage.getItem('kairos_usb_hash') || "",
+        usbPassword: state.usbSecret || localStorage.getItem('kairos_usb_secret') || ""
       })
     });
     const data = await res.json();
