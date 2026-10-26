@@ -1059,95 +1059,49 @@ async function sendLambdaAction(service, targetState) {
     const isMc = service === 'mc';
     const isStart = targetState === 'on';
 
-    if (!isMc && !isStart) {
-      fetch(LOCAL_BRIDGE_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'disconnect' })
-      }).catch(() => {});
-    }
+    if (!isMc && !isStart) fetch(LOCAL_BRIDGE_URL, { method: 'POST', body: JSON.stringify({ action: 'disconnect' }) }).catch(() => {});
 
     if (isMc) state.mc = isStart ? 'starting' : 'stopping';
     else state.dev = isStart ? 'starting' : 'stopping';
     renderUI();
 
     const actionName = isMc ? (isStart ? 'start_mc' : 'stop_mc') : (isStart ? 'start_gpu' : 'stop_gpu');
-    addLocalLog(`Enviando orden '${actionName}' a AWS Lambda...`, "AWS");
+    addLocalLog(`Enviando orden '${actionName}' a AWS...`, "AWS");
 
-    // Probamos automáticamente el Hash Crudo (ArrayBuffer exacto de index (1).html), el Hash Trimmed y Spokcillo
-    const candidates = [];
-    if (state.rawHash && state.secretText) {
-      candidates.push({ adminHash: state.rawHash, usbPassword: state.secretText });
-    }
-    if (state.trimHash && state.secretText && state.trimHash !== state.rawHash) {
-      candidates.push({ adminHash: state.trimHash, usbPassword: state.secretText });
-    }
-    const oldSavedHash = localStorage.getItem('kairos_usb_hash');
-    const oldSavedSec = localStorage.getItem('kairos_usb_secret');
-    if (oldSavedHash && oldSavedSec) {
-      candidates.push({ adminHash: oldSavedHash, usbPassword: oldSavedSec });
-    }
-    candidates.push({ adminHash: await sha256String("Spokcillo"), usbPassword: "Spokcillo" });
-    candidates.push({ adminHash: await sha256String("spokcillo"), usbPassword: "spokcillo" });
+    try {
+      const res = await fetch(LAMBDA_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: actionName,
+          pin: "spokcillo",
+          usbPassword: "spokcillo"
+        })
+      });
+      const data = await res.json();
 
-    let success = false;
-    let lastError = "";
+      if (!res.ok || data.error) {
+        showToast(`AWS rechazó la orden: ${data.error}`);
+        addLocalLog(`[ERR] ${data.error}`, "ERR");
+        await syncAwsStatus();
+        return;
+      }
 
-    for (const cred of candidates) {
-      try {
-        const res = await fetch(LAMBDA_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            action: actionName,
-            pin: "spokcillo",
-            adminHash: cred.adminHash,
-            usbPassword: cred.usbPassword
-          })
-        });
-        const data = await res.json();
-        if (res.ok && !data.error) {
-          success = true;
-          // Guardar como credencial ganadora
-          state.rawHash = cred.adminHash;
-          state.secretText = cred.usbPassword;
-          localStorage.setItem('kairos_raw_hash', cred.adminHash);
-          localStorage.setItem('kairos_secret_text', cred.usbPassword);
-          break;
+      showToast(isStart ? '⚡ Encendiendo servidor...' : '🛑 Apagando...');
+      const poll = setInterval(async () => {
+        await syncAwsStatus();
+        if (!isMc && isStart && state.dev === 'on' && state.devIp) {
+          clearInterval(poll);
+          triggerLocalTunnel(state.devIp, true);
+        } else if (!isMc && !isStart && state.dev === 'off') {
+          clearInterval(poll);
+        } else if (isMc && ((isStart && state.mc === 'on' && state.mcIp) || (!isStart && state.mc === 'off'))) {
+          clearInterval(poll);
         }
-        lastError = data.error || `HTTP ${res.status}`;
-      } catch (err) {
-        lastError = err.message;
-      }
+      }, 3500);
+    } catch (err) {
+      showToast('Error de red.');
     }
-
-    if (!success) {
-      showToast(`Calibra tu archivo .qkey 1 sola vez para autorizar AWS.`);
-      addLocalLog(`AWS pidió calibrar la firma original (${lastError}). Se abrió el sincronizador único.`, "ERR");
-      document.getElementById('calibrateStatusText').innerHTML =
-        `<strong style="color:#ff5c82;">⚠️ Selecciona DEMO_SOLO_PARA_PROTOTIPO.qkey una sola vez aquí abajo para clonar sus bytes exactos en el navegador:</strong>`;
-      state.pendingAction = () => sendLambdaAction(service, targetState);
-      document.getElementById('reactorModal').classList.add('open');
-      await syncAwsStatus();
-      return;
-    }
-
-    showToast(isStart ? '⚡ Servidor encendiendo en AWS EC2…' : '🛑 Apagando servidor en AWS…');
-    addLocalLog(`Orden '${actionName}' aceptada por AWS. Esperando asignación de IP pública...`, "READY");
-
-    const poll = setInterval(async () => {
-      await syncAwsStatus();
-      if (!isMc && isStart && state.dev === 'on' && state.devIp) {
-        clearInterval(poll);
-        addLocalLog(`IP asignada: ${state.devIp}. Disparando túnel SSH y calentamiento de ${state.selectedModel}...`, "READY");
-        triggerLocalTunnel(state.devIp, true);
-      } else if (!isMc && !isStart && state.dev === 'off') {
-        clearInterval(poll);
-        addLocalLog("Servidor SpawnDeck detenido completamente.", "AWS");
-      } else if (isMc && ((isStart && state.mc === 'on' && state.mcIp) || (!isStart && state.mc === 'off'))) {
-        clearInterval(poll);
-      }
-    }, 3500);
   });
 }
 
