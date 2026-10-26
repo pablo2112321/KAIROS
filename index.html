@@ -3,31 +3,42 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#090a0f">
-<title>KAIROS — Cloud Control</title>
+<meta name="theme-color" content="#06070b">
+<title>KAIROS — Cloud & AI Studio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #090a0f;
-  --surface: #11131a;
-  --surface-hover: #161922;
-  --surface-subtle: #0d0f14;
+  --bg: #06070b;
+  --surface: rgba(16, 19, 28, 0.82);
+  --surface-hover: rgba(24, 29, 42, 0.95);
+  --surface-subtle: #0a0c12;
   --border: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.16);
-  --text: #f3f4f6;
-  --text-secondary: #9ca3af;
-  --text-muted: #6b7280;
+  --border-strong: rgba(255, 255, 255, 0.18);
+  --text: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  /* Colores Vívidos */
   --mc-accent: #10b981;
-  --mc-soft: rgba(16, 185, 129, 0.12);
+  --mc-vivid: #00ffaa;
+  --mc-soft: rgba(16, 185, 129, 0.14);
+
   --dev-accent: #6366f1;
-  --dev-soft: rgba(99, 102, 241, 0.12);
+  --dev-vivid: #818cf8;
+  --dev-soft: rgba(99, 102, 241, 0.15);
+
+  --cyan-vivid: #06b6d4;
+  --cyan-soft: rgba(6, 182, 212, 0.14);
+
   --amber: #f59e0b;
-  --amber-soft: rgba(245, 158, 11, 0.12);
-  --danger: #ef4444;
-  --danger-soft: rgba(239, 68, 68, 0.12);
-  --radius-lg: 18px;
+  --amber-soft: rgba(245, 158, 11, 0.15);
+
+  --danger: #f43f5e;
+  --danger-soft: rgba(244, 63, 94, 0.15);
+
+  --radius-lg: 20px;
   --radius-md: 12px;
   --radius-sm: 8px;
   --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -38,202 +49,279 @@
 
 body {
   background-color: var(--bg);
-  background-image: radial-gradient(circle at 50% -20%, rgba(99, 102, 241, 0.08), transparent 60%);
+  background-image:
+    radial-gradient(circle at 18% -10%, rgba(99, 102, 241, 0.16), transparent 48%),
+    radial-gradient(circle at 82% -10%, rgba(16, 185, 129, 0.12), transparent 45%),
+    radial-gradient(circle at 50% 110%, rgba(6, 182, 212, 0.08), transparent 50%);
   color: var(--text);
   font-family: var(--sans);
   font-size: 14px;
   line-height: 1.5;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
-.container { max-width: 960px; margin: 0 auto; padding: 40px 24px 64px; }
+.container { max-width: 1080px; margin: 0 auto; padding: 34px 24px 72px; }
 
+/* Header Minimalista con Glow */
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding-bottom: 32px;
+  padding-bottom: 26px;
   border-bottom: 1px solid var(--border);
-  margin-bottom: 36px;
+  margin-bottom: 28px;
   flex-wrap: wrap;
 }
 
 .brand { display: flex; align-items: center; gap: 14px; }
 .brand-logo {
-  width: 38px; height: 38px; border-radius: 10px;
-  background: var(--text); color: var(--bg);
-  display: grid; place-items: center; font-weight: 700; font-size: 16px;
+  width: 42px; height: 42px; border-radius: 12px;
+  background: linear-gradient(135deg, var(--dev-accent), var(--cyan-vivid));
+  color: #fff;
+  display: grid; place-items: center; font-weight: 700; font-size: 18px;
+  box-shadow: 0 0 24px rgba(99, 102, 241, 0.45);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-.brand-text h1 { font-size: 17px; font-weight: 600; letter-spacing: 0.04em; }
-.brand-text p { font-size: 12px; color: var(--text-muted); }
+.brand:hover .brand-logo { transform: scale(1.08) rotate(-4deg); }
+.brand-text h1 { font-size: 18px; font-weight: 700; letter-spacing: 0.05em; }
+.brand-text p { font-size: 12px; color: var(--text-secondary); }
 
 .header-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 
 .pill {
   display: inline-flex; align-items: center; gap: 8px;
-  padding: 6px 12px; border-radius: 999px; font-size: 12px; font-weight: 500;
+  padding: 6px 13px; border-radius: 999px; font-size: 12px; font-weight: 500;
   background: var(--surface); border: 1px solid var(--border); color: var(--text-secondary);
+  backdrop-filter: blur(10px);
+  transition: all 0.2s ease;
 }
 
-.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text-muted); }
-.dot.online { background: var(--mc-accent); box-shadow: 0 0 8px var(--mc-accent); }
-.dot.busy { background: var(--amber); box-shadow: 0 0 8px var(--amber); animation: pulse 1.5s infinite ease-in-out; }
-.dot.error { background: var(--danger); }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-muted); transition: all 0.3s ease; }
+.dot.online { background: var(--mc-vivid); box-shadow: 0 0 10px var(--mc-vivid); }
+.dot.busy { background: var(--amber); box-shadow: 0 0 10px var(--amber); animation: pulse 1.2s infinite ease-in-out; }
+.dot.error { background: var(--danger); box-shadow: 0 0 10px var(--danger); }
 
-@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.35; transform: scale(0.85); } }
 
-.view-nav { display: flex; gap: 8px; margin-bottom: 28px; }
+/* Navegación */
+.view-nav {
+  display: flex; gap: 8px; margin-bottom: 26px; flex-wrap: wrap;
+  background: var(--surface-subtle); padding: 6px; border-radius: var(--radius-md);
+  border: 1px solid var(--border); width: fit-content;
+}
 .tab-btn {
   background: transparent; border: 1px solid transparent; color: var(--text-secondary);
-  padding: 8px 16px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500;
-  cursor: pointer; transition: all 0.18s ease;
+  padding: 9px 16px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500;
+  cursor: pointer; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 8px;
 }
-.tab-btn:hover { color: var(--text); background: var(--surface); }
-.tab-btn.active { background: var(--surface); border-color: var(--border-strong); color: var(--text); }
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.22), rgba(6, 182, 212, 0.14));
+  border-color: rgba(129, 140, 248, 0.4);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.18);
+}
 
-.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
 
+/* Tarjetas Animadas */
 .card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius-lg); padding: 28px;
+  background: var(--surface);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
   display: flex; flex-direction: column; justify-content: space-between;
-  transition: border-color 0.2s ease;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.28s ease, box-shadow 0.28s ease;
+  position: relative; overflow: hidden;
 }
-.card:hover { border-color: var(--border-strong); }
-.card.active-mc { border-color: rgba(16, 185, 129, 0.4); }
-.card.active-dev { border-color: rgba(99, 102, 241, 0.4); }
+.card:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-strong);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+}
+.card.active-mc {
+  border-color: rgba(0, 255, 170, 0.45);
+  box-shadow: 0 0 32px rgba(16, 185, 129, 0.14);
+}
+.card.active-dev {
+  border-color: rgba(129, 140, 248, 0.55);
+  box-shadow: 0 0 35px rgba(99, 102, 241, 0.18);
+}
 
-.card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
-.node-tag { font-family: var(--mono); font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 4px; }
-.card-title { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
+.card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+.node-tag { font-family: var(--mono); font-size: 11px; color: var(--cyan-vivid); text-transform: uppercase; letter-spacing: 0.09em; display: block; margin-bottom: 4px; font-weight: 600; }
+.card-title { font-size: 21px; font-weight: 700; letter-spacing: -0.02em; }
 
 .status-badge {
-  display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px;
-  border-radius: 999px; font-size: 11.5px; font-weight: 500; font-family: var(--mono);
+  display: inline-flex; align-items: center; gap: 7px; padding: 5px 12px;
+  border-radius: 999px; font-size: 11.5px; font-weight: 600; font-family: var(--mono);
   background: var(--surface-subtle); border: 1px solid var(--border); color: var(--text-secondary);
 }
-.status-badge.on { background: var(--mc-soft); color: #34d399; border-color: rgba(16, 185, 129, 0.25); }
-.status-badge.starting, .status-badge.stopping { background: var(--amber-soft); color: #fbbf24; border-color: rgba(245, 158, 11, 0.25); }
+.status-badge.on { background: var(--mc-soft); color: var(--mc-vivid); border-color: rgba(0, 255, 170, 0.35); }
+.status-badge.starting, .status-badge.stopping { background: var(--amber-soft); color: #fbbf24; border-color: rgba(245, 158, 11, 0.35); }
 
-.card-desc { color: var(--text-secondary); font-size: 13.5px; margin-bottom: 20px; line-height: 1.6; }
+.card-desc { color: var(--text-secondary); font-size: 13.5px; margin-bottom: 18px; line-height: 1.6; }
 
 .specs {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 14px;
   background: var(--surface-subtle); border: 1px solid var(--border);
-  border-radius: var(--radius-md); margin-bottom: 18px;
+  border-radius: var(--radius-md); margin-bottom: 16px;
 }
 .spec-item span { display: block; font-size: 11px; color: var(--text-muted); margin-bottom: 2px; }
-.spec-item strong { font-family: var(--mono); font-size: 11.5px; font-weight: 500; color: var(--text); word-break: break-all; }
+.spec-item strong { font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--text); word-break: break-all; }
 
+/* Barra de Estado de Calentamiento y Memoria */
+.gpu-warmup-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 12px 14px; border-radius: var(--radius-md);
+  background: linear-gradient(90deg, rgba(99, 102, 241, 0.12), rgba(6, 182, 212, 0.1));
+  border: 1px solid rgba(129, 140, 248, 0.3);
+  margin-bottom: 12px; font-family: var(--mono); font-size: 11.5px;
+  flex-wrap: wrap;
+}
+
+.repo-selector-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 10px 12px; background: var(--surface-subtle); border: 1px solid var(--border);
+  border-radius: var(--radius-md); margin-bottom: 14px;
+}
+.repo-select {
+  background: #121622; color: var(--text); border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm); padding: 6px 10px; font-family: var(--mono); font-size: 12px;
+  flex: 1; outline: none;
+}
+
+/* Botones con Micro-interacciones */
 .actions { display: flex; gap: 10px; flex-wrap: wrap; }
 
 .btn {
   appearance: none; border: 1px solid var(--border-strong); background: var(--surface-hover);
   color: var(--text); padding: 11px 16px; border-radius: var(--radius-md);
-  font-size: 13px; font-weight: 500; cursor: pointer;
+  font-size: 13px; font-weight: 600; cursor: pointer;
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  transition: all 0.16s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.btn:hover:not(:disabled) { background: #1f2330; border-color: rgba(255, 255, 255, 0.28); }
-.btn:disabled { opacity: 0.4; cursor: not-allowed; }
-.btn-primary { background: var(--text); color: var(--bg); border-color: var(--text); font-weight: 600; flex: 1; }
-.btn-mc { background: var(--mc-accent); color: #04130e; border-color: var(--mc-accent); font-weight: 600; flex: 1; }
-.btn-mc:hover:not(:disabled) { background: #34d399; border-color: #34d399; }
-.btn-dev { background: var(--dev-accent); color: #ffffff; border-color: var(--dev-accent); font-weight: 600; flex: 1; }
-.btn-dev:hover:not(:disabled) { background: #818cf8; border-color: #818cf8; }
-.btn-danger { background: var(--danger-soft); color: #f87171; border-color: rgba(239, 68, 68, 0.25); }
-.btn-danger:hover:not(:disabled) { background: rgba(239, 68, 68, 0.22); }
+.btn:hover:not(:disabled) { transform: translateY(-1px); border-color: rgba(255, 255, 255, 0.35); background: #202638; }
+.btn:active:not(:disabled) { transform: translateY(0); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.btn-mc {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #03150e; border-color: var(--mc-vivid); flex: 1;
+  box-shadow: 0 4px 18px rgba(16, 185, 129, 0.3);
+}
+.btn-mc:hover:not(:disabled) { background: linear-gradient(135deg, #34d399, #10b981); box-shadow: 0 6px 24px rgba(0, 255, 170, 0.45); }
+
+.btn-dev {
+  background: linear-gradient(135deg, #6366f1, #06b6d4);
+  color: #ffffff; border-color: #818cf8; flex: 1;
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.35);
+}
+.btn-dev:hover:not(:disabled) { background: linear-gradient(135deg, #818cf8, #22d3ee); box-shadow: 0 6px 26px rgba(99, 102, 241, 0.55); }
+
+.btn-danger { background: var(--danger-soft); color: #fb7185; border-color: rgba(244, 63, 94, 0.35); }
+.btn-danger:hover:not(:disabled) { background: rgba(244, 63, 94, 0.28); color: #fff; }
 .btn-sm { padding: 7px 12px; font-size: 12px; border-radius: var(--radius-sm); }
 
-.view-section { display: none; animation: fadeIn 0.22s ease; }
+.view-section { display: none; animation: fadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1); }
 .view-section.active { display: block; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-.dev-tunnel-box {
-  padding: 14px; background: var(--surface-subtle);
-  border: 1px solid var(--border); border-radius: var(--radius-md);
+/* Terminal en Vivo */
+.terminal-window {
+  background: #050609;
+  border: 1px solid rgba(129, 140, 248, 0.35);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
 }
-.dev-tunnel-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; font-size: 11.5px; color: var(--text-secondary); }
-.dev-tunnel-code { font-family: var(--mono); font-size: 11.5px; color: #a5b4fc; word-break: break-all; line-height: 1.5; }
-
-.gpu-warmup-bar {
+.terminal-bar {
+  background: #0e111a;
+  padding: 12px 18px;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 10px 14px; border-radius: var(--radius-sm);
-  background: rgba(99, 102, 241, 0.08); border: 1px solid rgba(99, 102, 241, 0.25);
-  margin-bottom: 12px; font-family: var(--mono); font-size: 11.5px;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap; gap: 10px;
+}
+.terminal-dots { display: flex; gap: 7px; align-items: center; }
+.t-dot { width: 11px; height: 11px; border-radius: 50%; }
+.t-red { background: #f43f5e; }
+.t-yellow { background: #f59e0b; }
+.t-green { background: #10b981; }
+
+.terminal-body {
+  padding: 18px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  height: 340px;
+  overflow-y: auto;
+  color: #cbd5e1;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.term-line { line-height: 1.5; word-break: break-all; }
+.term-line.ready { color: var(--mc-vivid); font-weight: 600; }
+.term-line.err { color: #fb7185; }
+.term-line.gpu { color: #38bdf8; }
+.term-line.ssh { color: #a5b4fc; }
+
+.terminal-input-bar {
+  display: flex; gap: 10px; padding: 12px 18px;
+  background: #0a0d14; border-top: 1px solid var(--border);
+}
+.terminal-input {
+  flex: 1; background: transparent; border: none; color: var(--mc-vivid);
+  font-family: var(--mono); font-size: 13px; outline: none;
 }
 
-.mc-portal {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius-lg); padding: 36px; text-align: center;
-  max-width: 640px; margin: 0 auto;
-}
-.mc-portal-icon {
-  width: 52px; height: 52px; border-radius: 14px; background: var(--mc-soft); color: #34d399;
-  display: grid; place-items: center; font-size: 22px; margin: 0 auto 16px;
-  border: 1px solid rgba(16, 185, 129, 0.25);
-}
-.ip-box {
+/* Gestor Multi-Repositorio */
+.repo-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 20px; }
+.input-text, .input-area {
+  width: 100%; padding: 10px 12px; border-radius: var(--radius-sm);
   background: var(--surface-subtle); border: 1px solid var(--border-strong);
-  border-radius: var(--radius-md); padding: 20px 24px;
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 16px; margin: 24px 0; flex-wrap: wrap;
+  color: var(--text); font-family: var(--mono); font-size: 12.5px; margin-bottom: 12px;
+  outline: none; transition: border-color 0.2s ease;
 }
-.ip-address { font-family: var(--mono); font-size: 20px; font-weight: 600; color: var(--text); }
+.input-text:focus, .input-area:focus { border-color: var(--dev-vivid); }
+.input-area { min-height: 110px; resize: vertical; font-family: var(--sans); }
 
-.log-panel {
-  margin-top: 32px; padding: 18px 22px; background: var(--surface-subtle);
-  border: 1px solid var(--border); border-radius: var(--radius-md);
+.repo-item {
+  padding: 14px; border-radius: var(--radius-md); background: var(--surface-subtle);
+  border: 1px solid var(--border); margin-bottom: 10px; cursor: pointer;
+  transition: all 0.2s ease;
 }
-.log-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 11.5px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
-.log-list { font-family: var(--mono); font-size: 12px; color: var(--text-secondary); max-height: 120px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
-.log-item { display: flex; gap: 10px; }
-.log-time { color: var(--text-muted); flex-shrink: 0; }
+.repo-item:hover, .repo-item.selected {
+  border-color: var(--dev-vivid); background: rgba(99, 102, 241, 0.1);
+}
 
+/* Modal Contraseña */
 .modal-backdrop {
-  position: fixed; inset: 0; background: rgba(5, 6, 10, 0.8);
-  backdrop-filter: blur(6px); display: none; place-items: center; padding: 20px; z-index: 50;
+  position: fixed; inset: 0; background: rgba(4, 5, 10, 0.82);
+  backdrop-filter: blur(8px); display: none; place-items: center; padding: 20px; z-index: 50;
 }
 .modal-backdrop.open { display: grid; }
 .modal {
-  background: var(--surface); border: 1px solid var(--border-strong);
-  border-radius: var(--radius-lg); padding: 28px; max-width: 460px; width: 100%;
+  background: #111420; border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg); padding: 28px; max-width: 420px; width: 100%;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
 }
-.modal h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
-.modal p { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.55; }
-
-.file-drop {
-  border: 1px dashed var(--border-strong); background: var(--surface-subtle);
-  border-radius: var(--radius-md); padding: 20px 16px; text-align: center;
-  cursor: pointer; margin-bottom: 14px;
-}
-.file-drop:hover { border-color: var(--dev-accent); background: rgba(99, 102, 241, 0.05); }
-
-.input-text {
-  width: 100%; padding: 10px 12px; border-radius: var(--radius-sm);
-  background: var(--surface-subtle); border: 1px solid var(--border-strong);
-  color: var(--text); font-family: var(--mono); font-size: 12px; margin-bottom: 14px;
-}
-
-.key-preview {
-  font-family: var(--mono); font-size: 11px; color: #34d399;
-  background: var(--mc-soft); border: 1px solid rgba(16, 185, 129, 0.25);
-  padding: 9px 12px; border-radius: var(--radius-sm); margin-bottom: 16px;
-  word-break: break-all; display: none;
-}
-.modal-actions { display: flex; justify-content: flex-end; gap: 10px; }
+.modal h3 { font-size: 19px; font-weight: 700; margin-bottom: 8px; }
+.modal p { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; }
 
 .toast {
-  position: fixed; bottom: 24px; right: 24px; background: var(--surface);
-  border: 1px solid var(--border-strong); color: var(--text); padding: 12px 18px;
-  border-radius: var(--radius-md); font-size: 13px; font-weight: 500;
-  opacity: 0; transform: translateY(10px); pointer-events: none; transition: all 0.2s ease; z-index: 60;
+  position: fixed; bottom: 24px; right: 24px; background: #131726;
+  border: 1px solid var(--dev-vivid); color: var(--text); padding: 13px 20px;
+  border-radius: var(--radius-md); font-size: 13px; font-weight: 600;
+  opacity: 0; transform: translateY(10px); pointer-events: none; transition: all 0.22s ease; z-index: 60;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
 }
 .toast.show { opacity: 1; transform: translateY(0); }
 
-@media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+@media (max-width: 780px) {
+  .grid, .repo-grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
@@ -243,8 +331,8 @@ body {
     <div class="brand">
       <div class="brand-logo">K</div>
       <div class="brand-text">
-        <h1>KAIROS</h1>
-        <p>Cloud Node Studio · us-east-2</p>
+        <h1>KAIROS STUDIO</h1>
+        <p>Cloud GPU & Multi-Repo AI Orchestrator · us-east-2</p>
       </div>
     </div>
 
@@ -257,26 +345,29 @@ body {
         <span class="dot" id="bridgeDot"></span>
         <span id="bridgeStatusText">Puente PC: Buscando…</span>
       </div>
-      <button class="btn btn-sm" id="usbStatusBtn" type="button">
-        <span id="usbStatusLabel">🔑 Llave USB: No cargada</span>
+      <button class="btn btn-sm" id="authBtn" type="button">
+        <span id="authLabel">🔒 Desbloquear (Spokcillo)</span>
       </button>
-      <button class="btn btn-sm" id="syncBtn" type="button">↻ Actualizar</button>
+      <button class="btn btn-sm" id="syncBtn" type="button">↻ Sincronizar</button>
     </div>
   </header>
 
   <div class="view-nav">
-    <button class="tab-btn active" id="tabNodes" type="button">Panel de Nodos</button>
-    <button class="tab-btn" id="tabMcPortal" type="button">Sala de Conexión Minecraft</button>
+    <button class="tab-btn active" data-tab="nodes" type="button">⚡ Panel de Nodos</button>
+    <button class="tab-btn" data-tab="terminal" type="button">💻 Terminal en Vivo & GPU</button>
+    <button class="tab-btn" data-tab="repos" type="button">🧠 Memoria de Repositorios</button>
+    <button class="tab-btn" data-tab="portal" type="button">⛏ Sala Minecraft</button>
   </div>
 
-  <section class="view-section active" id="sectionNodes">
+  <!-- VISTA 1: PANEL DE NODOS -->
+  <section class="view-section active" id="section-nodes">
     <div class="grid">
       <!-- Nodo Minecraft: spokcillo -->
       <article class="card" id="mcCard">
         <div>
           <div class="card-top">
             <div>
-              <span class="node-tag">Minecraft · spokcillo</span>
+              <span class="node-tag">Game Server · spokcillo</span>
               <h2 class="card-title">Minecraft Server</h2>
             </div>
             <span class="status-badge" id="mcBadge">
@@ -286,19 +377,19 @@ body {
           </div>
 
           <p class="card-desc">
-            Al iniciar el servidor se abrirá automáticamente el apartado para copiar la IP pública. Se apaga automáticamente tras 20 minutos sin jugadores.
+            Servidor multijugador con apagado automático tras 20 minutos sin jugadores conectados.
           </p>
 
           <div class="specs">
-            <div class="spec-item"><span>Nombre</span><strong>spokcillo</strong></div>
-            <div class="spec-item"><span>Instance ID</span><strong>i-0830d7dc6ccd4a515</strong></div>
+            <div class="spec-item"><span>Nodo</span><strong>spokcillo</strong></div>
+            <div class="spec-item"><span>Instancia</span><strong>i-0830d7dc6ccd4a515</strong></div>
             <div class="spec-item"><span>IP Pública</span><strong id="mcCardIp">—</strong></div>
           </div>
         </div>
 
         <div class="actions">
           <button class="btn btn-mc" id="startMcBtn" type="button">Iniciar Servidor</button>
-          <button class="btn" id="openMcPortalBtn" type="button">Ver IP</button>
+          <button class="btn" id="openMcPortalBtn" type="button">Sala IP</button>
           <button class="btn btn-danger" id="stopMcBtn" type="button">Apagar</button>
         </div>
       </article>
@@ -308,8 +399,8 @@ body {
         <div>
           <div class="card-top">
             <div>
-              <span class="node-tag">Workstation · SpawnDeck</span>
-              <h2 class="card-title">SpawnDeck Studio</h2>
+              <span class="node-tag">NVIDIA L4 24GB · G6.xlarge</span>
+              <h2 class="card-title">SpawnDeck AI Studio</h2>
             </div>
             <span class="status-badge" id="devBadge">
               <span class="dot" id="devDot"></span>
@@ -318,95 +409,139 @@ body {
           </div>
 
           <p class="card-desc">
-            Prende la instancia G6, abre el túnel SSH hacia tu PC automáticamente y precalienta <strong>qwen3-coder:30b-fast</strong> en la GPU NVIDIA L4.
+            Enciende la VPS, abre el túnel SSH de ultra-baja latencia (`11434`) y precalienta <strong>qwen3-coder:30b-fast</strong> con la memoria de tu repositorio.
           </p>
 
           <div class="specs">
-            <div class="spec-item"><span>Modelo IA</span><strong>qwen3:30b-fast</strong></div>
-            <div class="spec-item"><span>Instance ID</span><strong>i-097a016bf5e55ec12</strong></div>
-            <div class="spec-item"><span>IP Pública</span><strong id="devCardIp">—</strong></div>
+            <div class="spec-item"><span>Modelo</span><strong>qwen3:30b-fast</strong></div>
+            <div class="spec-item"><span>VRAM / Latencia</span><strong id="devVramSpec">20 GB · 0.1s</strong></div>
+            <div class="spec-item"><span>IP Pública Dinámica</span><strong id="devCardIp">—</strong></div>
           </div>
 
-          <!-- Estado en vivo del Túnel + Calentamiento GPU -->
+          <!-- Selector de Repositorio Activo para Precalentar con Memoria -->
+          <div class="repo-selector-bar">
+            <span style="font-size:12px; color:var(--text-secondary);">🧠 Repo en Memoria:</span>
+            <select id="quickRepoSelect" class="repo-select"></select>
+          </div>
+
+          <!-- Barra de Feedback en Vivo del Modelo -->
           <div class="gpu-warmup-bar">
             <span id="tunnelLiveStatus">🔴 Túnel Local: Desconectado</span>
-            <button class="btn btn-sm" id="manualTunnelBtn" type="button">Conectar y Calentar</button>
-          </div>
-
-          <div class="dev-tunnel-box">
-            <div class="dev-tunnel-head">
-              <span>Comando SSH Directo (Pendrive E:\)</span>
-              <button class="btn btn-sm" id="copySshBtn" type="button">Copiar comando</button>
-            </div>
-            <div class="dev-tunnel-code" id="sshCmdBox">
-              ssh -i "E:\spawndeck.key" -N -L 11434:127.0.0.1:11434 -o Compression=no -o IPQoS=lowdelay ubuntu@&lt;esperando-ip&gt;
+            <div style="display:flex; gap:6px;">
+              <button class="btn btn-sm" id="manualTunnelBtn" type="button" title="Reconectar túnel y calentar modelo con el repo seleccionado">🔥 Calentar Repo</button>
+              <button class="btn btn-sm" id="testAgentBtn" type="button" title="Probar velocidad de respuesta del modelo">⚡ Ping IA</button>
             </div>
           </div>
         </div>
 
-        <div class="actions" style="margin-top: 20px;">
+        <div class="actions" style="margin-top: 14px;">
           <button class="btn btn-dev" id="startDevBtn" type="button">⚡ Prender + Abrir Túnel</button>
+          <button class="btn" id="openTermBtn" type="button">💻 Ver Terminal</button>
           <button class="btn btn-danger" id="stopDevBtn" type="button">Apagar</button>
         </div>
       </article>
     </div>
   </section>
 
-  <!-- VISTA 2: SALA DE CONEXIÓN MINECRAFT -->
-  <section class="view-section" id="sectionMcPortal">
-    <div class="mc-portal">
-      <div class="mc-portal-icon">⛏</div>
-      <h2>Conexión a spokcillo</h2>
-      <div class="ip-box">
-        <div style="text-align:left;">
-          <span class="node-tag" id="portalStateLabel">Estado del Servidor</span>
-          <div class="ip-address" id="portalIpText">Sincronizando…</div>
+  <!-- VISTA 2: TERMINAL EN VIVO E INSPECTOR DE MÁQUINA -->
+  <section class="view-section" id="section-terminal">
+    <div class="terminal-window">
+      <div class="terminal-bar">
+        <div class="terminal-dots">
+          <span class="t-dot t-red"></span>
+          <span class="t-dot t-yellow"></span>
+          <span class="t-dot t-green"></span>
+          <strong style="margin-left:8px; font-family:var(--mono); font-size:12px; color:#fff;">
+            root@spawndeck-gpu:~ (Túnel 127.0.0.1:11434 + SSH Live Stream)
+          </strong>
         </div>
-        <div style="display:flex; gap:8px;">
-          <button class="btn btn-mc" id="copyMcIpBtn" type="button">Copiar IP</button>
-          <button class="btn" id="refreshPortalBtn" type="button">↻</button>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button class="btn btn-sm" data-cmd="sudo docker exec spawndeck-ollama ollama ps" type="button">🔍 ollama ps</button>
+          <button class="btn btn-sm" data-cmd="nvidia-smi --query-gpu=name,memory.used,memory.total,utilization.gpu,temperature.gpu --format=csv" type="button">🎮 Estado GPU L4</button>
+          <button class="btn btn-sm" data-cmd="sudo docker stats --no-stream" type="button">🐳 Docker Stats</button>
+          <button class="btn btn-sm" id="benchmarkBtn" type="button" style="border-color:var(--mc-vivid); color:var(--mc-vivid);">🚀 Probar Agente Ahora</button>
         </div>
       </div>
-      <div class="actions" style="justify-content: center;">
-        <button class="btn btn-mc" id="portalStartMcBtn" type="button" style="max-width: 240px;">Iniciar Servidor</button>
-        <button class="btn" id="backToNodesBtn" type="button">← Volver al panel</button>
+
+      <div class="terminal-body" id="terminalBody">
+        <div class="term-line">[SISTEMA] Terminal KAIROS lista. Esperando conexión con kairos_bridge.pyw (127.0.0.1:17500)...</div>
+      </div>
+
+      <form class="terminal-input-bar" id="terminalForm">
+        <span style="color:var(--cyan-vivid); font-family:var(--mono);">ubuntu@vps:~$</span>
+        <input type="text" id="terminalCmdInput" class="terminal-input" placeholder="Escribe un comando para correr dentro de tu VPS (ej: nvidia-smi, htop, docker ps) y presiona Enter...">
+        <button class="btn btn-sm" type="submit">Ejecutar</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- VISTA 3: MEMORIA MULTI-REPOSITORIO -->
+  <section class="view-section" id="section-repos">
+    <div class="card">
+      <div class="card-top">
+        <div>
+          <span class="node-tag">Persistent Context Engine</span>
+          <h2 class="card-title">Memoria Persistente por Repositorio</h2>
+        </div>
+        <button class="btn btn-sm" id="newRepoBtn" type="button">+ Nuevo Repositorio</button>
+      </div>
+      <p class="card-desc">
+        Guarda la arquitectura, el stack y los avances de cada proyecto. Al presionar <strong>🔥 Calentar Modelo con este Repo</strong>, KAIROS inyecta automáticamente esta memoria + los últimos commits de Git en la VRAM de <code>qwen3-coder:30b-fast</code> y actualiza <code>AGENTS.md</code> en tu carpeta local para que nunca empieces desde cero.
+      </p>
+
+      <div class="repo-grid">
+        <div id="repoListContainer"></div>
+
+        <form id="repoForm" style="background:var(--surface-subtle); padding:20px; border-radius:var(--radius-md); border:1px solid var(--border);">
+          <label style="font-size:12px; color:var(--text-secondary);">Nombre del Repositorio</label>
+          <input type="text" id="repoNameInput" class="input-text" placeholder="Ej: LeBrum, MiApp-Backend..." required>
+
+          <label style="font-size:12px; color:var(--text-secondary);">Ruta Local en tu PC (Opcional, para leer Git commits y crear AGENTS.md)</label>
+          <input type="text" id="repoPathInput" class="input-text" placeholder="Ej: C:\Users\Spokcillo\Documents\LeBrum">
+
+          <label style="font-size:12px; color:var(--text-secondary);">Stack Tecnológico y Reglas</label>
+          <input type="text" id="repoStackInput" class="input-text" placeholder="Ej: Django 5, Python 3.12, Docker, PostgreSQL">
+
+          <label style="font-size:12px; color:var(--text-secondary);">Memoria Acumulada (Qué se hizo antes y en qué quedamos)</label>
+          <textarea id="repoMemoryInput" class="input-area" placeholder="Describe qué módulos ya están listos, estructura de base de datos, decisiones clave y qué falta programar..."></textarea>
+
+          <div class="actions">
+            <button class="btn btn-dev" type="submit">💾 Guardar Memoria</button>
+            <button class="btn btn-mc" type="button" id="warmSelectedRepoBtn">🔥 Calentar Modelo con este Repo</button>
+          </div>
+        </form>
       </div>
     </div>
   </section>
 
-  <div class="log-panel">
-    <div class="log-header">
-      <span>Registro de Actividad KAIROS</span>
-      <span id="lastSyncTime">--:--:--</span>
+  <!-- VISTA 4: SALA MINECRAFT -->
+  <section class="view-section" id="section-portal">
+    <div class="card" style="max-width:620px; margin:0 auto; text-align:center;">
+      <h2 class="card-title" style="margin-bottom:8px;">⛏ Conexión a spokcillo</h2>
+      <p class="card-desc">Copia la IP dinámica actual para entrar desde tu cliente de Minecraft.</p>
+      <div style="background:var(--surface-subtle); padding:22px; border-radius:var(--radius-md); border:1px solid var(--border-strong); margin-bottom:20px; display:flex; justify-content:space-between; align-items:center;">
+        <div style="text-align:left;">
+          <span class="node-tag" id="portalStateLabel">Estado del Servidor</span>
+          <div style="font-family:var(--mono); font-size:22px; font-weight:700;" id="portalIpText">—</div>
+        </div>
+        <button class="btn btn-mc" id="copyMcIpBtn" type="button" style="max-width:150px;">Copiar IP</button>
+      </div>
+      <div class="actions" style="justify-content:center;">
+        <button class="btn btn-mc" id="portalStartMcBtn" type="button" style="max-width:220px;">Iniciar Servidor</button>
+      </div>
     </div>
-    <div class="log-list" id="logList"></div>
-  </div>
+  </section>
 </div>
 
-<!-- Modal: Cargar o Crear Llave de Pendrive -->
-<div class="modal-backdrop" id="usbModal">
-  <form class="modal" id="usbForm">
-    <h3>Llave de Autorización (Pendrive)</h3>
-    <p>Selecciona tu archivo <strong>.qkey</strong> del pendrive o escribe tu clave secreta para generar un nuevo archivo <code>.qkey</code>.</p>
-
-    <input type="file" id="usbFileInput" accept=".qkey,.key,.txt,.pem,*/*" style="display:none">
-
-    <div class="file-drop" id="fileDropZone">
-      <strong id="fileDropTitle">📂 Cargar archivo desde E:\ (Spokcillo)</strong>
-      <span id="fileDropSub">Haz clic para buscar DEMO_SOLO_PARA_PROTOTIPO.qkey</span>
-    </div>
-
-    <p style="margin-bottom:6px; font-size:12px;">O escribe/crea tu clave directamente:</p>
-    <div style="display:flex; gap:8px; margin-bottom:14px;">
-      <input type="password" id="manualKeyInput" class="input-text" placeholder="Escribe la clave secreta de tu Lambda..." style="margin-bottom:0;">
-      <button class="btn btn-sm" type="button" id="downloadQkeyBtn" title="Guardar como nuevo archivo .qkey en tu Pendrive">💾 Crear .qkey</button>
-    </div>
-
-    <div class="key-preview" id="keyPreviewBox"></div>
-
-    <div class="modal-actions">
-      <button class="btn" type="button" id="cancelModalBtn">Cancelar</button>
-      <button class="btn btn-primary" type="submit" id="confirmUsbBtn" disabled>Guardar y Continuar</button>
+<!-- Modal: Contraseña Spokcillo -->
+<div class="modal-backdrop" id="authModal">
+  <form class="modal" id="authForm">
+    <h3>🔐 Autorización KAIROS</h3>
+    <p>Ingresa tu contraseña maestra (<strong>Spokcillo</strong>) para desbloquear el encendido y apagado de servidores.</p>
+    <input type="password" id="passwordInput" class="input-text" placeholder="Contraseña..." autocomplete="off">
+    <div style="display:flex; justify-content:flex-end; gap:10px;">
+      <button class="btn" type="button" id="cancelAuthBtn">Cancelar</button>
+      <button class="btn btn-dev" type="submit">Desbloquear</button>
     </div>
   </form>
 </div>
@@ -416,24 +551,19 @@ body {
 <script>
 const LAMBDA_URL = "https://yakcmdk3nraxjqlgl77wh7gczm0hgove.lambda-url.us-east-2.on.aws/";
 const LOCAL_BRIDGE_URL = "http://127.0.0.1:17500";
-const FRIEND_PIN = "spokcillo";
+const MASTER_PASSWORD = "spokcillo";
 
 const state = {
   mc: 'off',
   mcIp: null,
   dev: 'off',
   devIp: null,
-  bridgeOnline: false,
-  tunnelState: 'off',
-  usbHash: localStorage.getItem('kairos_usb_hash') || null,
-  usbSecret: localStorage.getItem('kairos_usb_secret') || null,
-  usbFileName: localStorage.getItem('kairos_usb_name') || null,
+  unlocked: localStorage.getItem('kairos_unlocked') === 'true',
+  vault: null,
+  repos: [],
+  activeRepo: localStorage.getItem('kairos_active_repo') || 'LeBrum',
   pendingAction: null
 };
-
-function nowStr() {
-  return new Date().toLocaleTimeString('es-CL', { hour12: false });
-}
 
 function showToast(msg) {
   const t = document.getElementById('toast');
@@ -443,25 +573,33 @@ function showToast(msg) {
   window.toastTimeout = setTimeout(() => t.classList.remove('show'), 3800);
 }
 
-function addLog(text) {
-  const list = document.getElementById('logList');
-  const item = document.createElement('div');
-  item.className = 'log-item';
-  item.innerHTML = `<span class="log-time">[${nowStr()}]</span><span>${text}</span>`;
-  list.prepend(item);
-  while (list.children.length > 25) list.lastElementChild.remove();
+function appendTermLine(text, cls = '') {
+  const body = document.getElementById('terminalBody');
+  const div = document.createElement('div');
+  div.className = `term-line ${cls}`;
+  div.textContent = text;
+  body.appendChild(div);
+  body.scrollTop = body.scrollHeight;
 }
 
-function switchTab(tabName) {
-  const isPortal = tabName === 'portal';
-  document.getElementById('tabNodes').classList.toggle('active', !isPortal);
-  document.getElementById('tabMcPortal').classList.toggle('active', isPortal);
-  document.getElementById('sectionNodes').classList.toggle('active', !isPortal);
-  document.getElementById('sectionMcPortal').classList.toggle('active', isPortal);
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tabId));
+  document.querySelectorAll('.view-section').forEach(s => s.classList.toggle('active', s.id === `section-${tabId}`));
 }
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+});
+document.getElementById('openTermBtn').addEventListener('click', () => switchTab('terminal'));
+document.getElementById('openMcPortalBtn').addEventListener('click', () => switchTab('portal'));
 
 function renderUI() {
   const labels = { off: 'Detenido', starting: 'Iniciando…', stopping: 'Apagando…', on: 'En ejecución' };
+
+  // Auth status
+  document.getElementById('authLabel').textContent = state.unlocked
+    ? '🔓 Sesión: Spokcillo (Activa)'
+    : '🔒 Desbloquear (Spokcillo)';
 
   // Minecraft
   document.getElementById('mcBadge').className = `status-badge ${state.mc}`;
@@ -469,40 +607,99 @@ function renderUI() {
   document.getElementById('mcStatusLabel').textContent = labels[state.mc] || 'Detenido';
   document.getElementById('mcCard').classList.toggle('active-mc', state.mc === 'on');
   document.getElementById('mcCardIp').textContent = (state.mc === 'on' && state.mcIp) ? state.mcIp : '—';
+  document.getElementById('portalIpText').textContent = (state.mc === 'on' && state.mcIp) ? state.mcIp : 'Sin IP asignada';
 
   const mcBusy = state.mc === 'starting' || state.mc === 'stopping';
   document.getElementById('startMcBtn').disabled = mcBusy || state.mc === 'on';
   document.getElementById('stopMcBtn').disabled = mcBusy || state.mc !== 'on';
-  document.getElementById('portalIpText').textContent = (state.mc === 'on' && state.mcIp) ? state.mcIp : 'Sin IP asignada';
 
   // SpawnDeck
   document.getElementById('devBadge').className = `status-badge ${state.dev}`;
   document.getElementById('devDot').className = `dot ${state.dev === 'on' ? 'online' : (state.dev === 'starting' || state.dev === 'stopping' ? 'busy' : '')}`;
   document.getElementById('devStatusLabel').textContent = labels[state.dev] || 'Detenido';
   document.getElementById('devCard').classList.toggle('active-dev', state.dev === 'on');
-  document.getElementById('devCardIp').textContent = (state.dev === 'on' && state.devIp) ? state.devIp : (state.dev === 'starting' ? 'Asignando…' : '—');
+  document.getElementById('devCardIp').textContent = (state.dev === 'on' && state.devIp) ? state.devIp : (state.dev === 'starting' ? 'Asignando IP…' : '—');
 
   const devBusy = state.dev === 'starting' || state.dev === 'stopping';
   const startDevBtn = document.getElementById('startDevBtn');
   startDevBtn.disabled = devBusy || state.dev === 'on';
-  startDevBtn.textContent = state.dev === 'on' ? 'SpawnDeck Activo' : (state.dev === 'starting' ? 'Iniciando en AWS…' : '⚡ Prender + Abrir Túnel');
+  startDevBtn.textContent = state.dev === 'on' ? '🟢 SpawnDeck en Línea' : (state.dev === 'starting' ? '⏳ Iniciando en AWS…' : '⚡ Prender + Abrir Túnel');
   document.getElementById('stopDevBtn').disabled = devBusy || state.dev !== 'on';
-
-  const sshHost = (state.dev === 'on' && state.devIp) ? state.devIp : '<esperando-ip>';
-  document.getElementById('sshCmdBox').textContent = `ssh -i "E:\\spawndeck.key" -N -L 11434:127.0.0.1:11434 -o Compression=no -o IPQoS=lowdelay ubuntu@${sshHost}`;
-
-  document.getElementById('usbStatusLabel').textContent = state.usbHash
-    ? `🔑 Llave: ${state.usbFileName} (${state.usbHash.slice(0, 6)}…)`
-    : '🔑 Llave USB: No cargada';
 }
 
-async function computeNormalizedHash(text) {
-  const clean = text.trim();
-  const encoder = new TextEncoder();
-  const digest = await crypto.subtle.digest('SHA-256', encoder.encode(clean));
-  return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
+function renderRepos(repos) {
+  state.repos = repos || [];
+  const select = document.getElementById('quickRepoSelect');
+  const list = document.getElementById('repoListContainer');
+
+  select.innerHTML = state.repos.map(r =>
+    `<option value="${r.name}" ${r.name === state.activeRepo ? 'selected' : ''}>${r.name} (${r.stack.slice(0, 28)})</option>`
+  ).join('');
+
+  list.innerHTML = state.repos.map(r => `
+    <div class="repo-item ${r.name === state.activeRepo ? 'selected' : ''}" data-name="${r.name}">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+        <strong style="color:#fff;">📁 ${r.name}</strong>
+        <span style="font-size:11px; color:var(--text-muted); font-family:var(--mono);">${r.updated || ''}</span>
+      </div>
+      <div style="font-size:11.5px; color:var(--cyan-vivid); font-family:var(--mono); margin-bottom:6px;">${r.stack || ''}</div>
+      <div style="font-size:12px; color:var(--text-secondary); line-height:1.4;">${(r.memory || '').slice(0, 120)}...</div>
+    </div>
+  `).join('');
+
+  list.querySelectorAll('.repo-item').forEach(el => {
+    el.addEventListener('click', () => {
+      const repo = state.repos.find(x => x.name === el.dataset.name);
+      if (!repo) return;
+      state.activeRepo = repo.name;
+      localStorage.setItem('kairos_active_repo', repo.name);
+      document.getElementById('repoNameInput').value = repo.name;
+      document.getElementById('repoPathInput').value = repo.path || '';
+      document.getElementById('repoStackInput').value = repo.stack || '';
+      document.getElementById('repoMemoryInput').value = repo.memory || '';
+      renderRepos(state.repos);
+    });
+  });
 }
 
+document.getElementById('quickRepoSelect').addEventListener('change', (e) => {
+  state.activeRepo = e.target.value;
+  localStorage.setItem('kairos_active_repo', state.activeRepo);
+});
+
+document.getElementById('newRepoBtn').addEventListener('click', () => {
+  document.getElementById('repoNameInput').value = '';
+  document.getElementById('repoPathInput').value = '';
+  document.getElementById('repoStackInput').value = '';
+  document.getElementById('repoMemoryInput').value = '';
+  document.getElementById('repoNameInput').focus();
+});
+
+document.getElementById('repoForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const repoObj = {
+    name: document.getElementById('repoNameInput').value.trim(),
+    path: document.getElementById('repoPathInput').value.trim(),
+    stack: document.getElementById('repoStackInput').value.trim(),
+    memory: document.getElementById('repoMemoryInput').value.trim()
+  };
+  try {
+    const res = await fetch(LOCAL_BRIDGE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'save_repo', repo: repoObj })
+    });
+    const data = await res.json();
+    state.activeRepo = repoObj.name;
+    renderRepos(data.repos);
+    showToast(`Memoria de '${repoObj.name}' guardada y AGENTS.md actualizado.`);
+  } catch (err) {
+    showToast('Verifica que kairos_bridge.pyw esté activo.');
+  }
+});
+
+// Sincronización con kairos_bridge.pyw
+let lastLogCount = 0;
 async function pollLocalBridge() {
   const bDot = document.getElementById('bridgeDot');
   const bTxt = document.getElementById('bridgeStatusText');
@@ -511,142 +708,128 @@ async function pollLocalBridge() {
   try {
     const res = await fetch(LOCAL_BRIDGE_URL, { method: 'GET' });
     const data = await res.json();
-    state.bridgeOnline = true;
-    state.tunnelState = data.tunnel;
 
     bDot.className = 'dot online';
     bTxt.textContent = 'Puente PC: Activo';
 
+    if (data.vault) state.vault = data.vault;
+    if (data.repos && state.repos.length === 0) renderRepos(data.repos);
+
+    if (data.vram_gb > 0) {
+      document.getElementById('devVramSpec').textContent = `${data.vram_gb} GB · ${data.latency_ms}ms`;
+    }
+
     if (data.tunnel === 'ready') {
       liveBar.textContent = `🟢 ${data.message}`;
-      liveBar.style.color = '#34d399';
+      liveBar.style.color = '#00ffaa';
     } else if (data.tunnel === 'connecting' || data.tunnel === 'warming') {
       liveBar.textContent = `🟡 ${data.message}`;
       liveBar.style.color = '#fbbf24';
     } else if (data.tunnel === 'error') {
       liveBar.textContent = `🔴 ${data.message}`;
-      liveBar.style.color = '#f87171';
+      liveBar.style.color = '#fb7185';
     } else {
       liveBar.textContent = '⚪ Túnel Local: En espera';
-      liveBar.style.color = '#9ca3af';
+      liveBar.style.color = '#94a3b8';
     }
 
-    if (state.dev === 'on' && state.devIp && data.tunnel === 'off') {
-      triggerLocalTunnel(state.devIp);
+    // Actualizar Terminal en Vivo
+    if (data.logs && data.logs.length !== lastLogCount) {
+      const body = document.getElementById('terminalBody');
+      body.innerHTML = '';
+      data.logs.forEach(line => {
+        let cls = '';
+        if (line.includes('[READY]')) cls = 'ready';
+        else if (line.includes('[ERR]')) cls = 'err';
+        else if (line.includes('[GPU]')) cls = 'gpu';
+        else if (line.includes('[SSH]')) cls = 'ssh';
+        appendTermLine(line, cls);
+      });
+      lastLogCount = data.logs.length;
+    }
+
+    // Auto-conectar túnel apenas AWS dé IP
+    if (state.dev === 'on' && state.devIp && (data.tunnel === 'off' || data.ip !== state.devIp)) {
+      triggerLocalTunnel(state.devIp, false);
     }
   } catch (e) {
-    state.bridgeOnline = false;
-    bDot.className = 'dot';
-    bTxt.textContent = 'Puente PC: Apagado';
-    liveBar.textContent = '⚪ Ejecuta kairos_bridge.pyw en tu PC para auto-túnel';
-    liveBar.style.color = '#9ca3af';
+    bDot.className = 'dot error';
+    bTxt.textContent = 'Puente PC: Inactivo';
   }
 }
 
-async function triggerLocalTunnel(ip) {
-  if (!ip) return;
-  try {
-    addLog(`Ordenando al Puente PC abrir túnel SSH hacia ${ip} y calentar GPU...`);
-    await fetch(LOCAL_BRIDGE_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'connect', ip })
-    });
-    pollLocalBridge();
-  } catch (e) {
-    showToast('Abre kairos_bridge.pyw en tu PC para automatizar el túnel.');
-  }
-}
-
-async function disconnectLocalTunnel() {
-  try {
-    await fetch(LOCAL_BRIDGE_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'disconnect' })
-    });
-  } catch (e) {}
-}
-
-let tempHash = null, tempSecret = null, tempFileName = null;
-const usbFileInput = document.getElementById('usbFileInput');
-const manualKeyInput = document.getElementById('manualKeyInput');
-
-document.getElementById('fileDropZone').addEventListener('click', () => usbFileInput.click());
-
-usbFileInput.addEventListener('change', async () => {
-  const file = usbFileInput.files && usbFileInput.files[0];
-  if (!file) return;
-  tempSecret = (await file.text()).trim();
-  tempHash = await computeNormalizedHash(tempSecret);
-  tempFileName = file.name;
-
-  document.getElementById('fileDropTitle').textContent = `Archivo cargado: ${file.name}`;
-  const preview = document.getElementById('keyPreviewBox');
-  preview.style.display = 'block';
-  preview.textContent = `SHA-256: ${tempHash}`;
-  document.getElementById('confirmUsbBtn').disabled = false;
-});
-
-manualKeyInput.addEventListener('input', async () => {
-  const val = manualKeyInput.value.trim();
-  if (!val) return;
-  tempSecret = val;
-  tempHash = await computeNormalizedHash(val);
-  tempFileName = 'spawndeck.qkey';
-  const preview = document.getElementById('keyPreviewBox');
-  preview.style.display = 'block';
-  preview.textContent = `SHA-256: ${tempHash}`;
-  document.getElementById('confirmUsbBtn').disabled = false;
-});
-
-document.getElementById('downloadQkeyBtn').addEventListener('click', () => {
-  const val = manualKeyInput.value.trim();
-  if (!val) {
-    showToast('Escribe primero una clave en el campo de texto.');
+async function triggerLocalTunnel(ip, force = true) {
+  if (!ip) {
+    showToast('La instancia aún no tiene IP pública asignada.');
     return;
   }
-  const blob = new Blob([val], { type: 'text/plain;charset=utf-8' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'spawndeck.qkey';
-  a.click();
-  showToast('Archivo spawndeck.qkey descargado. Guárdalo en tu pendrive E:\\');
-});
+  try {
+    showToast(`Abriendo túnel y calentando memoria de '${state.activeRepo}'...`);
+    await fetch(LOCAL_BRIDGE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'connect', ip, repo: state.activeRepo, force })
+    });
+    setTimeout(pollLocalBridge, 600);
+  } catch (e) {
+    showToast('Ejecuta el script de PowerShell para iniciar kairos_bridge.pyw.');
+  }
+}
 
-document.getElementById('cancelModalBtn').addEventListener('click', () => {
-  document.getElementById('usbModal').classList.remove('open');
-  state.pendingAction = null;
-});
+// Autenticación por Contraseña Spokcillo
+function requirePassword(callback) {
+  if (state.unlocked) {
+    callback();
+    return;
+  }
+  state.pendingAction = callback;
+  document.getElementById('authModal').classList.add('open');
+  document.getElementById('passwordInput').focus();
+}
 
-document.getElementById('usbForm').addEventListener('submit', (e) => {
-  e.preventDefault();
-  if (!tempHash) return;
-  state.usbHash = tempHash;
-  state.usbSecret = tempSecret;
-  state.usbFileName = tempFileName;
-
-  localStorage.setItem('kairos_usb_hash', tempHash);
-  localStorage.setItem('kairos_usb_secret', tempSecret);
-  localStorage.setItem('kairos_usb_name', tempFileName);
-
-  document.getElementById('usbModal').classList.remove('open');
-  addLog(`Llave configurada (${tempFileName}).`);
-  renderUI();
-
-  if (state.pendingAction) {
-    const fn = state.pendingAction;
-    state.pendingAction = null;
-    fn();
+document.getElementById('authBtn').addEventListener('click', () => {
+  if (state.unlocked) {
+    state.unlocked = false;
+    localStorage.removeItem('kairos_unlocked');
+    renderUI();
+    showToast('Sesión bloqueada.');
+  } else {
+    requirePassword(() => showToast('Sesión desbloqueada con éxito.'));
   }
 });
 
-document.getElementById('usbStatusBtn').addEventListener('click', () => {
+document.getElementById('cancelAuthBtn').addEventListener('click', () => {
+  document.getElementById('authModal').classList.remove('open');
   state.pendingAction = null;
-  document.getElementById('usbModal').classList.add('open');
 });
 
-async function syncAwsStatus(silent = false) {
+document.getElementById('authForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const val = document.getElementById('passwordInput').value.trim();
+  if (val.toLowerCase() === MASTER_PASSWORD) {
+    state.unlocked = true;
+    localStorage.setItem('kairos_unlocked', 'true');
+    document.getElementById('passwordInput').value = '';
+    document.getElementById('authModal').classList.remove('open');
+    renderUI();
+    showToast('🔓 Autorización Spokcillo activada.');
+    if (state.pendingAction) {
+      const fn = state.pendingAction;
+      state.pendingAction = null;
+      fn();
+    }
+  } else {
+    showToast('❌ Contraseña incorrecta. Usa: Spokcillo');
+  }
+});
+
+async function sha256Text(txt) {
+  const buf = new TextEncoder().encode(txt);
+  const digest = await crypto.subtle.digest('SHA-256', buf);
+  return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function syncAwsStatus() {
   const dot = document.getElementById('awsDot');
   const txt = document.getElementById('awsStatusText');
   try {
@@ -658,8 +841,7 @@ async function syncAwsStatus(silent = false) {
       return;
     }
     dot.className = 'dot online';
-    txt.textContent = 'AWS Conectado';
-    document.getElementById('lastSyncTime').textContent = nowStr();
+    txt.textContent = 'AWS Online';
 
     state.mc = data.uiState || 'off';
     state.mcIp = data.ip || null;
@@ -670,112 +852,169 @@ async function syncAwsStatus(silent = false) {
     renderUI();
   } catch (err) {
     dot.className = 'dot error';
-    txt.textContent = 'Sin conexión Lambda';
+    txt.textContent = 'Sin red Lambda';
   }
 }
 
 async function sendLambdaAction(service, targetState) {
-  const isMc = service === 'mc';
-  const isStart = targetState === 'on';
+  requirePassword(async () => {
+    const isMc = service === 'mc';
+    const isStart = targetState === 'on';
 
-  // Si no hay llave guardada al encender SpawnDeck, pedimos el modal
-  if (!isMc && isStart && !state.usbHash) {
-    state.pendingAction = () => sendLambdaAction(service, targetState);
-    document.getElementById('usbModal').classList.add('open');
-    return;
-  }
+    if (!isMc && !isStart) {
+      fetch(LOCAL_BRIDGE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'disconnect' })
+      }).catch(() => {});
+    }
 
-  if (!isMc && !isStart) {
-    disconnectLocalTunnel();
-  }
+    if (isMc) state.mc = isStart ? 'starting' : 'stopping';
+    else state.dev = isStart ? 'starting' : 'stopping';
+    renderUI();
 
-  if (isMc) {
-    state.mc = isStart ? 'starting' : 'stopping';
-    if (isStart) switchTab('portal');
-  } else {
-    state.dev = isStart ? 'starting' : 'stopping';
-  }
-  renderUI();
+    const actionName = isMc ? (isStart ? 'start_mc' : 'stop_mc') : (isStart ? 'start_gpu' : 'stop_gpu');
+    appendTermLine(`[AWS] Enviando orden '${actionName}' a AWS Lambda...`, 'ssh');
 
-  const actionName = isMc ? (isStart ? 'start_mc' : 'stop_mc') : (isStart ? 'start_gpu' : 'stop_gpu');
-  addLog(`Enviando '${actionName}' a AWS Lambda...`);
+    // Lista inteligente de candidatos de autenticación (Bóveda cruda + Spokcillo)
+    const candidates = [];
+    if (state.vault && state.vault.adminHash) {
+      candidates.push({ adminHash: state.vault.adminHash, usbPassword: state.vault.usbPassword });
+    }
+    candidates.push({ adminHash: await sha256Text("Spokcillo"), usbPassword: "Spokcillo" });
+    candidates.push({ adminHash: await sha256Text("spokcillo"), usbPassword: "spokcillo" });
 
-  try {
-    // ENVIAMOS LAS CREDENCIALES TANTO AL PRENDER COMO AL APAGAR PARA EVITAR ACCESO DENEGADO
-    const res = await fetch(LAMBDA_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        action: actionName,
-        pin: FRIEND_PIN,
-        adminHash: state.usbHash || localStorage.getItem('kairos_usb_hash') || "",
-        usbPassword: state.usbSecret || localStorage.getItem('kairos_usb_secret') || ""
-      })
-    });
-    const data = await res.json();
+    let success = false;
+    let lastError = "";
 
-    if (!res.ok || data.error) {
-      showToast(`AWS respondió: ${data.error || 'Error'}`);
-      addLog(`Error AWS: ${data.error || res.status}`);
-      await syncAwsStatus(true);
+    for (const cred of candidates) {
+      try {
+        const res = await fetch(LAMBDA_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: actionName,
+            pin: "spokcillo",
+            adminHash: cred.adminHash,
+            usbPassword: cred.usbPassword
+          })
+        });
+        const data = await res.json();
+        if (res.ok && !data.error) {
+          success = true;
+          break;
+        }
+        lastError = data.error || `HTTP ${res.status}`;
+      } catch (err) {
+        lastError = err.message;
+      }
+    }
+
+    if (!success) {
+      showToast(`AWS rechazó la orden: ${lastError}`);
+      appendTermLine(`[ERR] AWS rechazó '${actionName}': ${lastError}. Inserta tu pendrive E:\\ 1 segundo para que el Puente PC clone los bytes crudos de DEMO_SOLO_PARA_PROTOTIPO.qkey.`, 'err');
+      await syncAwsStatus();
       return;
     }
 
-    showToast(isStart ? 'Iniciando en AWS…' : 'Apagando servidor en AWS…');
+    showToast(isStart ? '⚡ Orden aceptada. Encendiendo servidor en AWS…' : '🛑 Apagando servidor en AWS…');
+    appendTermLine(`[AWS] Orden '${actionName}' aceptada por AWS EC2. Monitoreando estado...`, 'ready');
 
     const poll = setInterval(async () => {
-      await syncAwsStatus(true);
+      await syncAwsStatus();
       if (!isMc && isStart && state.dev === 'on' && state.devIp) {
         clearInterval(poll);
-        addLog(`SpawnDeck Online en ${state.devIp}. Iniciando Auto-Túnel y Warmup...`);
-        triggerLocalTunnel(state.devIp);
+        showToast(`¡SpawnDeck Online (${state.devIp})! Abriendo túnel...`);
+        triggerLocalTunnel(state.devIp, true);
       } else if (!isMc && !isStart && state.dev === 'off') {
         clearInterval(poll);
-        addLog('SpawnDeck detenido correctamente.');
-        showToast('SpawnDeck apagado en AWS.');
+        showToast('SpawnDeck apagado correctamente.');
       } else if (isMc && ((isStart && state.mc === 'on' && state.mcIp) || (!isStart && state.mc === 'off'))) {
         clearInterval(poll);
       }
-    }, 4000);
-  } catch (err) {
-    showToast('Error de red con Lambda.');
-    await syncAwsStatus(true);
-  }
+    }, 3500);
+  });
 }
 
-document.getElementById('tabNodes').addEventListener('click', () => switchTab('nodes'));
-document.getElementById('tabMcPortal').addEventListener('click', () => switchTab('portal'));
-document.getElementById('openMcPortalBtn').addEventListener('click', () => switchTab('portal'));
-document.getElementById('backToNodesBtn').addEventListener('click', () => switchTab('nodes'));
-
+// Botones Principales
 document.getElementById('startMcBtn').addEventListener('click', () => sendLambdaAction('mc', 'on'));
 document.getElementById('portalStartMcBtn').addEventListener('click', () => sendLambdaAction('mc', 'on'));
 document.getElementById('stopMcBtn').addEventListener('click', () => sendLambdaAction('mc', 'off'));
-
 document.getElementById('startDevBtn').addEventListener('click', () => sendLambdaAction('dev', 'on'));
 document.getElementById('stopDevBtn').addEventListener('click', () => sendLambdaAction('dev', 'off'));
 
 document.getElementById('manualTunnelBtn').addEventListener('click', () => {
-  if (state.devIp) triggerLocalTunnel(state.devIp);
+  if (state.devIp) triggerLocalTunnel(state.devIp, true);
   else showToast('Primero enciende SpawnDeck para obtener IP.');
 });
 
-document.getElementById('syncBtn').addEventListener('click', () => syncAwsStatus(false));
-document.getElementById('refreshPortalBtn').addEventListener('click', () => syncAwsStatus(false));
-
-document.getElementById('copyMcIpBtn').addEventListener('click', () => {
-  if (state.mcIp) { navigator.clipboard.writeText(state.mcIp); showToast('IP copiada'); }
+document.getElementById('warmSelectedRepoBtn').addEventListener('click', () => {
+  const rname = document.getElementById('repoNameInput').value.trim() || state.activeRepo;
+  state.activeRepo = rname;
+  if (state.devIp) {
+    switchTab('terminal');
+    triggerLocalTunnel(state.devIp, false);
+  } else {
+    showToast('Enciende SpawnDeck primero para calentar este repositorio en la GPU.');
+  }
 });
-document.getElementById('copySshBtn').addEventListener('click', () => {
-  navigator.clipboard.writeText(document.getElementById('sshCmdBox').textContent.trim());
-  showToast('Comando SSH copiado');
+
+// Comandos en Vivo en la Terminal
+async function runVpsCommand(cmd) {
+  if (!state.devIp) {
+    showToast('La VPS debe estar encendida para ejecutar comandos.');
+    return;
+  }
+  switchTab('terminal');
+  appendTermLine(`ubuntu@${state.devIp}:~$ ${cmd}`, 'ssh');
+  try {
+    await fetch(LOCAL_BRIDGE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'exec', ip: state.devIp, cmd })
+    });
+    setTimeout(pollLocalBridge, 500);
+  } catch (e) {
+    appendTermLine(`[ERR] No se pudo contactar con el Puente PC.`, 'err');
+  }
+}
+
+document.querySelectorAll('[data-cmd]').forEach(btn => {
+  btn.addEventListener('click', () => runVpsCommand(btn.dataset.cmd));
+});
+
+document.getElementById('terminalForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const input = document.getElementById('terminalCmdInput');
+  const cmd = input.value.trim();
+  if (!cmd) return;
+  input.value = '';
+  runVpsCommand(cmd);
+});
+
+async function runAgentBenchmark() {
+  switchTab('terminal');
+  appendTermLine(`[TEST] Probando respuesta en caliente de qwen3-coder:30b-fast (Repo: ${state.activeRepo})...`, 'gpu');
+  await fetch(LOCAL_BRIDGE_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action: 'warmup', repo: state.activeRepo })
+  });
+  setTimeout(pollLocalBridge, 800);
+}
+
+document.getElementById('testAgentBtn').addEventListener('click', runAgentBenchmark);
+document.getElementById('benchmarkBtn').addEventListener('click', runAgentBenchmark);
+document.getElementById('syncBtn').addEventListener('click', () => { syncAwsStatus(); pollLocalBridge(); showToast('Estado sincronizado.'); });
+document.getElementById('copyMcIpBtn').addEventListener('click', () => {
+  if (state.mcIp) { navigator.clipboard.writeText(state.mcIp); showToast(`IP copiada: ${state.mcIp}`); }
 });
 
 renderUI();
-syncAwsStatus(false);
+syncAwsStatus();
 pollLocalBridge();
-setInterval(() => syncAwsStatus(true), 10000);
-setInterval(pollLocalBridge, 3000);
+setInterval(syncAwsStatus, 8000);
+setInterval(pollLocalBridge, 2000);
 </script>
 </body>
 </html>
