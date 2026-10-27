@@ -3,69 +3,92 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#040814">
-<title>SPOKCILLO REALM — Minecraft Shader Cloud Panel</title>
+<meta name="theme-color" content="#050511">
+<title>SPOKCILLO REALM — Minecraft Shader Sanctuary</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  /* Tema por defecto: Noche Mística (Santuario Lunar) */
-  --bg-deep: #030712;
-  --bg-sky-top: #040b1e;
-  --bg-sky-mid: #0b1d42;
-  --bg-sky-horizon: #133366;
-  --shader-glow: rgba(0, 210, 255, 0.42);
-  --shader-core: #00e5ff;
-  --shader-secondary: #38bdf8;
-  --shader-emerald: #00ffaa;
-  --shader-amber: #fbbf24;
-  --shader-danger: #ff3366;
-  --mist-color-1: rgba(14, 65, 130, 0.35);
-  --mist-color-2: rgba(0, 195, 255, 0.18);
+  /* Tema 1: Aurora Astral (Imagen 1 - Cian, Magenta y Nubes Violetas) */
+  --bg-base: #04040c;
+  --sky-top: #050716;
+  --sky-mid: #101336;
+  --sky-bot: #1f143d;
+  --water-fade: #070919;
 
-  --glass-bg: rgba(8, 15, 32, 0.58);
-  --glass-bg-hover: rgba(13, 24, 48, 0.72);
-  --glass-subtle: rgba(5, 10, 22, 0.68);
-  --glass-border: rgba(148, 210, 255, 0.14);
-  --glass-border-strong: rgba(0, 229, 255, 0.38);
+  --accent-1: #00f5d4;
+  --accent-2: #ff2a85;
+  --accent-3: #a855f7;
+  --accent-warm: #ffb703;
+  --status-ok: #00ffaa;
+  --status-warn: #ffbe0b;
+  --status-err: #ff2a5f;
 
-  --text-main: #f0f7ff;
-  --text-secondary: #94b4d4;
-  --text-muted: #5e7a99;
+  --aurora-1: rgba(0, 245, 212, 0.48);
+  --aurora-2: rgba(255, 42, 133, 0.45);
+  --aurora-3: rgba(168, 85, 247, 0.38);
 
-  --radius-xl: 28px;
-  --radius-lg: 20px;
-  --radius-md: 14px;
-  --radius-sm: 10px;
+  --glass-surface: rgba(12, 14, 32, 0.42);
+  --glass-surface-strong: rgba(16, 19, 42, 0.62);
+  --glass-inner: rgba(6, 8, 20, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.14);
+  --glass-border-highlight: rgba(0, 245, 212, 0.48);
 
-  --font-display: 'Cinzel', serif;
-  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --text-primary: #ffffff;
+  --text-secondary: #cbd5e1;
+  --text-muted: #8b9bb4;
+
+  --font-display: 'Outfit', sans-serif;
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+
+  --blur-heavy: blur(42px) saturate(210%);
+  --blur-medium: blur(26px) saturate(180%);
 }
 
-/* Tema Alternativo: Amanecer Dorado (Complementary Dawn Shaders) */
-body.theme-dawn {
-  --bg-deep: #0d0907;
-  --bg-sky-top: #1a1829;
-  --bg-sky-mid: #4a3531;
-  --bg-sky-horizon: #9c6234;
-  --shader-glow: rgba(255, 180, 50, 0.42);
-  --shader-core: #ffbe3b;
-  --shader-secondary: #fde047;
-  --shader-emerald: #34d399;
-  --mist-color-1: rgba(210, 140, 70, 0.32);
-  --mist-color-2: rgba(180, 210, 175, 0.22);
+/* Tema 2: Santuario Sakura (Imagen 3 - Cerezos, Faroles Cálidos y Montañas) */
+body[data-shader="sakura"] {
+  --bg-base: #0b0711;
+  --sky-top: #141c38;
+  --sky-mid: #3b2d54;
+  --sky-bot: #6e3b56;
+  --water-fade: #0e1726;
 
-  --glass-bg: rgba(22, 17, 14, 0.62);
-  --glass-bg-hover: rgba(34, 26, 20, 0.76);
-  --glass-subtle: rgba(14, 11, 9, 0.72);
-  --glass-border: rgba(255, 210, 140, 0.16);
-  --glass-border-strong: rgba(255, 190, 59, 0.42);
+  --accent-1: #ff75b5;
+  --accent-2: #ffb703;
+  --accent-3: #38bdf8;
 
-  --text-main: #fffaf0;
-  --text-secondary: #d6c3b0;
-  --text-muted: #948270;
+  --aurora-1: rgba(255, 117, 181, 0.48);
+  --aurora-2: rgba(255, 183, 3, 0.42);
+  --aurora-3: rgba(56, 189, 248, 0.36);
+
+  --glass-surface: rgba(24, 16, 32, 0.44);
+  --glass-surface-strong: rgba(34, 22, 44, 0.64);
+  --glass-inner: rgba(14, 10, 22, 0.55);
+  --glass-border-highlight: rgba(255, 117, 181, 0.52);
+}
+
+/* Tema 3: Laguna Esmeralda (Imagen 2 - Agua Turquesa y Selva Radiante) */
+body[data-shader="lagoon"] {
+  --bg-base: #021014;
+  --sky-top: #07223b;
+  --sky-mid: #0c4a6e;
+  --sky-bot: #065f46;
+  --water-fade: #02181c;
+
+  --accent-1: #00f2fe;
+  --accent-2: #10b981;
+  --accent-3: #fde047;
+
+  --aurora-1: rgba(0, 242, 254, 0.5);
+  --aurora-2: rgba(16, 185, 129, 0.46);
+  --aurora-3: rgba(250, 204, 21, 0.32);
+
+  --glass-surface: rgba(6, 26, 34, 0.44);
+  --glass-surface-strong: rgba(8, 36, 46, 0.64);
+  --glass-inner: rgba(4, 18, 24, 0.58);
+  --glass-border-highlight: rgba(0, 242, 254, 0.52);
 }
 
 * {
@@ -79,227 +102,299 @@ html {
 }
 
 body {
-  background-color: var(--bg-deep);
-  color: var(--text-main);
+  background-color: var(--bg-base);
+  color: var(--text-primary);
   font-family: var(--font-sans);
   font-size: 14px;
-  line-height: 1.55;
+  line-height: 1.6;
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
-  transition: background-color 1.2s ease, color 0.8s ease;
+  transition: background-color 1s ease;
   -webkit-font-smoothing: antialiased;
 }
 
-/* ================= CAPAS DE SHADERS, CIELO Y NIEBLA VOLUMÉTRICA ================= */
-.shader-viewport {
+/* ================= ESCENARIO SHADER VOLUMÉTRICO CON SÚPER BLUR ================= */
+.shader-stage {
   position: fixed;
   inset: 0;
-  z-index: -3;
-  background: linear-gradient(
-    180deg,
-    var(--bg-sky-top) 0%,
-    var(--bg-sky-mid) 52%,
-    var(--bg-sky-horizon) 85%,
-    var(--bg-deep) 100%
-  );
+  z-index: -4;
+  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 48%, var(--sky-bot) 78%, var(--water-fade) 100%);
   transition: background 1.4s ease;
   overflow: hidden;
 }
 
-#shaderCanvas {
+/* Cortinas de Aurora / Nubes Volumétricas Desenfocadas */
+.aurora-ribbon {
   position: absolute;
+  border-radius: 50%;
+  filter: blur(75px);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  transition: background 1.2s ease;
+}
+
+.aurora-1 {
+  width: 75vw;
+  height: 55vh;
+  top: -12%;
+  left: -10%;
+  background: radial-gradient(ellipse at center, var(--aurora-1), transparent 70%);
+  animation: auroraWave1 14s ease-in-out infinite alternate;
+}
+
+.aurora-2 {
+  width: 80vw;
+  height: 50vh;
+  top: 4%;
+  right: -15%;
+  background: radial-gradient(ellipse at center, var(--aurora-2), transparent 70%);
+  animation: auroraWave2 18s ease-in-out infinite alternate;
+}
+
+.aurora-3 {
+  width: 70vw;
+  height: 48vh;
+  bottom: 8%;
+  left: 15%;
+  background: radial-gradient(ellipse at center, var(--aurora-3), transparent 72%);
+  animation: auroraWave3 16s ease-in-out infinite alternate;
+}
+
+/* Reflejo de Agua Cristalino Inferior */
+.water-reflection {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 32vh;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 245, 212, 0.06) 45%, rgba(4, 4, 12, 0.88) 100%);
+  backdrop-filter: blur(18px);
+  pointer-events: none;
+}
+
+@keyframes auroraWave1 {
+  0% { transform: translate(0, 0) rotate(-6deg) scale(1); }
+  100% { transform: translate(8%, 6%) rotate(6deg) scale(1.15); }
+}
+@keyframes auroraWave2 {
+  0% { transform: translate(0, 0) rotate(8deg) scale(1.05); }
+  100% { transform: translate(-10%, 8%) rotate(-5deg) scale(1.2); }
+}
+@keyframes auroraWave3 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(5%, -7%) scale(1.18); }
+}
+
+#shaderCanvas {
+  position: fixed;
   inset: 0;
   width: 100%;
   height: 100%;
-  display: block;
+  z-index: -3;
+  pointer-events: none;
 }
 
-/* Luna Creciente / Sol con God Rays */
-.celestial-body {
-  position: absolute;
-  top: 8%;
-  left: 16%;
-  width: 110px;
-  height: 110px;
+/* Luz interactiva que sigue el cursor */
+.cursor-glow {
+  position: fixed;
+  width: 560px;
+  height: 560px;
   border-radius: 50%;
-  box-shadow: inset -24px -10px 0 4px #e0f7ff, 0 0 65px 18px rgba(0, 210, 255, 0.55), 0 0 140px 45px rgba(0, 140, 255, 0.3);
-  filter: drop-shadow(0 0 25px var(--shader-core));
-  animation: floatCelestial 9s ease-in-out infinite alternate;
-  transition: all 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+  background: radial-gradient(circle, var(--aurora-1) 0%, rgba(255, 42, 133, 0.12) 45%, transparent 70%);
+  filter: blur(85px);
   pointer-events: none;
+  z-index: -2;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease, height 0.4s ease;
 }
 
-body.theme-dawn .celestial-body {
-  left: 72%;
-  top: 11%;
-  background: radial-gradient(circle, #fffbeb 15%, #fde047 55%, #f59e0b 100%);
-  box-shadow: 0 0 90px 35px rgba(255, 190, 60, 0.65), 0 0 220px 90px rgba(245, 158, 11, 0.4);
-}
-
-/* Rayos volumétricos (God Rays) */
-.god-rays {
-  position: absolute;
-  inset: -20%;
-  background: repeating-conic-gradient(
-    from 210deg at 18% 14%,
-    transparent 0deg,
-    rgba(0, 229, 255, 0.04) 4deg,
-    transparent 9deg
-  );
-  filter: blur(22px);
-  animation: rotateRays 28s linear infinite alternate;
-  pointer-events: none;
-  transition: opacity 1.2s ease;
-}
-
-body.theme-dawn .god-rays {
-  background: repeating-conic-gradient(
-    from 195deg at 74% 15%,
-    transparent 0deg,
-    rgba(255, 200, 80, 0.085) 5deg,
-    transparent 11deg
-  );
-}
-
-/* Capas de niebla y desvanecido inferior */
-.volumetric-mist {
-  position: absolute;
-  bottom: -60px;
-  left: -15%;
-  width: 130%;
-  height: 360px;
-  background:
-    radial-gradient(ellipse at 50% 80%, var(--mist-color-2), transparent 65%),
-    radial-gradient(ellipse at 25% 95%, var(--mist-color-1), transparent 70%),
-    radial-gradient(ellipse at 80% 90%, var(--mist-color-1), transparent 70%);
-  filter: blur(45px);
-  animation: driftMist 14s ease-in-out infinite alternate;
-  pointer-events: none;
-}
-
-.vignette-fade {
+/* Malla sutil de grano cinematográfico */
+.ambient-vignette {
   position: fixed;
   inset: 0;
-  z-index: -2;
-  background:
-    radial-gradient(circle at 50% 42%, transparent 35%, rgba(3, 7, 18, 0.68) 100%),
-    linear-gradient(180deg, rgba(3, 7, 18, 0.35) 0%, transparent 22%, transparent 72%, var(--bg-deep) 100%);
+  z-index: -1;
+  background: radial-gradient(circle at 50% 35%, transparent 45%, rgba(3, 4, 10, 0.65) 100%);
   pointer-events: none;
 }
 
-@keyframes floatCelestial {
-  0% { transform: translateY(0px) rotate(-4deg); }
-  100% { transform: translateY(-14px) rotate(4deg); }
-}
-
-@keyframes rotateRays {
-  0% { transform: rotate(-3deg) scale(1); }
-  100% { transform: rotate(4deg) scale(1.06); }
-}
-
-@keyframes driftMist {
-  0% { transform: translateX(-3%) scaleY(1); }
-  100% { transform: translateX(3%) scaleY(1.12); }
-}
-
-/* ================= CONTENEDOR PRINCIPAL Y ANIMACIONES DE ENTRADA ================= */
+/* ================= LAYOUT Y ANIMACIONES FLUIDAS ================= */
 .container {
-  max-width: 1180px;
+  max-width: 1220px;
   margin: 0 auto;
-  padding: 28px 24px 80px;
+  padding: 28px 24px 90px;
   position: relative;
   z-index: 2;
 }
 
-.fade-up {
+.reveal {
   opacity: 0;
-  transform: translateY(22px);
-  animation: fadeUpAnim 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform: translateY(26px) scale(0.985);
+  animation: revealSpring 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-.delay-1 { animation-delay: 0.1s; }
-.delay-2 { animation-delay: 0.22s; }
-.delay-3 { animation-delay: 0.34s; }
+.d-1 { animation-delay: 0.08s; }
+.d-2 { animation-delay: 0.18s; }
+.d-3 { animation-delay: 0.28s; }
+.d-4 { animation-delay: 0.38s; }
 
-@keyframes fadeUpAnim {
-  to { opacity: 1; transform: translateY(0); }
+@keyframes revealSpring {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
-/* ================= CABECERA SUPERIOR ================= */
-.header {
+/* ================= COMPONENTE BASE: CRISTAL ESMERILADO PRO ================= */
+.glass-card {
+  background: var(--glass-surface);
+  backdrop-filter: var(--blur-heavy);
+  -webkit-backdrop-filter: var(--blur-heavy);
+  border: 1px solid var(--glass-border);
+  border-radius: 28px;
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.48),
+    inset 0 1px 1px rgba(255, 255, 255, 0.25),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.05);
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    480px circle at var(--mouse-x, 50%) var(--mouse-y, -20%),
+    rgba(255, 255, 255, 0.12),
+    transparent 45%
+  );
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.glass-card:hover::after {
+  opacity: 1;
+}
+
+.glass-card:hover {
+  border-color: var(--glass-border-highlight);
+  box-shadow:
+    0 30px 75px rgba(0, 0, 0, 0.58),
+    0 0 40px var(--aurora-1),
+    inset 0 1px 2px rgba(255, 255, 255, 0.35);
+  transform: translateY(-4px);
+}
+
+.glass-card.online-glow {
+  border-color: rgba(0, 255, 170, 0.65);
+  box-shadow:
+    0 30px 80px rgba(0, 255, 170, 0.22),
+    0 0 55px rgba(0, 245, 212, 0.28),
+    inset 0 0 35px rgba(0, 255, 170, 0.08);
+}
+
+/* ================= BARRA DE NAVEGACIÓN FLOTANTE ================= */
+.navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 18px;
-  padding: 18px 24px;
-  margin-bottom: 28px;
-  background: var(--glass-bg);
-  backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-xl);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  padding: 16px 26px;
+  margin-bottom: 26px;
+  border-radius: 999px;
   flex-wrap: wrap;
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 15px;
 }
 
-.portal-orb {
-  width: 52px;
-  height: 52px;
+.brand-emblem {
+  width: 50px;
+  height: 50px;
   border-radius: 16px;
-  background: radial-gradient(circle at 35% 30%, #ffffff, var(--shader-core) 45%, #0284c7 100%);
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2), var(--accent-3));
+  background-size: 200% 200%;
+  animation: gradientFlow 5s ease infinite;
   display: grid;
   place-items: center;
-  font-size: 25px;
-  box-shadow: 0 0 32px var(--shader-glow), inset 0 0 12px rgba(255, 255, 255, 0.8);
-  animation: pulseOrb 3.5s ease-in-out infinite;
-  position: relative;
+  font-size: 24px;
+  box-shadow: 0 0 30px var(--aurora-1), inset 0 1px 2px rgba(255, 255, 255, 0.7);
 }
 
-@keyframes pulseOrb {
-  0%, 100% { transform: scale(1); box-shadow: 0 0 28px var(--shader-glow); }
-  50% { transform: scale(1.05); box-shadow: 0 0 48px var(--shader-core); }
+@keyframes gradientFlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
-.brand-info h1 {
+.brand-title h1 {
   font-family: var(--font-display);
-  font-size: 22px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  background: linear-gradient(90deg, #ffffff, var(--shader-core), var(--shader-emerald));
+  font-size: 21px;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  background: linear-gradient(90deg, #ffffff 10%, var(--accent-1) 55%, var(--accent-2) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.brand-info p {
-  font-size: 12.5px;
+.brand-title p {
+  font-size: 12px;
   color: var(--text-secondary);
+  font-weight: 500;
 }
 
-.header-actions {
+.nav-controls {
   display: flex;
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
 }
 
-.shader-pill {
+/* Selector de Shaders */
+.shader-switcher {
+  display: inline-flex;
+  background: var(--glass-inner);
+  padding: 5px;
+  border-radius: 999px;
+  border: 1px solid var(--glass-border);
+  gap: 4px;
+}
+
+.shader-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  padding: 6px 13px;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.shader-btn.active {
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  color: #050510;
+  box-shadow: 0 0 20px var(--aurora-1);
+}
+
+.pill-status {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 8px 15px;
   border-radius: 999px;
   font-size: 12px;
-  font-weight: 600;
-  background: var(--glass-subtle);
+  font-weight: 700;
+  background: var(--glass-inner);
   border: 1px solid var(--glass-border);
   color: var(--text-secondary);
-  backdrop-filter: blur(12px);
 }
 
 .dot {
@@ -307,253 +402,207 @@ body.theme-dawn .god-rays {
   height: 9px;
   border-radius: 50%;
   background: var(--text-muted);
-  transition: all 0.3s ease;
 }
 .dot.online {
-  background: var(--shader-emerald);
-  box-shadow: 0 0 14px var(--shader-emerald);
+  background: var(--status-ok);
+  box-shadow: 0 0 14px var(--status-ok);
 }
 .dot.busy {
-  background: var(--shader-amber);
-  box-shadow: 0 0 14px var(--shader-amber);
-  animation: blinkDot 1s infinite ease-in-out;
+  background: var(--status-warn);
+  box-shadow: 0 0 14px var(--status-warn);
+  animation: pulseDot 1s infinite ease-in-out;
 }
 .dot.error {
-  background: var(--shader-danger);
-  box-shadow: 0 0 14px var(--shader-danger);
+  background: var(--status-err);
+  box-shadow: 0 0 14px var(--status-err);
 }
 
-@keyframes blinkDot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.35; transform: scale(0.75); }
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(0.7); opacity: 0.4; }
 }
 
-/* ================= BARRA DE ESTADOS DEL SERVIDOR (4 ETAPAS) ================= */
-.pipeline-grid {
+/* ================= PIPELINE DE 4 ESTADOS DEL SERVIDOR ================= */
+.pipeline-bar {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 14px;
   margin-bottom: 26px;
 }
 
-.stage-card {
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-lg);
-  padding: 15px 18px;
+.step-glass {
+  padding: 16px 20px;
+  border-radius: 22px;
   display: flex;
   align-items: center;
   gap: 14px;
-  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-  overflow: hidden;
 }
 
-.stage-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-  transform: translateX(-100%);
-  transition: transform 0.6s ease;
-}
-.stage-card:hover::before {
-  transform: translateX(100%);
+.step-glass.active {
+  border-color: var(--status-warn);
+  box-shadow: 0 0 32px rgba(255, 190, 11, 0.25);
 }
 
-.stage-card.active {
-  border-color: var(--shader-amber);
-  box-shadow: 0 0 28px rgba(251, 191, 36, 0.22);
+.step-glass.done {
+  border-color: var(--status-ok);
+  background: linear-gradient(135deg, rgba(0, 255, 170, 0.16), var(--glass-surface));
+  box-shadow: 0 0 35px rgba(0, 255, 170, 0.2);
 }
 
-.stage-card.done {
-  border-color: rgba(0, 255, 170, 0.55);
-  background: linear-gradient(135deg, rgba(0, 255, 170, 0.14), var(--glass-bg));
-  box-shadow: 0 0 30px rgba(0, 255, 170, 0.18);
-}
-
-.stage-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 11px;
-  background: var(--glass-subtle);
+.step-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: var(--glass-inner);
   border: 1px solid var(--glass-border);
   display: grid;
   place-items: center;
   font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: 13px;
+  font-weight: 800;
+  font-size: 14px;
   color: var(--text-secondary);
   transition: all 0.35s ease;
 }
 
-.stage-card.active .stage-icon {
-  background: var(--shader-amber);
-  color: #1a1002;
-  border-color: var(--shader-amber);
-  box-shadow: 0 0 16px var(--shader-amber);
+.step-glass.active .step-badge {
+  background: var(--status-warn);
+  color: #1a1000;
+  box-shadow: 0 0 18px var(--status-warn);
 }
 
-.stage-card.done .stage-icon {
-  background: var(--shader-emerald);
+.step-glass.done .step-badge {
+  background: var(--status-ok);
   color: #021a10;
-  border-color: var(--shader-emerald);
-  box-shadow: 0 0 16px var(--shader-emerald);
+  box-shadow: 0 0 18px var(--status-ok);
 }
 
-.stage-text span {
+.step-info span {
   display: block;
   font-size: 10.5px;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.09em;
   color: var(--text-muted);
-}
-
-.stage-text strong {
-  font-size: 13px;
-  color: var(--text-main);
   font-weight: 700;
 }
 
-/* ================= GRID PRINCIPAL: PORTAL DE CONTROL + ESTADO EN VIVO ================= */
-.main-grid {
-  display: grid;
-  grid-template-columns: 1.25fr 0.95fr;
-  gap: 24px;
-  margin-bottom: 28px;
-}
-
-.glass-panel {
-  background: var(--glass-bg);
-  backdrop-filter: blur(26px) saturate(170%);
-  -webkit-backdrop-filter: blur(26px) saturate(170%);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-xl);
-  padding: 32px;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.glass-panel:hover {
-  border-color: var(--glass-border-strong);
-  transform: translateY(-3px);
-}
-
-.glass-panel.server-online {
-  border-color: var(--shader-emerald);
-  box-shadow: 0 25px 70px rgba(0, 255, 170, 0.2), inset 0 0 35px rgba(0, 255, 170, 0.06);
-}
-
-.panel-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 14px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-
-.realm-tag {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--shader-core);
-  display: block;
-  margin-bottom: 4px;
-  font-weight: 700;
-}
-
-.panel-title {
+.step-info strong {
   font-family: var(--font-display);
-  font-size: 26px;
-  font-weight: 800;
-  letter-spacing: 0.03em;
+  font-size: 14px;
+  color: #ffffff;
+  font-weight: 700;
 }
 
-.status-pill-large {
+/* ================= HERO CENTRAL: PORTAL DEL SERVIDOR + DESCARGA MEDIAFIRE ================= */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 0.9fr;
+  gap: 24px;
+  margin-bottom: 26px;
+}
+
+.hero-card {
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  padding: 8px 16px;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent-1);
+  margin-bottom: 6px;
+}
+
+.card-heading {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+.server-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 18px;
   border-radius: 999px;
   font-family: var(--font-mono);
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 700;
-  background: var(--glass-subtle);
+  background: var(--glass-inner);
   border: 1px solid var(--glass-border);
-  transition: all 0.35s ease;
 }
 
-.status-pill-large.on {
-  background: rgba(0, 255, 170, 0.15);
-  color: var(--shader-emerald);
-  border-color: rgba(0, 255, 170, 0.5);
-  box-shadow: 0 0 25px rgba(0, 255, 170, 0.25);
+.server-status-badge.on {
+  background: rgba(0, 255, 170, 0.16);
+  color: var(--status-ok);
+  border-color: rgba(0, 255, 170, 0.55);
+  box-shadow: 0 0 28px rgba(0, 255, 170, 0.3);
 }
 
-.status-pill-large.starting,
-.status-pill-large.stopping {
-  background: rgba(251, 191, 36, 0.16);
-  color: var(--shader-amber);
-  border-color: rgba(251, 191, 36, 0.5);
-  box-shadow: 0 0 25px rgba(251, 191, 36, 0.25);
+.server-status-badge.starting,
+.server-status-badge.stopping {
+  background: rgba(255, 190, 11, 0.18);
+  color: var(--status-warn);
+  border-color: rgba(255, 190, 11, 0.55);
 }
 
-/* Caja Santuario de IP Pública */
-.ip-sanctuary {
-  background: linear-gradient(135deg, rgba(0, 229, 255, 0.12), rgba(5, 12, 28, 0.78));
-  border: 1px solid var(--glass-border-strong);
-  border-radius: var(--radius-lg);
-  padding: 22px 24px;
-  margin: 20px 0 24px;
+/* Cristalería de la Dirección IP */
+.ip-showcase {
+  margin: 24px 0;
+  padding: 24px 26px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(6, 8, 22, 0.65) 100%);
+  border: 1px solid var(--glass-border-highlight);
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.25), 0 15px 35px rgba(0, 0, 0, 0.35);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
-  position: relative;
-  box-shadow: inset 0 0 30px rgba(0, 229, 255, 0.08), 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 
-.ip-sanctuary-info span {
-  display: block;
+.ip-label {
   font-family: var(--font-mono);
   font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--shader-core);
-  margin-bottom: 5px;
+  letter-spacing: 0.12em;
+  color: var(--accent-1);
+  display: block;
+  margin-bottom: 4px;
 }
 
-.ip-display {
+.ip-value {
   font-family: var(--font-mono);
-  font-size: 27px;
+  font-size: 30px;
   font-weight: 800;
   color: #ffffff;
-  text-shadow: 0 0 22px var(--shader-glow);
+  text-shadow: 0 0 28px var(--aurora-1);
   letter-spacing: 0.02em;
-  word-break: break-all;
 }
 
-.ip-sub {
-  font-size: 12px;
+.ip-hint {
+  font-size: 12.5px;
   color: var(--text-secondary);
-  margin-top: 3px;
+  margin-top: 4px;
 }
 
-/* Botones con estética Shader Glow */
+/* Botones de Alto Impacto */
 .btn {
   appearance: none;
   border: 1px solid var(--glass-border);
-  background: var(--glass-bg-hover);
-  color: var(--text-main);
-  padding: 13px 20px;
-  border-radius: var(--radius-md);
+  background: var(--glass-surface-strong);
+  color: var(--text-primary);
+  padding: 13px 22px;
+  border-radius: 16px;
   font-family: var(--font-sans);
   font-size: 13.5px;
   font-weight: 700;
@@ -561,479 +610,516 @@ body.theme-dawn .god-rays {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 9px;
-  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-  backdrop-filter: blur(12px);
+  gap: 10px;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(16px);
 }
 
 .btn:hover:not(:disabled) {
-  transform: translateY(-3px) scale(1.01);
-  border-color: var(--shader-core);
-  box-shadow: 0 10px 28px var(--shader-glow);
+  transform: translateY(-3px) scale(1.015);
+  border-color: var(--accent-1);
+  box-shadow: 0 12px 30px var(--aurora-1);
 }
 
 .btn:active:not(:disabled) {
-  transform: translateY(0px) scale(0.99);
+  transform: translateY(0) scale(0.99);
 }
 
 .btn:disabled {
-  opacity: 0.42;
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
-.btn-ignite {
-  background: linear-gradient(135deg, #00ffaa 0%, #00d2ff 100%);
-  color: #021318;
+.btn-power-on {
+  background: linear-gradient(135deg, var(--status-ok) 0%, var(--accent-1) 55%, var(--accent-2) 100%);
+  background-size: 200% 200%;
+  animation: gradientFlow 6s ease infinite;
+  color: #030712;
   border: none;
-  flex: 1.4;
+  flex: 1.5;
   font-size: 15px;
   font-weight: 800;
-  box-shadow: 0 0 32px rgba(0, 255, 170, 0.35);
+  box-shadow: 0 10px 35px rgba(0, 245, 212, 0.4);
 }
 
-.btn-ignite:hover:not(:disabled) {
-  box-shadow: 0 0 48px rgba(0, 255, 170, 0.65);
+.btn-power-on:hover:not(:disabled) {
+  box-shadow: 0 15px 45px rgba(0, 245, 212, 0.7), 0 0 25px var(--aurora-2);
 }
 
-.btn-shutdown {
-  background: rgba(255, 51, 102, 0.16);
-  color: #ff6b8b;
-  border-color: rgba(255, 51, 102, 0.42);
+.btn-power-off {
+  background: rgba(255, 42, 95, 0.18);
+  color: #ff85a1;
+  border-color: rgba(255, 42, 95, 0.45);
   flex: 0.8;
 }
 
-.btn-shutdown:hover:not(:disabled) {
-  background: rgba(255, 51, 102, 0.28);
-  border-color: var(--shader-danger);
-  box-shadow: 0 0 28px rgba(255, 51, 102, 0.35);
+.btn-power-off:hover:not(:disabled) {
+  background: rgba(255, 42, 95, 0.32);
+  border-color: var(--status-err);
+  box-shadow: 0 10px 30px rgba(255, 42, 95, 0.4);
 }
 
 .btn-sm {
-  padding: 8px 14px;
+  padding: 8px 15px;
   font-size: 12px;
-  border-radius: var(--radius-sm);
+  border-radius: 12px;
 }
 
-.power-controls {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-/* Especificaciones del Nodo */
-.specs-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-bottom: 18px;
-}
-
-.spec-box {
-  background: var(--glass-subtle);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-md);
-  padding: 13px 16px;
-}
-
-.spec-box span {
-  display: block;
-  font-size: 11px;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: 3px;
-}
-
-.spec-box strong {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--text-main);
-}
-
-/* Consola de Eventos del Servidor */
-.event-log-box {
-  background: rgba(3, 6, 15, 0.78);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-md);
-  padding: 14px 16px;
-  height: 175px;
-  overflow-y: auto;
-  font-family: var(--font-mono);
-  font-size: 12px;
+/* ================= TARJETA DESTACADA: DESCARGA DE MODS.RAR (MEDIAFIRE) ================= */
+.modpack-hub-card {
+  padding: 34px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  justify-content: space-between;
+  background:
+    radial-gradient(circle at 90% 10%, var(--aurora-2), transparent 55%),
+    radial-gradient(circle at 10% 90%, var(--aurora-1), transparent 60%),
+    var(--glass-surface);
+  border-color: rgba(255, 255, 255, 0.22);
 }
 
-.log-entry {
+.file-showcase {
+  background: var(--glass-inner);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 18px 20px;
+  margin: 18px 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.rar-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--accent-2), var(--accent-3));
+  display: grid;
+  place-items: center;
+  font-size: 26px;
+  box-shadow: 0 0 25px var(--aurora-2);
+  flex-shrink: 0;
+}
+
+.file-meta strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: #ffffff;
+}
+
+.file-meta span {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--accent-1);
+}
+
+.install-steps {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 20px;
+  font-size: 12.5px;
   color: var(--text-secondary);
-  line-height: 1.45;
 }
-.log-entry.ok { color: var(--shader-emerald); font-weight: 600; }
-.log-entry.warn { color: var(--shader-amber); }
-.log-entry.err { color: #ff6b8b; }
 
-/* ================= SECCIÓN DE MODS Y SHADERS EN LA MISMA PÁGINA ================= */
-.mods-section-header {
+.install-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.install-step code {
+  font-family: var(--font-mono);
+  color: var(--accent-1);
+  background: rgba(0, 0, 0, 0.35);
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 11.5px;
+}
+
+.btn-mediafire {
+  background: linear-gradient(135deg, #0072ff 0%, #00c6ff 50%, var(--accent-1) 100%);
+  color: #ffffff;
+  border: none;
+  font-size: 14.5px;
+  font-weight: 800;
+  width: 100%;
+  box-shadow: 0 12px 35px rgba(0, 198, 255, 0.42);
+}
+
+.btn-mediafire:hover {
+  color: #02101c;
+  box-shadow: 0 16px 45px rgba(0, 245, 212, 0.68);
+}
+
+/* ================= SECCIÓN DE MODS + TELEMETRÍA EN LA MISMA PÁGINA ================= */
+.bottom-layout {
+  display: grid;
+  grid-template-columns: 1.55fr 0.85fr;
+  gap: 24px;
+}
+
+.section-card {
+  padding: 32px;
+}
+
+.mods-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 22px;
+  gap: 14px;
+  margin-bottom: 20px;
   flex-wrap: wrap;
 }
 
-.mods-filter-bar {
+.filter-group {
   display: flex;
-  gap: 8px;
+  gap: 7px;
   flex-wrap: wrap;
-  align-items: center;
 }
 
-.filter-chip {
-  background: var(--glass-subtle);
+.chip {
+  background: var(--glass-inner);
   border: 1px solid var(--glass-border);
   color: var(--text-secondary);
   padding: 7px 14px;
   border-radius: 999px;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.25s ease;
 }
 
-.filter-chip.active,
-.filter-chip:hover {
-  background: linear-gradient(135deg, rgba(0, 229, 255, 0.22), rgba(0, 255, 170, 0.16));
-  border-color: var(--shader-core);
-  color: #ffffff;
-  box-shadow: 0 0 18px var(--shader-glow);
+.chip.active,
+.chip:hover {
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  color: #050510;
+  border-color: transparent;
+  box-shadow: 0 0 20px var(--aurora-1);
 }
 
-.search-input {
-  background: var(--glass-subtle);
+.search-box {
+  background: var(--glass-inner);
   border: 1px solid var(--glass-border);
-  color: var(--text-main);
-  padding: 8px 14px;
+  color: #ffffff;
+  padding: 9px 16px;
   border-radius: 999px;
   font-family: var(--font-sans);
   font-size: 12.5px;
   outline: none;
-  min-width: 210px;
-  transition: border-color 0.25s ease;
+  width: 220px;
+  transition: all 0.25s ease;
 }
-.search-input:focus {
-  border-color: var(--shader-core);
+.search-box:focus {
+  border-color: var(--accent-1);
+  box-shadow: 0 0 18px var(--aurora-1);
 }
 
-.mods-grid {
+.mods-bento {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+  gap: 14px;
 }
 
-.mod-card {
-  background: var(--glass-subtle);
+.mod-item {
+  background: var(--glass-inner);
   border: 1px solid var(--glass-border);
-  border-radius: var(--radius-lg);
-  padding: 18px 20px;
+  border-radius: 20px;
+  padding: 18px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 12px;
-  transition: all 0.32s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.mod-card:hover {
-  transform: translateY(-5px);
-  border-color: var(--glass-border-strong);
-  background: var(--glass-bg-hover);
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45), 0 0 24px rgba(0, 229, 255, 0.12);
-}
-
-.mod-top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
   gap: 10px;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.mod-icon {
+.mod-item:hover {
+  transform: translateY(-5px) scale(1.01);
+  border-color: var(--accent-1);
+  background: rgba(20, 26, 52, 0.68);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45), 0 0 25px var(--aurora-1);
+}
+
+.mod-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mod-emoji {
   width: 42px;
   height: 42px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, rgba(0, 229, 255, 0.18), rgba(0, 255, 170, 0.12));
-  border: 1px solid var(--glass-border-strong);
+  border-radius: 13px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--glass-border);
   display: grid;
   place-items: center;
-  font-size: 20px;
-  flex-shrink: 0;
+  font-size: 21px;
 }
 
-.mod-badge {
+.mod-tag {
   font-family: var(--font-mono);
-  font-size: 10.5px;
-  padding: 3px 9px;
+  font-size: 10px;
+  padding: 4px 9px;
   border-radius: 999px;
-  background: rgba(0, 229, 255, 0.12);
-  color: var(--shader-core);
-  border: 1px solid rgba(0, 229, 255, 0.3);
-  font-weight: 600;
+  background: rgba(0, 245, 212, 0.12);
+  color: var(--accent-1);
+  border: 1px solid rgba(0, 245, 212, 0.3);
+  font-weight: 700;
 }
 
-.mod-name {
-  font-size: 15.5px;
+.mod-title {
+  font-family: var(--font-display);
+  font-size: 16px;
   font-weight: 800;
-  color: var(--text-main);
-  margin-bottom: 4px;
+  color: #ffffff;
+  margin-top: 6px;
 }
 
 .mod-desc {
-  font-size: 12.5px;
+  font-size: 12px;
   color: var(--text-secondary);
   line-height: 1.45;
 }
 
-.mod-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 10px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--text-muted);
-}
-
-.delete-mod-btn {
-  background: transparent;
-  border: none;
-  color: var(--text-muted);
-  cursor: pointer;
-  font-size: 13px;
-  transition: color 0.2s;
-}
-.delete-mod-btn:hover {
-  color: var(--shader-danger);
-}
-
-/* Formulario Desplegable para Añadir Mod */
-.add-mod-drawer {
-  display: none;
-  background: var(--glass-subtle);
-  border: 1px solid var(--glass-border-strong);
-  border-radius: var(--radius-lg);
-  padding: 20px;
-  margin-bottom: 20px;
-  gap: 12px;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  align-items: end;
-}
-.add-mod-drawer.open {
+/* Telemetría y Consola de Eventos */
+.specs-bento {
   display: grid;
-  animation: fadeUpAnim 0.35s ease forwards;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin: 16px 0 20px;
 }
 
-.field-group label {
-  display: block;
-  font-size: 11px;
-  font-family: var(--font-mono);
-  color: var(--shader-core);
-  margin-bottom: 5px;
-  text-transform: uppercase;
-}
-
-.field-input {
-  width: 100%;
-  padding: 9px 12px;
-  border-radius: var(--radius-sm);
-  background: rgba(4, 9, 20, 0.8);
+.spec-tile {
+  background: var(--glass-inner);
   border: 1px solid var(--glass-border);
-  color: var(--text-main);
-  font-family: var(--font-sans);
-  font-size: 13px;
-  outline: none;
+  border-radius: 16px;
+  padding: 13px 15px;
 }
 
-/* ================= MODAL DE AUTORIZACIÓN (NÚCLEO RÚNICO) ================= */
-.modal-backdrop {
+.spec-tile span {
+  display: block;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 3px;
+}
+
+.spec-tile strong {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: #ffffff;
+}
+
+.live-console {
+  background: rgba(3, 5, 14, 0.72);
+  border: 1px solid var(--glass-border);
+  border-radius: 18px;
+  padding: 15px;
+  height: 225px;
+  overflow-y: auto;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.log-line { color: var(--text-secondary); }
+.log-line.ok { color: var(--status-ok); font-weight: 600; }
+.log-line.warn { color: var(--status-warn); }
+.log-line.err { color: var(--status-err); }
+
+/* ================= MODAL DE LLAVE RÚNICA CON SÚPER DESENFOQUE ================= */
+.modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(2, 5, 14, 0.82);
-  backdrop-filter: blur(16px);
+  background: rgba(3, 4, 12, 0.75);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
   display: none;
   place-items: center;
   padding: 20px;
-  z-index: 60;
+  z-index: 90;
 }
-.modal-backdrop.open {
+.modal-overlay.open {
   display: grid;
 }
 
-.modal-card {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border-strong);
-  border-radius: var(--radius-xl);
-  padding: 34px;
+.modal-glass {
   max-width: 430px;
   width: 100%;
+  padding: 36px;
   text-align: center;
-  box-shadow: 0 0 70px var(--shader-glow);
 }
 
-.rune-reactor {
-  width: 124px;
-  height: 124px;
+.orb-hold {
+  width: 126px;
+  height: 126px;
   border-radius: 50%;
   margin: 22px auto;
-  background: radial-gradient(circle, rgba(0, 229, 255, 0.28), rgba(5, 12, 28, 0.85));
-  border: 3px solid var(--shader-core);
+  background: radial-gradient(circle, var(--aurora-1), rgba(8, 12, 28, 0.9));
+  border: 3px solid var(--accent-1);
   display: grid;
   place-items: center;
   cursor: pointer;
   position: relative;
   user-select: none;
-  box-shadow: 0 0 38px var(--shader-glow);
+  box-shadow: 0 0 45px var(--aurora-1);
 }
 
-.rune-ring {
+.orb-ring {
   position: absolute;
   inset: -6px;
   border-radius: 50%;
   border: 4px solid transparent;
-  border-top-color: var(--shader-emerald);
+  border-top-color: var(--accent-2);
   transition: transform 0.1s linear;
 }
 
-/* Notificación Flotante (Toast) */
+/* Toast Flotante */
 .toast {
   position: fixed;
-  bottom: 26px;
-  right: 26px;
-  background: var(--glass-bg-hover);
-  backdrop-filter: blur(18px);
-  border: 1px solid var(--shader-core);
-  color: var(--text-main);
+  bottom: 28px;
+  right: 28px;
+  background: var(--glass-surface-strong);
+  backdrop-filter: var(--blur-medium);
+  border: 1px solid var(--accent-1);
+  color: #ffffff;
   padding: 14px 22px;
-  border-radius: var(--radius-md);
+  border-radius: 16px;
   font-weight: 700;
   font-size: 13.5px;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.55), 0 0 25px var(--shader-glow);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.6), 0 0 30px var(--aurora-1);
   opacity: 0;
-  transform: translateY(14px);
+  transform: translateY(15px);
   pointer-events: none;
-  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-  z-index: 80;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 100;
 }
 .toast.show {
   opacity: 1;
   transform: translateY(0);
 }
 
-@media (max-width: 920px) {
-  .main-grid, .pipeline-grid {
+@media (max-width: 980px) {
+  .hero-grid, .bottom-layout, .pipeline-bar {
     grid-template-columns: 1fr;
+  }
+  .navbar {
+    border-radius: 26px;
   }
 }
 </style>
 </head>
-<body>
+<body data-shader="aurora">
 
-<!-- FONDO DE SHADERS EN VIVO (ESTRELLAS, LUNA/SOL, GOD RAYS Y NIEBLA) -->
-<div class="shader-viewport">
-  <canvas id="shaderCanvas"></canvas>
-  <div class="god-rays"></div>
-  <div class="celestial-body"></div>
-  <div class="volumetric-mist"></div>
+<!-- ESCENARIO SHADER MULTICAPA: AURORAS, AGUA Y PARTÍCULAS -->
+<div class="shader-stage">
+  <div class="aurora-ribbon aurora-1"></div>
+  <div class="aurora-ribbon aurora-2"></div>
+  <div class="aurora-ribbon aurora-3"></div>
+  <div class="water-reflection"></div>
 </div>
-<div class="vignette-fade"></div>
+<canvas id="shaderCanvas"></canvas>
+<div class="cursor-glow" id="cursorGlow"></div>
+<div class="ambient-vignette"></div>
 
 <div class="container">
-  <!-- CABECERA -->
-  <header class="header fade-up">
+  <!-- BARRA SUPERIOR DE CRISTAL -->
+  <header class="glass-card navbar reveal">
     <div class="brand">
-      <div class="portal-orb" id="headerOrb">⛏</div>
-      <div class="brand-info">
-        <h1>SPOKCILLO REALM</h1>
-        <p>Minecraft Modded Cloud Server · Shaders & Forge Ecosystem</p>
+      <div class="brand-emblem">⛏</div>
+      <div class="brand-title">
+        <h1>SPOKCILLO SANCTUARY</h1>
+        <p>Servidor Minecraft Modded · Shaders & Cloud Node</p>
       </div>
     </div>
 
-    <div class="header-actions">
-      <div class="shader-pill">
-        <span class="dot busy" id="awsDot"></span>
-        <span id="awsStatusText">AWS Lambda: Sincronizando…</span>
+    <div class="nav-controls">
+      <!-- Selector de los 3 Shaders de las imágenes -->
+      <div class="shader-switcher" role="group" aria-label="Selector de atmósfera Shader">
+        <button class="shader-btn active" data-theme="aurora" type="button">🌌 Aurora Astral</button>
+        <button class="shader-btn" data-theme="sakura" type="button">🌸 Sakura Zen</button>
+        <button class="shader-btn" data-theme="lagoon" type="button">🏝️ Laguna Turquesa</button>
       </div>
-      <button class="btn btn-sm" id="themeToggleBtn" type="button" title="Cambiar atmósfera de Shaders">
-        🌙 Shader: Noche Mística
-      </button>
+
+      <div class="pill-status">
+        <span class="dot busy" id="awsDot"></span>
+        <span id="awsStatusText">AWS: Sincronizando…</span>
+      </div>
+
       <button class="btn btn-sm" id="jsGateBtn" type="button">
-        <span id="jsGateLabel">🔒 Llave Rúnica: Lista</span>
+        <span id="jsGateLabel">🔒 Llave Rúnica</span>
       </button>
-      <button class="btn btn-sm" id="syncBtn" type="button" title="Refrescar estado">↻</button>
+      <button class="btn btn-sm" id="syncBtn" type="button" title="Sincronizar estado ahora">↻</button>
     </div>
   </header>
 
-  <!-- PIPELINE DE ESTADOS DEL SERVIDOR MINECRAFT -->
-  <section class="pipeline-grid fade-up delay-1">
-    <div class="stage-card" id="stage1">
-      <div class="stage-icon">1</div>
-      <div class="stage-text">
-        <span>Nodo Cloud EC2</span>
-        <strong id="stage1Text">Servidor Detenido</strong>
+  <!-- PIPELINE DE ESTADOS EN TIEMPO REAL -->
+  <section class="pipeline-bar reveal d-1">
+    <div class="glass-card step-glass" id="step1">
+      <div class="step-badge">01</div>
+      <div class="step-info">
+        <span>Instancia Cloud</span>
+        <strong id="step1Text">Nodo Apagado</strong>
       </div>
     </div>
-    <div class="stage-card" id="stage2">
-      <div class="stage-icon">2</div>
-      <div class="stage-text">
-        <span>IPv4 Dinámica</span>
-        <strong id="stage2Text">Sin Asignar</strong>
+    <div class="glass-card step-glass" id="step2">
+      <div class="step-badge">02</div>
+      <div class="step-info">
+        <span>Red Pública IPv4</span>
+        <strong id="step2Text">En espera</strong>
       </div>
     </div>
-    <div class="stage-card" id="stage3">
-      <div class="stage-icon">3</div>
-      <div class="stage-text">
+    <div class="glass-card step-glass" id="step3">
+      <div class="step-badge">03</div>
+      <div class="step-info">
         <span>Motor Forge & Mods</span>
-        <strong id="stage3Text">En reposo</strong>
+        <strong id="step3Text">En reposo</strong>
       </div>
     </div>
-    <div class="stage-card" id="stage4">
-      <div class="stage-icon">4</div>
-      <div class="stage-text">
-        <span>Estado del Mundo</span>
-        <strong id="stage4Text">Offline</strong>
+    <div class="glass-card step-glass" id="step4">
+      <div class="step-badge">04</div>
+      <div class="step-info">
+        <span>Santuario Minecraft</span>
+        <strong id="step4Text">Offline</strong>
       </div>
     </div>
   </section>
 
-  <!-- SECCIÓN CENTRAL: CONTROL DE ENCENDIDO E IP + TELEMETRÍA -->
-  <section class="main-grid fade-up delay-2">
-    <!-- Tarjeta Izquierda: Santuario de Control y Conexión -->
-    <article class="glass-panel" id="mcMainCard">
+  <!-- HERO: ENCENDIDO E IP + DESCARGA OFICIAL DE MODS.RAR -->
+  <section class="hero-grid reveal d-2">
+    <!-- Panel Izquierdo: Control de Encendido e IP -->
+    <article class="glass-card hero-card" id="mainServerCard">
       <div>
-        <div class="panel-header">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:14px; flex-wrap:wrap; margin-bottom:14px;">
           <div>
-            <span class="realm-tag">Santuario Multijugador · us-east-2</span>
-            <h2 class="panel-title">Portal de Conexión</h2>
+            <span class="eyebrow">✨ Portal Multijugador · us-east-2</span>
+            <h2 class="card-heading">Control del Servidor</h2>
           </div>
-          <span class="status-pill-large" id="mcBadge">
+          <div class="server-status-badge" id="mcBadge">
             <span class="dot" id="mcDot"></span>
             <span id="mcStatusLabel">Detenido</span>
-          </span>
+          </div>
         </div>
 
-        <p style="color:var(--text-secondary); font-size:13.5px;">
-          Enciende el servidor en la nube cuando vayan a jugar. El sistema cuenta con un guardián automático que apaga la instancia tras <strong>20 minutos sin jugadores conectados</strong> para ahorrar recursos.
+        <p style="color:var(--text-secondary); font-size:14px;">
+          Enciende el mundo directamente desde aquí cuando vayan a entrar. El servidor cuenta con apagado inteligente tras <strong>20 minutos sin jugadores conectados</strong>.
         </p>
 
-        <!-- Caja de IP con Brillo Shader -->
-        <div class="ip-sanctuary">
-          <div class="ip-sanctuary-info">
-            <span>✨ Dirección IP Pública del Servidor</span>
-            <div class="ip-display" id="mcIpDisplay">Servidor Apagado</div>
-            <div class="ip-sub" id="mcIpSub">Enciende el nodo para generar la IP de la sesión</div>
+        <!-- Vitrina de IP Dinámica -->
+        <div class="ip-showcase">
+          <div>
+            <span class="ip-label">🌐 Dirección IP Pública Dinámica</span>
+            <div class="ip-value" id="mcIpDisplay">Servidor Apagado</div>
+            <div class="ip-hint" id="mcIpHint">Pulsa "Encender Servidor" para asignar una IP pública</div>
           </div>
           <button class="btn" id="copyIpBtn" type="button">
             📋 Copiar IP
@@ -1041,123 +1127,133 @@ body.theme-dawn .god-rays {
         </div>
       </div>
 
-      <!-- Botones de Encendido y Apagado -->
-      <div class="power-controls">
-        <button class="btn btn-ignite" id="startMcBtn" type="button">
+      <div style="display:flex; gap:12px; flex-wrap:wrap;">
+        <button class="btn btn-power-on" id="startMcBtn" type="button">
           ⚡ Encender Servidor Minecraft
         </button>
-        <button class="btn btn-shutdown" id="stopMcBtn" type="button">
-          🛑 Apagar Servidor
+        <button class="btn btn-power-off" id="stopMcBtn" type="button">
+          🛑 Apagar
         </button>
       </div>
     </article>
 
-    <!-- Tarjeta Derecha: Telemetría del Nodo y Registro en Vivo -->
-    <article class="glass-panel">
-      <div class="panel-header" style="margin-bottom:14px;">
-        <div>
-          <span class="realm-tag">Telemetría & Oráculo AWS</span>
-          <h2 class="panel-title" style="font-size:22px;">Estado del Nodo</h2>
+    <!-- Panel Derecho: Descarga Oficial del Pack de Mods (MediaFire) -->
+    <article class="glass-card modpack-hub-card">
+      <div>
+        <span class="eyebrow" style="color:var(--accent-2);">📦 Pack Oficial Requerido</span>
+        <h2 class="card-heading" style="font-size:26px;">Descarga los Mods</h2>
+        <p style="color:var(--text-secondary); font-size:13px; margin-top:4px;">
+          Descarga el archivo comprimido oficial con todos los mods sincronizados para poder entrar al servidor sin errores de compatibilidad.
+        </p>
+
+        <div class="file-showcase">
+          <div class="rar-icon">💎</div>
+          <div class="file-meta">
+            <strong>mods.rar</strong>
+            <span>MediaFire Direct · Pack Completo Forge</span>
+          </div>
+        </div>
+
+        <div class="install-steps">
+          <div class="install-step">
+            <span>1️⃣</span>
+            <span>Descarga y descomprime el archivo <code>mods.rar</code></span>
+          </div>
+          <div class="install-step">
+            <span>2️⃣</span>
+            <span>Pega los archivos <code>.jar</code> en <code>%appdata%\.minecraft\mods</code></span>
+          </div>
+          <div class="install-step">
+            <span>3️⃣</span>
+            <span>Abre el juego con <strong>Forge</strong> y pega la IP del servidor</span>
+          </div>
         </div>
       </div>
 
-      <div class="specs-grid">
-        <div class="spec-box">
-          <span>Nombre del Nodo</span>
-          <strong>spokcillo</strong>
-        </div>
-        <div class="spec-box">
-          <span>Instance ID (AWS)</span>
-          <strong>i-0830d7dc6ccd4a515</strong>
-        </div>
-        <div class="spec-box">
-          <span>Loader / Entorno</span>
-          <strong style="color:var(--shader-core);">Forge Modded · Docker</strong>
-        </div>
-        <div class="spec-box">
-          <span>Auto-Shutdown</span>
-          <strong style="color:var(--shader-emerald);">Activo (20m Idle)</strong>
-        </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <a href="https://www.mediafire.com/file/5xly6wpkoruyvti/mods.rar/file" target="_blank" rel="noopener noreferrer" class="btn btn-mediafire" style="flex:1;">
+          ⬇️ Descargar mods.rar (MediaFire)
+        </a>
+        <button class="btn" id="copyModLinkBtn" type="button" title="Copiar enlace de MediaFire para tus amigos">
+          🔗 Copiar Link
+        </button>
       </div>
-
-      <span class="realm-tag" style="margin-bottom:8px;">📜 Registro de Eventos en Tiempo Real</span>
-      <div class="event-log-box" id="eventLogBox"></div>
     </article>
   </section>
 
-  <!-- SECCIÓN INFERIOR (EN LA MISMA PÁGINA): MODPACK & SHADERS ACTIVOS -->
-  <section class="glass-panel fade-up delay-3">
-    <div class="mods-section-header">
-      <div>
-        <span class="realm-tag">Configuración del Mundo · Modpack Activo</span>
-        <h2 class="panel-title">Mods & Shaders del Servidor (<span id="modCountBadge">0</span>)</h2>
+  <!-- SECCIÓN INFERIOR: CATÁLOGO DE MODS Y TELEMETRÍA EN LA MISMA PÁGINA -->
+  <section class="bottom-layout reveal d-3">
+    <!-- Catálogo Visual de Mods Activos -->
+    <article class="glass-card section-card">
+      <div class="mods-header">
+        <div>
+          <span class="eyebrow">🧩 Ecosistema del Mundo</span>
+          <h3 class="card-heading" style="font-size:24px;">Mods & Shaders Incluidos (<span id="modCount">0</span>)</h3>
+        </div>
+        <input type="text" id="modSearch" class="search-box" placeholder="🔍 Filtrar mod o shader...">
       </div>
 
-      <div class="mods-filter-bar">
-        <input type="text" id="modSearchInput" class="search-input" placeholder="🔍 Buscar mod o shader...">
-        <button class="filter-chip active" data-cat="all" type="button">Todos</button>
-        <button class="filter-chip" data-cat="Dimensiones & Biomas" type="button">Biomas & Cuevas</button>
-        <button class="filter-chip" data-cat="Herramientas & Magia" type="button">Forja &Equipo</button>
-        <button class="filter-chip" data-cat="Shaders & FPS" type="button">Shaders & FPS</button>
-        <button class="btn btn-sm" id="toggleAddModBtn" type="button" style="border-color:var(--shader-core); color:var(--shader-core);">
-          + Añadir Mod
-        </button>
+      <div class="filter-group" style="margin-bottom:18px;">
+        <button class="chip active" data-cat="all" type="button">Todos</button>
+        <button class="chip" data-cat="Biomas & Cuevas" type="button">Biomas & Cuevas</button>
+        <button class="chip" data-cat="Forja & Equipo" type="button">Forja & Equipo</button>
+        <button class="chip" data-cat="Shaders & FPS" type="button">Shaders & FPS</button>
+        <button class="chip" data-cat="Utilidad & Mundo" type="button">Utilidad & Mundo</button>
       </div>
-    </div>
 
-    <!-- Cajón desplegable por si quieres agregar más mods a la vista -->
-    <form class="add-mod-drawer" id="addModForm">
-      <div class="field-group">
-        <label>Nombre del Mod</label>
-        <input type="text" id="newModName" class="field-input" placeholder="Ej: Twilight Forest" required>
-      </div>
-      <div class="field-group">
-        <label>Categoría</label>
-        <select id="newModCat" class="field-input">
-          <option value="Dimensiones & Biomas">Dimensiones & Biomas</option>
-          <option value="Herramientas & Magia">Herramientas & Magia</option>
-          <option value="Shaders & FPS">Shaders & FPS</option>
-          <option value="Utilidad & QoL">Utilidad & QoL</option>
-        </select>
-      </div>
-      <div class="field-group">
-        <label>Icono (Emoji)</label>
-        <input type="text" id="newModIcon" class="field-input" placeholder="Ej: 🌲" maxlength="4">
-      </div>
-      <div class="field-group" style="grid-column: 1 / -1;">
-        <label>Descripción breve</label>
-        <input type="text" id="newModDesc" class="field-input" placeholder="Describe qué añade este mod al servidor..." required>
-      </div>
-      <div style="grid-column: 1 / -1; display:flex; justify-content:flex-end; gap:10px;">
-        <button class="btn btn-sm" type="button" id="cancelAddModBtn">Cancelar</button>
-        <button class="btn btn-sm" type="submit" style="background:var(--shader-emerald); color:#021a10; border:none;">💾 Guardar en el Modpack</button>
-      </div>
-    </form>
+      <div class="mods-bento" id="modsGrid"></div>
+    </article>
 
-    <div class="mods-grid" id="modsGrid"></div>
+    <!-- Telemetría y Consola de Eventos -->
+    <article class="glass-card section-card">
+      <span class="eyebrow">📡 Telemetría en Tiempo Real</span>
+      <h3 class="card-heading" style="font-size:24px;">Estado del Nodo</h3>
+
+      <div class="specs-bento">
+        <div class="spec-tile">
+          <span>Nodo Servidor</span>
+          <strong>spokcillo</strong>
+        </div>
+        <div class="spec-tile">
+          <span>Instance ID</span>
+          <strong>i-0830d7dc6ccd4a515</strong>
+        </div>
+        <div class="spec-tile">
+          <span>Región Cloud</span>
+          <strong style="color:var(--accent-1);">AWS us-east-2</strong>
+        </div>
+        <div class="spec-tile">
+          <span>Auto-Apagado</span>
+          <strong style="color:var(--status-ok);">20 min sin jugadores</strong>
+        </div>
+      </div>
+
+      <span class="eyebrow" style="margin-bottom:8px;">📜 Registro de Actividad del Servidor</span>
+      <div class="live-console" id="consoleBox"></div>
+    </article>
   </section>
 </div>
 
-<!-- MODAL DE SEGURIDAD RÚNICA (AUTORIZACIÓN AWS LAMBDA) -->
-<div class="modal-backdrop" id="reactorModal">
-  <div class="modal-card">
-    <span class="realm-tag">Guardián del Santuario · Spokcillo</span>
-    <h3 style="font-family:var(--font-display); font-size:22px; margin-bottom:8px;">⚡ Autorización del Portal</h3>
-    <p style="font-size:13px; color:var(--text-secondary);">
-      Mantén presionado el orbe rúnico 0.5s o pulsa <strong>Validar y Ejecutar Ahora</strong> para enviar la orden a AWS EC2.
+<!-- MODAL DE AUTORIZACIÓN RÚNICA -->
+<div class="modal-overlay" id="authModal">
+  <div class="glass-card modal-glass">
+    <span class="eyebrow">Seguridad del Santuario · Spokcillo</span>
+    <h3 class="card-heading" style="font-size:24px; margin-bottom:8px;">⚡ Autorizar Orden Cloud</h3>
+    <p style="color:var(--text-secondary); font-size:13px;">
+      Mantén presionado el núcleo 0.5 segundos o pulsa <strong>Validar y Ejecutar Ahora</strong> para enviar la señal a AWS EC2.
     </p>
 
-    <div class="rune-reactor" id="reactorHoldBtn">
-      <div class="rune-ring" id="reactorRing"></div>
+    <div class="orb-hold" id="orbHoldBtn">
+      <div class="orb-ring" id="orbRing"></div>
       <div>
-        <div style="font-size:28px;">💠</div>
-        <strong id="reactorPct" style="font-family:var(--font-mono); font-size:13px; color:var(--shader-core);">MANTENER</strong>
+        <div style="font-size:30px;">💠</div>
+        <strong id="orbPct" style="font-family:var(--font-mono); font-size:13px; color:var(--accent-1);">MANTENER</strong>
       </div>
     </div>
 
-    <div style="display:flex; justify-content:space-between; gap:10px;">
-      <button class="btn" type="button" id="closeReactorBtn">Cancelar</button>
-      <button class="btn btn-ignite" type="button" id="instantJsAuthBtn" style="font-size:13px;">🚀 Validar y Ejecutar Ahora</button>
+    <div style="display:flex; gap:10px; justify-content:space-between;">
+      <button class="btn" id="cancelAuthBtn" type="button">Cancelar</button>
+      <button class="btn btn-power-on" id="instantAuthBtn" type="button" style="font-size:13px;">🚀 Validar y Ejecutar Ahora</button>
     </div>
   </div>
 </div>
@@ -1165,91 +1261,110 @@ body.theme-dawn .god-rays {
 <div class="toast" id="toast"></div>
 
 <script>
-// ================= CONFIGURACIÓN DE CONEXIÓN AWS LAMBDA =================
+// ================= CONFIGURACIÓN OFICIAL AWS & MEDIAFIRE =================
 const LAMBDA_URL = "https://yakcmdk3nraxjqlgl77wh7gczm0hgove.lambda-url.us-east-2.on.aws/";
+const MODPACK_URL = "https://www.mediafire.com/file/5xly6wpkoruyvti/mods.rar/file";
 const MASTER_PASS = "spokcillo";
 
-// Lista base de Mods y Shaders del servidor
-const DEFAULT_MODS = [
+const SERVER_MODS = [
   {
-    id: "tconstruct",
-    name: "Tinkers' Construct",
-    category: "Herramientas & Magia",
-    icon: "⚒️",
-    version: "Forge · Activo",
-    desc: "Sistema de fundición, forja modular y creación de herramientas y armas personalizadas con modificadores únicos."
-  },
-  {
-    id: "alexscaves",
     name: "Alex's Caves",
-    category: "Dimensiones & Biomas",
+    category: "Biomas & Cuevas",
     icon: "🦖",
-    version: "Forge · Activo",
-    desc: "Cinco biomas subterráneos masivos: Cavernas Magnéticas, Abismos Primordiales, Cuevas Tóxicas, Abisales y Dulces."
+    desc: "Cinco dimensiones subterráneas gigantescas: Cavernas Magnéticas, Primordiales, Tóxicas, Abisales y de Dulce."
   },
   {
-    id: "oculus_shaders",
-    name: "Oculus + Complementary Shaders",
+    name: "Tinkers' Construct",
+    category: "Forja & Equipo",
+    icon: "⚒️",
+    desc: "Hornos de fundición multi-bloque para forjar armas y herramientas modulares con aleaciones únicas."
+  },
+  {
+    name: "Complementary Shaders + Oculus",
     category: "Shaders & FPS",
-    icon: "🌙",
-    version: "Cliente · Shaders",
-    desc: "Iluminación volumétrica, cielo estrellado realista, niebla atmosférica, reflejos en el agua y sombras dinámicas."
+    icon: "🌌",
+    desc: "Auroras boreales, reflejos cristalinos en el agua, niebla volumétrica y sombras dinámicas en tiempo real."
   },
   {
-    id: "embeddium",
     name: "Embeddium (Sodium Forge)",
     category: "Shaders & FPS",
     icon: "⚡",
-    version: "Optimización",
-    desc: "Motor de renderizado de alto rendimiento que duplica los FPS y elimina tirones al usar Shaders pesados."
+    desc: "Optimización extrema del motor gráfico para duplicar los FPS al jugar con Shaders y mods pesados."
   },
   {
-    id: "jei",
-    name: "Just Enough Items (JEI)",
-    category: "Utilidad & QoL",
-    icon: "📖",
-    version: "Forge · Activo",
-    desc: "Visor instantáneo de todas las recetas, aleaciones de Tinkers' y usos de bloques del servidor."
-  },
-  {
-    id: "waystones",
-    name: "Waystones",
-    category: "Utilidad & QoL",
-    icon: "🗿",
-    version: "Forge · Activo",
-    desc: "Monolitos rúnicos de teletransporte para viajar entre bases, aldeas y santuarios descubiertos."
-  },
-  {
-    id: "backpacks",
     name: "Sophisticated Backpacks",
-    category: "Herramientas & Magia",
+    category: "Forja & Equipo",
     icon: "🎒",
-    version: "Forge · Activo",
-    desc: "Mochilas mejorables con imanes de objetos, auto-alimentación y mesas de trabajo integradas."
+    desc: "Mochilas mejorables con imán automático de ítems, filtros inteligentes y mesas de trabajo integradas."
   },
   {
-    id: "citadel",
-    name: "Citadel & Mantle",
-    category: "Utilidad & QoL",
+    name: "Waystones",
+    category: "Utilidad & Mundo",
+    icon: "🗿",
+    desc: "Monolitos rúnicos de teletransporte para viajar al instante entre bases, biomas y aldeas."
+  },
+  {
+    name: "Just Enough Items (JEI)",
+    category: "Utilidad & Mundo",
+    icon: "📖",
+    desc: "Catálogo interactivo dentro del inventario para consultar todas las recetas y fundiciones del pack."
+  },
+  {
+    name: "Citadel & Mantle Core",
+    category: "Utilidad & Mundo",
     icon: "🏛️",
-    version: "Librerías Core",
-    desc: "Núcleo de animaciones avanzadas, físicas de entidades y soporte estructural para Alex's Caves y Tinkers'."
+    desc: "Motor de animaciones cinemáticas, físicas avanzadas de jefes y estructuras para todo el modpack."
   }
 ];
 
 const state = {
   mc: "off",
   mcIp: null,
-  jsAuthorized: sessionStorage.getItem("spokcillo_mc_auth") === "true",
-  theme: localStorage.getItem("spokcillo_shader_theme") || "night",
-  activeCategory: "all",
-  searchQuery: "",
-  mods: JSON.parse(localStorage.getItem("spokcillo_mc_mods") || "null") || DEFAULT_MODS,
-  pendingAction: null
+  authorized: sessionStorage.getItem("spokcillo_auth") === "true",
+  shader: localStorage.getItem("spokcillo_shader_mode") || "aurora",
+  category: "all",
+  search: "",
+  pendingFn: null
 };
 
-// ================= UTILIDADES DE INTERFAZ Y LOGS =================
-function nowTime() {
+// ================= EFECTO SPOTLIGHT EN TARJETAS DE CRISTAL =================
+const cursorGlow = document.getElementById("cursorGlow");
+window.addEventListener("mousemove", (e) => {
+  cursorGlow.style.left = `${e.clientX}px`;
+  cursorGlow.style.top = `${e.clientY}px`;
+
+  document.querySelectorAll(".glass-card").forEach(card => {
+    const rect = card.getBoundingClientRect();
+    card.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
+    card.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
+  });
+});
+
+// ================= CAMBIADOR DE SHADERS (AURORA / SAKURA / LAGOON) =================
+function applyShaderMode(mode) {
+  state.shader = mode;
+  document.body.setAttribute("data-shader", mode);
+  localStorage.setItem("spokcillo_shader_mode", mode);
+  document.querySelectorAll(".shader-btn").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.theme === mode);
+  });
+}
+
+document.querySelectorAll(".shader-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    applyShaderMode(btn.dataset.theme);
+    const names = {
+      aurora: "🌌 Shader: Aurora Astral activado",
+      sakura: "🌸 Shader: Santuario Sakura activado",
+      lagoon: "🏝️ Shader: Laguna Turquesa activado"
+    };
+    showToast(names[btn.dataset.theme]);
+  });
+});
+applyShaderMode(state.shader);
+
+// ================= NOTIFICACIONES Y CONSOLA =================
+function getTimeStr() {
   return new Date().toLocaleTimeString("es-CL", { hour12: false });
 }
 
@@ -1261,125 +1376,101 @@ function showToast(msg) {
   window.toastTimer = setTimeout(() => t.classList.remove("show"), 3800);
 }
 
-function addLog(msg, type = "") {
-  const box = document.getElementById("eventLogBox");
-  const div = document.createElement("div");
-  div.className = `log-entry ${type}`;
-  div.textContent = `[${nowTime()}] ${msg}`;
-  box.appendChild(div);
+function logEvent(msg, cls = "") {
+  const box = document.getElementById("consoleBox");
+  const line = document.createElement("div");
+  line.className = `log-line ${cls}`;
+  line.textContent = `[${getTimeStr()}] ${msg}`;
+  box.appendChild(line);
   box.scrollTop = box.scrollHeight;
 }
 
-addLog("Santuario Spokcillo inicializado. Consultando estado en AWS us-east-2...", "ok");
+logEvent("Panel Spokcillo Sanctuary inicializado. Sincronizando con AWS Lambda...", "ok");
 
-// ================= CAMBIO DE ATMÓSFERA SHADER (NOCHE / AMANECER) =================
-function applyShaderTheme() {
-  const isDawn = state.theme === "dawn";
-  document.body.classList.toggle("theme-dawn", isDawn);
-  document.getElementById("themeToggleBtn").textContent = isDawn
-    ? "🌅 Shader: Alba Dorada"
-    : "🌙 Shader: Noche Mística";
-}
+// ================= ACTUALIZACIÓN VISUAL DEL ESTADO DEL SERVIDOR =================
+function updatePipelineUI() {
+  const s1 = document.getElementById("step1"),
+        s2 = document.getElementById("step2"),
+        s3 = document.getElementById("step3"),
+        s4 = document.getElementById("step4");
 
-document.getElementById("themeToggleBtn").addEventListener("click", () => {
-  state.theme = state.theme === "night" ? "dawn" : "night";
-  localStorage.setItem("spokcillo_shader_theme", state.theme);
-  applyShaderTheme();
-  showToast(state.theme === "dawn" ? "🌅 Atmósfera cambiada a Alba Dorada" : "🌙 Atmósfera cambiada a Noche Mística");
-});
-applyShaderTheme();
-
-// ================= RENDERIZADO DEL ESTADO DEL SERVIDOR =================
-function updateStages() {
-  const s1 = document.getElementById("stage1"),
-        s2 = document.getElementById("stage2"),
-        s3 = document.getElementById("stage3"),
-        s4 = document.getElementById("stage4");
-
-  s1.className = "stage-card";
-  s2.className = "stage-card";
-  s3.className = "stage-card";
-  s4.className = "stage-card";
+  [s1, s2, s3, s4].forEach(el => el.className = "glass-card step-glass");
 
   if (state.mc === "on") {
-    s1.classList.add("done");
-    s2.classList.add("done");
-    s3.classList.add("done");
-    s4.classList.add("done");
-    document.getElementById("stage1Text").textContent = "EC2 En Ejecución";
-    document.getElementById("stage2Text").textContent = state.mcIp || "Asignada";
-    document.getElementById("stage3Text").textContent = "Forge Cargado";
-    document.getElementById("stage4Text").textContent = "🟢 Mundo Abierto";
+    [s1, s2, s3, s4].forEach(el => el.classList.add("done"));
+    document.getElementById("step1Text").textContent = "EC2 Online";
+    document.getElementById("step2Text").textContent = state.mcIp || "IP Activa";
+    document.getElementById("step3Text").textContent = "Mods Cargados";
+    document.getElementById("step4Text").textContent = "🟢 Mundo Abierto";
   } else if (state.mc === "starting") {
     s1.classList.add("done");
     s2.classList.add("active");
     s3.classList.add("active");
-    document.getElementById("stage1Text").textContent = "Iniciando Nodo…";
-    document.getElementById("stage2Text").textContent = state.mcIp || "Solicitando IP…";
-    document.getElementById("stage3Text").textContent = "Cargando Mods…";
-    document.getElementById("stage4Text").textContent = "Preparando…";
+    document.getElementById("step1Text").textContent = "Despertando EC2…";
+    document.getElementById("step2Text").textContent = state.mcIp || "Asignando IP…";
+    document.getElementById("step3Text").textContent = "Iniciando Forge…";
+    document.getElementById("step4Text").textContent = "Cargando…";
   } else if (state.mc === "stopping") {
     s1.classList.add("active");
-    document.getElementById("stage1Text").textContent = "Apagando EC2…";
-    document.getElementById("stage2Text").textContent = "Liberando IP…";
-    document.getElementById("stage3Text").textContent = "Guardando Mundo";
-    document.getElementById("stage4Text").textContent = "Cerrando…";
+    document.getElementById("step1Text").textContent = "Apagando Nodo…";
+    document.getElementById("step2Text").textContent = "Liberando IP…";
+    document.getElementById("step3Text").textContent = "Guardando Mundo";
+    document.getElementById("step4Text").textContent = "Cerrando…";
   } else {
-    document.getElementById("stage1Text").textContent = "Servidor Detenido";
-    document.getElementById("stage2Text").textContent = "Sin Asignar";
-    document.getElementById("stage3Text").textContent = "En reposo";
-    document.getElementById("stage4Text").textContent = "Offline";
+    document.getElementById("step1Text").textContent = "Nodo Apagado";
+    document.getElementById("step2Text").textContent = "En espera";
+    document.getElementById("step3Text").textContent = "En reposo";
+    document.getElementById("step4Text").textContent = "Offline";
   }
 }
 
-function renderServerUI() {
-  const labels = {
+function renderUI() {
+  const statusMap = {
     off: "Detenido",
-    starting: "Encendiendo Mundo…",
+    starting: "Iniciando Mundo…",
     stopping: "Guardando y Apagando…",
     on: "En Ejecución"
   };
 
-  document.getElementById("jsGateLabel").textContent = state.jsAuthorized
+  document.getElementById("jsGateLabel").textContent = state.authorized
     ? "⚡ Llave Rúnica: Activa"
-    : "🔒 Llave Rúnica: Lista";
+    : "🔒 Llave Rúnica";
 
   const badge = document.getElementById("mcBadge");
   const dot = document.getElementById("mcDot");
-  badge.className = `status-pill-large ${state.mc}`;
+  badge.className = `server-status-badge ${state.mc}`;
   dot.className = `dot ${state.mc === "on" ? "online" : (state.mc === "starting" || state.mc === "stopping" ? "busy" : "")}`;
-  document.getElementById("mcStatusLabel").textContent = labels[state.mc] || "Detenido";
+  document.getElementById("mcStatusLabel").textContent = statusMap[state.mc] || "Detenido";
 
-  document.getElementById("mcMainCard").classList.toggle("server-online", state.mc === "on");
+  document.getElementById("mainServerCard").classList.toggle("online-glow", state.mc === "on");
 
-  const ipDisplay = document.getElementById("mcIpDisplay");
-  const ipSub = document.getElementById("mcIpSub");
+  const ipVal = document.getElementById("mcIpDisplay");
+  const ipHint = document.getElementById("mcIpHint");
 
   if (state.mc === "on" && state.mcIp) {
-    ipDisplay.textContent = state.mcIp;
-    ipSub.textContent = "Puerto predeterminado: 25565 · Haz clic en Copiar IP para entrar";
+    ipVal.textContent = state.mcIp;
+    ipHint.textContent = "Servidor listo · Copia la IP y entra con tu perfil Forge";
   } else if (state.mc === "starting") {
-    ipDisplay.textContent = "Asignando IPv4…";
-    ipSub.textContent = "AWS EC2 está despertando el servidor y cargando los mods";
+    ipVal.textContent = "Asignando IPv4…";
+    ipHint.textContent = "AWS está encendiendo la máquina y cargando los mods";
   } else {
-    ipDisplay.textContent = "Servidor Apagado";
-    ipSub.textContent = "Enciende el nodo para generar la IP pública de la sesión";
+    ipVal.textContent = "Servidor Apagado";
+    ipHint.textContent = "Pulsa 'Encender Servidor' para asignar una IP pública";
   }
 
-  const busy = state.mc === "starting" || state.mc === "stopping";
+  const isBusy = state.mc === "starting" || state.mc === "stopping";
   const startBtn = document.getElementById("startMcBtn");
-  startBtn.disabled = busy || state.mc === "on";
+  startBtn.disabled = isBusy || state.mc === "on";
   startBtn.textContent = state.mc === "on"
-    ? "🟢 Servidor Minecraft en Línea"
-    : (state.mc === "starting" ? "⏳ Despertando Servidor en AWS…" : "⚡ Encender Servidor Minecraft");
+    ? "🟢 Servidor en Línea (Listo para jugar)"
+    : (state.mc === "starting" ? "⏳ Encendiendo Servidor en AWS…" : "⚡ Encender Servidor Minecraft");
 
-  document.getElementById("stopMcBtn").disabled = busy || state.mc !== "on";
-
-  updateStages();
+  document.getElementById("stopMcBtn").disabled = isBusy || state.mc !== "on";
+  updatePipelineUI();
 }
 
-// ================= COMUNICACIÓN CON AWS LAMBDA =================
-async function syncAwsStatus() {
+// ================= CONEXIÓN CON AWS LAMBDA =================
+async function syncAws() {
   const awsDot = document.getElementById("awsDot");
   const awsTxt = document.getElementById("awsStatusText");
   try {
@@ -1391,99 +1482,100 @@ async function syncAwsStatus() {
       return;
     }
     awsDot.className = "dot online";
-    awsTxt.textContent = "AWS Online · us-east-2";
+    awsTxt.textContent = "AWS Online";
 
-    const prevState = state.mc;
-    const prevIp = state.mcIp;
+    const oldState = state.mc;
+    const oldIp = state.mcIp;
     state.mc = data.uiState || "off";
     state.mcIp = data.ip || null;
 
-    if (prevState !== state.mc || prevIp !== state.mcIp) {
+    if (oldState !== state.mc || oldIp !== state.mcIp) {
       if (state.mc === "on" && state.mcIp) {
-        addLog(`¡Mundo activo! IP asignada: ${state.mcIp}`, "ok");
-      } else if (state.mc === "off" && prevState !== "off") {
-        addLog("El servidor de Minecraft se ha detenido correctamente.", "warn");
+        logEvent(`¡Servidor en línea! IP asignada: ${state.mcIp}`, "ok");
+      } else if (state.mc === "off" && oldState !== "off") {
+        logEvent("Servidor detenido correctamente.", "warn");
       }
     }
-    renderServerUI();
-  } catch (err) {
+    renderUI();
+  } catch (e) {
     awsDot.className = "dot error";
-    awsTxt.textContent = "Sin conexión Lambda";
+    awsTxt.textContent = "Sin red Lambda";
   }
 }
 
-// ================= AUTORIZACIÓN RÚNICA (MODAL) =================
-let holdInterval = null, holdPct = 0;
-const reactorBtn = document.getElementById("reactorHoldBtn");
-const reactorPct = document.getElementById("reactorPct");
-const reactorRing = document.getElementById("reactorRing");
+// ================= MODAL DE LLAVE RÚNICA =================
+let holdTimer = null, holdProgress = 0;
+const orbHoldBtn = document.getElementById("orbHoldBtn");
+const orbPct = document.getElementById("orbPct");
+const orbRing = document.getElementById("orbRing");
 
-function completeAuth() {
-  clearInterval(holdInterval);
-  holdPct = 100;
-  reactorPct.textContent = "100% OK";
-  state.jsAuthorized = true;
-  sessionStorage.setItem("spokcillo_mc_auth", "true");
-  document.getElementById("reactorModal").classList.remove("open");
-  renderServerUI();
-  if (state.pendingAction) {
-    const fn = state.pendingAction;
-    state.pendingAction = null;
+function unlockAndRun() {
+  clearInterval(holdTimer);
+  holdProgress = 100;
+  orbPct.textContent = "100% OK";
+  state.authorized = true;
+  sessionStorage.setItem("spokcillo_auth", "true");
+  document.getElementById("authModal").classList.remove("open");
+  renderUI();
+  if (state.pendingFn) {
+    const fn = state.pendingFn;
+    state.pendingFn = null;
     fn();
   }
 }
 
-function startHold() {
-  clearInterval(holdInterval);
-  holdInterval = setInterval(() => {
-    holdPct += 25;
-    reactorPct.textContent = `${Math.min(100, holdPct)}%`;
-    reactorRing.style.transform = `rotate(${holdPct * 3.6}deg)`;
-    if (holdPct >= 100) completeAuth();
+function beginHold() {
+  clearInterval(holdTimer);
+  holdTimer = setInterval(() => {
+    holdProgress += 25;
+    orbPct.textContent = `${Math.min(100, holdProgress)}%`;
+    orbRing.style.transform = `rotate(${holdProgress * 3.6}deg)`;
+    if (holdProgress >= 100) unlockAndRun();
   }, 80);
 }
 
-function stopHold() {
-  clearInterval(holdInterval);
-  if (holdPct < 100) {
-    holdPct = 0;
-    reactorPct.textContent = "MANTENER";
-    reactorRing.style.transform = "rotate(0deg)";
+function endHold() {
+  clearInterval(holdTimer);
+  if (holdProgress < 100) {
+    holdProgress = 0;
+    orbPct.textContent = "MANTENER";
+    orbRing.style.transform = "rotate(0deg)";
   }
 }
 
-reactorBtn.addEventListener("mousedown", startHold);
-reactorBtn.addEventListener("touchstart", startHold);
-window.addEventListener("mouseup", stopHold);
-window.addEventListener("touchend", stopHold);
-document.getElementById("instantJsAuthBtn").addEventListener("click", completeAuth);
-document.getElementById("closeReactorBtn").addEventListener("click", () => {
-  document.getElementById("reactorModal").classList.remove("open");
-  state.pendingAction = null;
+orbHoldBtn.addEventListener("mousedown", beginHold);
+orbHoldBtn.addEventListener("touchstart", beginHold);
+window.addEventListener("mouseup", endHold);
+window.addEventListener("touchend", endHold);
+
+document.getElementById("instantAuthBtn").addEventListener("click", unlockAndRun);
+document.getElementById("cancelAuthBtn").addEventListener("click", () => {
+  document.getElementById("authModal").classList.remove("open");
+  state.pendingFn = null;
 });
 document.getElementById("jsGateBtn").addEventListener("click", () => {
-  document.getElementById("reactorModal").classList.add("open");
+  document.getElementById("authModal").classList.add("open");
 });
 
-function requireAuth(callback) {
-  if (state.jsAuthorized) {
-    callback();
+function requireGate(fn) {
+  if (state.authorized) {
+    fn();
     return;
   }
-  holdPct = 0;
-  reactorPct.textContent = "MANTENER";
-  state.pendingAction = callback;
-  document.getElementById("reactorModal").classList.add("open");
+  holdProgress = 0;
+  orbPct.textContent = "MANTENER";
+  state.pendingFn = fn;
+  document.getElementById("authModal").classList.add("open");
 }
 
-async function triggerMcAction(targetState) {
-  requireAuth(async () => {
-    const isStart = targetState === "on";
+async function sendServerPower(target) {
+  requireGate(async () => {
+    const isStart = target === "on";
     state.mc = isStart ? "starting" : "stopping";
-    renderServerUI();
+    renderUI();
 
     const actionName = isStart ? "start_mc" : "stop_mc";
-    addLog(`Enviando orden '${actionName}' al nodo spokcillo...`, "warn");
+    logEvent(`Enviando orden '${actionName}' a AWS Lambda...`, "warn");
 
     try {
       const res = await fetch(LAMBDA_URL, {
@@ -1499,205 +1591,199 @@ async function triggerMcAction(targetState) {
 
       if (!res.ok || data.error) {
         showToast(`AWS: ${data.error || "Error"}`);
-        addLog(`AWS rechazó la orden: ${data.error}`, "err");
-        await syncAwsStatus();
+        logEvent(`Error devuelto por AWS: ${data.error}`, "err");
+        await syncAws();
         return;
       }
 
-      showToast(isStart ? "⚡ Despertando servidor Minecraft en AWS…" : "🛑 Guardando mundo y apagando instancia…");
-      addLog(`Orden '${actionName}' confirmada por AWS Lambda.`, "ok");
+      showToast(isStart ? "⚡ Encendiendo servidor en AWS…" : "🛑 Apagando servidor en AWS…");
+      logEvent(`Orden '${actionName}' aceptada por AWS EC2.`, "ok");
 
       const poll = setInterval(async () => {
-        await syncAwsStatus();
+        await syncAws();
         if ((isStart && state.mc === "on" && state.mcIp) || (!isStart && state.mc === "off")) {
           clearInterval(poll);
         }
       }, 3500);
-    } catch (err) {
-      showToast("Error de red al contactar con AWS Lambda.");
-      addLog(`Error de conexión: ${err.message}`, "err");
-      await syncAwsStatus();
+    } catch (e) {
+      showToast("Error de conexión con AWS Lambda.");
+      logEvent(`Fallo de red: ${e.message}`, "err");
+      await syncAws();
     }
   });
 }
 
-document.getElementById("startMcBtn").addEventListener("click", () => triggerMcAction("on"));
-document.getElementById("stopMcBtn").addEventListener("click", () => triggerMcAction("off"));
+document.getElementById("startMcBtn").addEventListener("click", () => sendServerPower("on"));
+document.getElementById("stopMcBtn").addEventListener("click", () => sendServerPower("off"));
 document.getElementById("syncBtn").addEventListener("click", () => {
-  syncAwsStatus();
-  showToast("🔄 Estado sincronizado con AWS");
+  syncAws();
+  showToast("🔄 Estado actualizado");
 });
 
 document.getElementById("copyIpBtn").addEventListener("click", () => {
   if (state.mcIp) {
     navigator.clipboard.writeText(state.mcIp);
     showToast(`📋 ¡IP copiada!: ${state.mcIp}`);
-    addLog(`IP pública copiada al portapapeles (${state.mcIp})`, "ok");
+    logEvent(`IP copiada al portapapeles: ${state.mcIp}`, "ok");
   } else {
     showToast("⚠️ Enciende el servidor primero para obtener la IP.");
   }
 });
 
-// ================= CATÁLOGO INTERACTIVO DE MODS =================
+document.getElementById("copyModLinkBtn").addEventListener("click", () => {
+  navigator.clipboard.writeText(MODPACK_URL);
+  showToast("🔗 ¡Enlace de MediaFire (mods.rar) copiado!");
+  logEvent("Enlace de descarga de mods.rar copiado al portapapeles.", "ok");
+});
+
+// ================= RENDERIZADO DEL CATÁLOGO DE MODS =================
 function renderMods() {
   const grid = document.getElementById("modsGrid");
-  const filtered = state.mods.filter(m => {
-    const matchesCat = state.activeCategory === "all" || m.category === state.activeCategory;
-    const q = state.searchQuery.toLowerCase();
-    const matchesSearch = m.name.toLowerCase().includes(q) || m.desc.toLowerCase().includes(q) || m.category.toLowerCase().includes(q);
-    return matchesCat && matchesSearch;
+  const list = SERVER_MODS.filter(m => {
+    const matchCat = state.category === "all" || m.category === state.category;
+    const q = state.search.toLowerCase();
+    const matchText = m.name.toLowerCase().includes(q) || m.desc.toLowerCase().includes(q) || m.category.toLowerCase().includes(q);
+    return matchCat && matchText;
   });
 
-  document.getElementById("modCountBadge").textContent = state.mods.length;
+  document.getElementById("modCount").textContent = SERVER_MODS.length;
 
-  grid.innerHTML = filtered.map(mod => `
-    <div class="mod-card">
+  grid.innerHTML = list.map(mod => `
+    <div class="mod-item">
       <div>
-        <div class="mod-top">
-          <div class="mod-icon">${mod.icon || "📦"}</div>
-          <span class="mod-badge">${mod.category}</span>
+        <div class="mod-item-top">
+          <div class="mod-emoji">${mod.icon}</div>
+          <span class="mod-tag">${mod.category}</span>
         </div>
-        <h3 class="mod-name" style="margin-top:12px;">${mod.name}</h3>
+        <h4 class="mod-title">${mod.name}</h4>
         <p class="mod-desc">${mod.desc}</p>
-      </div>
-      <div class="mod-footer">
-        <span>🟢 ${mod.version || "Forge · Activo"}</span>
-        <button class="delete-mod-btn" data-id="${mod.id}" title="Quitar de la lista">✕</button>
       </div>
     </div>
   `).join("");
-
-  grid.querySelectorAll(".delete-mod-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      state.mods = state.mods.filter(m => m.id !== btn.dataset.id);
-      localStorage.setItem("spokcillo_mc_mods", JSON.stringify(state.mods));
-      renderMods();
-      showToast("Mod eliminado de la lista.");
-    });
-  });
 }
 
-document.querySelectorAll(".filter-chip").forEach(chip => {
-  chip.addEventListener("click", () => {
-    document.querySelectorAll(".filter-chip").forEach(c => c.classList.remove("active"));
-    chip.classList.add("active");
-    state.activeCategory = chip.dataset.cat;
+document.querySelectorAll(".chip").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".chip").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    state.category = btn.dataset.cat;
     renderMods();
   });
 });
 
-document.getElementById("modSearchInput").addEventListener("input", (e) => {
-  state.searchQuery = e.target.value;
+document.getElementById("modSearch").addEventListener("input", (e) => {
+  state.search = e.target.value;
   renderMods();
 });
 
-document.getElementById("toggleAddModBtn").addEventListener("click", () => {
-  document.getElementById("addModForm").classList.toggle("open");
-});
-document.getElementById("cancelAddModBtn").addEventListener("click", () => {
-  document.getElementById("addModForm").classList.remove("open");
-});
-
-document.getElementById("addModForm").addEventListener("submit", (e) => {
-  e.preventDefault();
-  const newMod = {
-    id: "mod_" + Date.now(),
-    name: document.getElementById("newModName").value.trim(),
-    category: document.getElementById("newModCat").value,
-    icon: document.getElementById("newModIcon").value.trim() || "✨",
-    version: "Forge · Activo",
-    desc: document.getElementById("newModDesc").value.trim()
-  };
-  state.mods.unshift(newMod);
-  localStorage.setItem("spokcillo_mc_mods", JSON.stringify(state.mods));
-  e.target.reset();
-  document.getElementById("addModForm").classList.remove("open");
-  renderMods();
-  showToast(`✨ Mod '${newMod.name}' añadido al catálogo.`);
-});
-
-// ================= MOTOR DE PARTÍCULAS Y ESTRELLAS SHADER (CANVAS) =================
+// ================= MOTOR CANVAS DE PARTÍCULAS SHADER (ESTRELLAS / PÉTALOS SAKURA / DESTELLOS) =================
 const canvas = document.getElementById("shaderCanvas");
 const ctx = canvas.getContext("2d");
 let stars = [];
-let fireflies = [];
+let particles = [];
 
-function resizeCanvas() {
+function resize() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 }
-window.addEventListener("resize", resizeCanvas);
-resizeCanvas();
+window.addEventListener("resize", resize);
+resize();
 
-for (let i = 0; i < 140; i++) {
+for (let i = 0; i < 150; i++) {
   stars.push({
     x: Math.random() * window.innerWidth,
-    y: Math.random() * (window.innerHeight * 0.75),
-    r: Math.random() * 1.8 + 0.4,
+    y: Math.random() * (window.innerHeight * 0.78),
+    r: Math.random() * 1.7 + 0.4,
     alpha: Math.random(),
-    speed: Math.random() * 0.018 + 0.005
+    delta: Math.random() * 0.016 + 0.004
   });
 }
 
-for (let i = 0; i < 38; i++) {
-  fireflies.push({
+for (let i = 0; i < 45; i++) {
+  particles.push({
     x: Math.random() * window.innerWidth,
     y: Math.random() * window.innerHeight,
-    r: Math.random() * 2.6 + 1.2,
-    vx: (Math.random() - 0.5) * 0.45,
-    vy: -Math.random() * 0.55 - 0.15,
-    alpha: Math.random() * 0.8 + 0.2
+    size: Math.random() * 3.5 + 1.5,
+    vx: (Math.random() - 0.5) * 0.65,
+    vy: (Math.random() - 0.5) * 0.5 - 0.25,
+    alpha: Math.random() * 0.75 + 0.25,
+    angle: Math.random() * Math.PI * 2,
+    spin: (Math.random() - 0.5) * 0.03
   });
 }
 
-function animateShaders() {
+function renderShaderCanvas() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  const isDawn = state.theme === "dawn";
+  const mode = state.shader;
   const isOnline = state.mc === "on";
 
   // Estrellas centelleantes
   stars.forEach(s => {
-    s.alpha += s.speed;
-    if (s.alpha > 1 || s.alpha < 0.15) s.speed = -s.speed;
+    s.alpha += s.delta;
+    if (s.alpha > 1 || s.alpha < 0.15) s.delta = -s.delta;
     ctx.beginPath();
     ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-    ctx.fillStyle = isDawn
-      ? `rgba(255, 240, 200, ${s.alpha * 0.45})`
-      : `rgba(185, 235, 255, ${s.alpha * 0.9})`;
+    ctx.fillStyle = mode === "lagoon"
+      ? `rgba(220, 250, 255, ${s.alpha * 0.55})`
+      : `rgba(255, 255, 255, ${s.alpha * 0.88})`;
     ctx.fill();
   });
 
-  // Partículas rúnicas / luciérnagas de shader
-  fireflies.forEach(f => {
-    f.x += f.vx;
-    f.y += isOnline ? f.vy * 1.8 : f.vy;
-    if (f.y < -10) {
-      f.y = canvas.height + 10;
-      f.x = Math.random() * canvas.width;
+  // Partículas atmosféricas según el Shader activo
+  particles.forEach(p => {
+    p.x += p.vx;
+    p.y += mode === "sakura" ? Math.abs(p.vy) + 0.35 : (isOnline ? p.vy * 1.7 : p.vy);
+    p.angle += p.spin;
+
+    if (p.y < -15) p.y = canvas.height + 15;
+    if (p.y > canvas.height + 15) p.y = -15;
+    if (p.x < -15) p.x = canvas.width + 15;
+    if (p.x > canvas.width + 15) p.x = -15;
+
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.angle);
+
+    let color;
+    if (mode === "sakura") {
+      // Pétalos de cerezo brillantes y chispas de farol cálido
+      color = `rgba(255, 135, 195, ${p.alpha})`;
+      ctx.fillStyle = color;
+      ctx.shadowBlur = 12;
+      ctx.shadowColor = color;
+      ctx.beginPath();
+      ctx.ellipse(0, 0, p.size * 1.4, p.size * 0.75, 0, 0, Math.PI * 2);
+      ctx.fill();
+    } else if (mode === "lagoon") {
+      // Destellos turquesa / esmeralda sobre el agua
+      color = `rgba(0, 242, 254, ${p.alpha})`;
+      ctx.fillStyle = color;
+      ctx.shadowBlur = 16;
+      ctx.shadowColor = color;
+      ctx.beginPath();
+      ctx.arc(0, 0, p.size, 0, Math.PI * 2);
+      ctx.fill();
+    } else {
+      // Polvo estelar de Aurora (Cian y Magenta)
+      color = isOnline ? `rgba(0, 255, 170, ${p.alpha})` : `rgba(0, 245, 212, ${p.alpha})`;
+      ctx.fillStyle = color;
+      ctx.shadowBlur = 16;
+      ctx.shadowColor = color;
+      ctx.beginPath();
+      ctx.arc(0, 0, p.size * 0.9, 0, Math.PI * 2);
+      ctx.fill();
     }
-    if (f.x < 0) f.x = canvas.width;
-    if (f.x > canvas.width) f.x = 0;
-
-    ctx.beginPath();
-    ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
-    const color = isOnline
-      ? `rgba(0, 255, 170, ${f.alpha})`
-      : (isDawn ? `rgba(255, 195, 70, ${f.alpha})` : `rgba(0, 215, 255, ${f.alpha})`);
-    ctx.shadowBlur = 14;
-    ctx.shadowColor = color;
-    ctx.fillStyle = color;
-    ctx.fill();
-    ctx.shadowBlur = 0;
+    ctx.restore();
   });
 
-  requestAnimationFrame(animateShaders);
+  requestAnimationFrame(renderShaderCanvas);
 }
 
-animateShaders();
+renderShaderCanvas();
 renderMods();
-renderServerUI();
-syncAwsStatus();
-setInterval(syncAwsStatus, 5000);
+renderUI();
+syncAws();
+setInterval(syncAws, 5000);
 </script>
 </body>
 </html>
